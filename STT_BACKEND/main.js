@@ -41,6 +41,10 @@ app.use('/api/voyages', voyage_routes);
 // pour utiliser les routes de tickets
 const ticket_routes = require('./routers/TicketRouter.js');
 app.use('/api/tickets', ticket_routes);
+// pour utiliser les routes de Trajets
+const trajets_routes = require('./routers/TrajetRouter.js');
+app.use('/api/trajets', trajets_routes);
+
 
 // méthode pour se connecter à la base de données avec un fichier env
 require('dotenv').config();

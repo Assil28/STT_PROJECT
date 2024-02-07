@@ -1,4 +1,4 @@
-const Voyage = require("../models/voyageModel");
+const Voyage = require("../models/VoyageModel");
 
 const getVoyages = ((req, res) => {
     Voyage.find({})
