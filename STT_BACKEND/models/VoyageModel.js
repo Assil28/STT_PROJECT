@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VoyageModel = new Schema({
+  _id:String,
     ville_depart:String,
     ville_arrive:String,
  

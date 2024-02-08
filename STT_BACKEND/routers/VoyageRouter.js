@@ -19,6 +19,6 @@ router.post('/',createVoyage)
 router.put('/:VoyageID',updateVoyage)
 router.delete('/deleteVoyage/:VoyageID', deleteVoyage)
 router.get('/getVoyageByTicket/:VoyageID',getVoyageByTicket)
-router.get('/getVoyageByvilleDateTime',getVoyageByVilleDateTime)
+router.post('/getVoyageByvilleDateTime',getVoyageByVilleDateTime)
 
 module.exports= router

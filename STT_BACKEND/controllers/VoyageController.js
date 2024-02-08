@@ -59,7 +59,7 @@ const getVoyageByTicket = async (req, res) => {
     try {
              const voyage = await Voyage.findOne({ $and: [{ ville_depart: req.body.ville_depart }, { ville_arrive: req.body.ville_arrive },{heure_depart_voyage:req.body.heure_depart_voyage},{date:req.body.date}] });
 
-            res.json({ voyage });
+             res.json({ voyageId: voyage._id });
             } catch (error) {
             console.error('Error fetching voyages by villeDateTime:', error);
             res.status(500).json({ error: 'Internal Server Error' });
