@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:stt/InterfaceUI/FomVoyage.dart';
 
 //import 'package:flutter_pro/LoginScreen.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:stt/home_screen.dart';
 
 void main() {
+  Stripe.publishableKey =
+      "pk_test_51ObMplKMb9izxsLhCho5F2R9fvurExAmUzn2Nu9EeLC9szpEGkPAPGuKGaAnlT63cP3fNHNwIdDA9oqQ4gCmCJEy00t1cIJOoN";
+
   runApp(const MyApp());
 }
 
@@ -20,7 +25,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 
 

@@ -6,22 +6,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VoyageModel = new Schema({
-  _id:String,
-    ville_depart:String,
-    ville_arrive:String,
- 
+
     heure_depart_voyage:String,
     heure_arrive_voyage:String,
     date:Date,
     nbr_places_reserve:Number,
-    prix:Number,
-
+    ville_depart:String,
+    ville_arrive:String,
+     prix:Number,
     bus_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Bus',
         required: true
       },
-  
+    
 })
 
 
