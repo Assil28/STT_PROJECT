@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:stt/Models/VoyageModel.dart';
 
 
 class VoyageService {
@@ -52,8 +53,7 @@ class VoyageService {
   }
 
 
-  static Future<String> getVoyageByVilleDateTime(
-      Map<String, String> filterParams) async {
+  static Future<String> getVoyageByVilleDateTime(Map<String, String> filterParams) async {
     final response = await http.post(
       Uri.parse('$baseUrl/getVoyageByVilleDateTime'),
       headers: <String, String>{
@@ -68,5 +68,26 @@ class VoyageService {
       throw Exception('Failed to get voyage by ville and datetime');
     }
   }
+
+  static Future<List<Voyage>> getVoyagesByDate(String date) async {
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/getVoyagesByDate'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'date': date}),
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body)['result'];
+      List<Voyage> voyages = (data as List).map((item) => Voyage.fromJson(item)).toList();
+      return voyages;
+    } else {
+      throw Exception('Failed to get voyages by date');
+    }
+  }
+
+
 
 }

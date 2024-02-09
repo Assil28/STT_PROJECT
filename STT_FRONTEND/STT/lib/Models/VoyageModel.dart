@@ -27,4 +27,16 @@ class Voyage {
       'prix': prix,
     };
   }
+
+    factory Voyage.fromJson(Map<String, dynamic> json) {
+    return Voyage(
+
+      date: json['date'],
+      ville_depart: json['ville_depart'],
+      ville_arrive: json['ville_arrive'],
+      heure_depart_voyage: json['heure_depart_voyage'],
+      heure_arrive_voyage: json['heure_arrive_voyage'],
+      prix: json['prix'],
+    );
+  }
 }
