@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VoyageModel = new Schema({
-   
+
     heure_depart_voyage:String,
     heure_arrive_voyage:String,
     date:Date,

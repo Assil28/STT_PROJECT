@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stt/InterfaceUI/FomVoyage.dart';
+
+//import 'package:flutter_pro/LoginScreen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stt/home_screen.dart';
 
@@ -15,8 +18,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
+    return const MaterialApp(
+      title: 'Flutter Demo',
+
+      home:  FormVoyage(),
     );
   }
 }
+
+
+

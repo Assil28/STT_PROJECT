@@ -59,12 +59,40 @@ const getVoyageByTicket = async (req, res) => {
     try {
              const voyage = await Voyage.findOne({ $and: [{ ville_depart: req.body.ville_depart }, { ville_arrive: req.body.ville_arrive },{heure_depart_voyage:req.body.heure_depart_voyage},{date:req.body.date}] });
 
-            res.json({ voyage });
+             res.json({ voyageId: voyage._id });
             } catch (error) {
             console.error('Error fetching voyages by villeDateTime:', error);
             res.status(500).json({ error: 'Internal Server Error' });
             }
   };
+
+
+  const getVoyageByDate = async (req, res) => {
+    try {
+             const voyage = await Voyage.findOne({date:req.body.date} );
+
+             res.json({ voyage:voyage});
+            } catch (error) {
+            console.error('Error fetching voyages by villeDateTime:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            }
+  };
+
+  const getVoyagesByDate = (req, res) => {
+    const { date } = req.body; 
+    Voyage.find({ date })
+        .then(result => {
+            if (result.length === 0) {
+                res.status(404).json({ msg: 'No voyages found for the given date' });
+            } else {
+                res.status(200).json({ result });
+            }
+        })
+        .catch(error => {
+            console.error('Error finding voyages by date:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
   
 
 
@@ -78,6 +106,7 @@ module.exports = {
    updateVoyage,
    deleteVoyage,
    getVoyageByTicket,
-   getVoyageByVilleDateTime
+   getVoyageByVilleDateTime,
+   getVoyagesByDate
 
 }
