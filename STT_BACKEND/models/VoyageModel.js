@@ -11,18 +11,15 @@ const VoyageModel = new Schema({
     heure_arrive_voyage:String,
     date:Date,
     nbr_places_reserve:Number,
-
+    ville_depart:String,
+    ville_arrive:String,
+     prix:Number,
     bus_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Bus',
         required: true
       },
-      trajet_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trajet',
-        required: true
-      },
-  
+    
 })
 
 
