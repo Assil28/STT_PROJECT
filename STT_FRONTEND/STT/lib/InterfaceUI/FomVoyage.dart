@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_pro/Models/TicketModel.dart';
-import 'package:flutter_pro/Models/VoyageModel.dart';
-import 'package:flutter_pro/Services/TicketService.dart';
-import 'package:flutter_pro/Services/VoyageService.dart';
-//import 'Models/VoyageModel.dart';
 import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:flutter/material.dart';
+import 'package:stt/Models/TicketModel.dart';
+import 'package:stt/Models/VoyageModel.dart';
+import 'package:stt/Services/TicketService.dart';
 
-List<Voyage> listVoyages = <Voyage>[]; // Définir le type de la liste comme Voyage
+import '../Services/VoyageService.dart';
 
+//import 'Models/VoyageModel.dart';
+
+List<Voyage> listVoyages =
+    <Voyage>[]; // Définir le type de la liste comme Voyage
 
 void main() {
   runApp(const FormVoyage());
@@ -23,9 +25,8 @@ class FormVoyage extends StatefulWidget {
 class _FormVoyageState extends State<FormVoyage> {
   GlobalKey<FormState> form = GlobalKey<FormState>();
 
-
   late TicketModel ticket;
-  late  String villeDepart,villeArrive,heureVoyage,dateVoyage;
+  late String villeDepart, villeArrive, heureVoyage, dateVoyage;
 
   late TicketService ticketService;
 
@@ -72,16 +73,16 @@ class _FormVoyageState extends State<FormVoyage> {
                   decoration:const InputDecoration(
                     hintText: 'selected date',
                   ),
-                ),*/  // pour la date
+                ),*/ // pour la date
 
                 CalendarAgenda(
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now().subtract(Duration(days: 140)),
                   lastDate: DateTime.now().add(Duration(days: 4)),
                   onDateSelected: (date) async {
-                    dateVoyage=date.toString().substring(0,10);
+                    dateVoyage = date.toString().substring(0, 10);
                     print(dateVoyage);
-                    listVoyages= await VoyageService.getVoyagesByDate(
+                    listVoyages = await VoyageService.getVoyagesByDate(
                       dateVoyage,
                     );
 
@@ -114,7 +115,7 @@ class _FormVoyageState extends State<FormVoyage> {
                     }
                     return null;
                   },
-                  decoration:const  InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'selected arrival city',
                   ),
                 ),
@@ -177,12 +178,13 @@ class _FormVoyageState extends State<FormVoyage> {
                     if (form.currentState!.validate()) {
                       form.currentState!.save();
                       print("Ticket:");
-                      print("Date: ${dateVoyage}\n VilleDepart :${villeDepart}\n Ville Arrivé : ${villeArrive}\n Heure :${heureVoyage}\n Cin Voyageur :${ticket!.cinVoyageur}\n NumTell : ${ticket!.numTel}\n");
-
+                      print(
+                          "Date: ${dateVoyage}\n VilleDepart :${villeDepart}\n Ville Arrivé : ${villeArrive}\n Heure :${heureVoyage}\n Cin Voyageur :${ticket!.cinVoyageur}\n NumTell : ${ticket!.numTel}\n");
 
                       try {
                         // Appeler la fonction getVoyageByVilleDateTime pour obtenir l'ID du voyage
-                        final voyageId = await VoyageService.getVoyageByVilleDateTime({
+                        final voyageId =
+                            await VoyageService.getVoyageByVilleDateTime({
                           'ville_depart': villeDepart,
                           'ville_arrive': villeArrive,
                           'heure_depart_voyage': heureVoyage,
@@ -196,13 +198,16 @@ class _FormVoyageState extends State<FormVoyage> {
                           ticket.voyageId = voyageId;
                           print("ID du voyage trouvé: $voyageId");
                         } else {
-                          print("Aucun voyage trouvé avec les critères spécifiés");
+                          print(
+                              "Aucun voyage trouvé avec les critères spécifiés");
                         }
 
                         // Appeler le service TicketService pour ajouter le ticket
-                        print("ID du voyage trouvé dans ticket: ${ticket.voyageId}");
+                        print(
+                            "ID du voyage trouvé dans ticket: ${ticket.voyageId}");
                         ticket.qrCode = "qr code pour tester";
-                        print("ID du voyage trouvé dans ticket: ${ticket.toJson()}");
+                        print(
+                            "ID du voyage trouvé dans ticket: ${ticket.toJson()}");
                         await TicketService.createTicket(ticket.toJson());
 
                         print("Ticket ajouté avec succès");
@@ -211,16 +216,10 @@ class _FormVoyageState extends State<FormVoyage> {
                         print("Erreur lors de l'ajout du ticket: $error");
                         // Gérer l'erreur (afficher un message à l'utilisateur, par exemple)
                       }
-
-
                     } else {
                       print("Formulaire invalide");
                     }
-
-
                   },
-
-
                   child: Text("Valider"),
                 ),
               ],
@@ -231,7 +230,6 @@ class _FormVoyageState extends State<FormVoyage> {
     );
   }
 }
-
 
 class DropdownButtonExample extends StatefulWidget {
   const DropdownButtonExample({Key? key});
@@ -274,5 +272,3 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
         }).toList());
   }
 }
-
-
