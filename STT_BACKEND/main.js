@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3800;
-
+require('dotenv').config();
 const cors= require('cors')
 
 app.use(logger('dev'));
@@ -42,7 +42,9 @@ app.use('/api/voyages', voyage_routes);
 const ticket_routes = require('./routers/TicketRouter.js');
 app.use('/api/tickets', ticket_routes);
 
-
+/// payment router 
+const payment_routes = require('./routers/PaymentRouter.js');
+app.use('/api/payment', payment_routes);
 // méthode pour se connecter à la base de données avec un fichier env
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_URI)
