@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:stt/Models/TicketModel.dart';
-import 'package:stt/Services/TicketService.dart';
-import 'package:stt/Services/VoyageService.dart';
-
-
+import 'package:flutter_pro/Models/TicketModel.dart';
+import 'package:flutter_pro/Models/VoyageModel.dart';
+import 'package:flutter_pro/Services/TicketService.dart';
+import 'package:flutter_pro/Services/VoyageService.dart';
 //import 'Models/VoyageModel.dart';
+import 'package:calendar_agenda/calendar_agenda.dart';
 
-const List<String> list = <String>['Tunis', 'Djerba', 'Bizerte', 'Gafsa','Medenine','Douz'];
+List<Voyage> listVoyages = <Voyage>[]; // Définir le type de la liste comme Voyage
+
 
 void main() {
   runApp(const FormVoyage());
@@ -52,7 +53,7 @@ class _FormVoyageState extends State<FormVoyage> {
             key: form,
             child: Column(
               children: [
-                TextFormField(
+                /*TextFormField(
                   onSaved: (val) {
                     dateVoyage = val! ;
                     setState(() {
@@ -71,6 +72,22 @@ class _FormVoyageState extends State<FormVoyage> {
                   decoration:const InputDecoration(
                     hintText: 'selected date',
                   ),
+                ),*/  // pour la date
+
+                CalendarAgenda(
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now().subtract(Duration(days: 140)),
+                  lastDate: DateTime.now().add(Duration(days: 4)),
+                  onDateSelected: (date) async {
+                    dateVoyage=date.toString().substring(0,10);
+                    print(dateVoyage);
+                    listVoyages= await VoyageService.getVoyagesByDate(
+                      dateVoyage,
+                    );
+
+                    print("voyages:");
+                    print(listVoyages[0].ville_arrive);
+                  },
                 ),
                 TextFormField(
                   onSaved: (val) {
@@ -85,7 +102,7 @@ class _FormVoyageState extends State<FormVoyage> {
                   decoration: const InputDecoration(
                     hintText: 'selected depart city',
                   ),
-                ),
+                ), //pour la ville_dep
                 TextFormField(
                   obscureText: false,
                   onSaved: (val) {
@@ -217,39 +234,45 @@ class _FormVoyageState extends State<FormVoyage> {
 
 
 class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+  const DropdownButtonExample({Key? key});
 
   @override
   State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
 }
 
 class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String dropdownValue = list.first;
+  late String dropdownValue;
+
+  @override
+  void initState() {
+    super.initState();
+    // Assurez-vous que listVoyages n'est pas vide avant d'essayer d'accéder à son premier élément
+    dropdownValue = listVoyages.isNotEmpty ? listVoyages[0].toString() : '';
+  }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+        value: dropdownValue,
+        icon: const Icon(Icons.arrow_downward),
+        elevation: 16,
+        style: const TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          height: 2,
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String? value) {
+          setState(() {
+            dropdownValue = value!;
+          });
+        },
+        items: listVoyages.map<DropdownMenuItem<String>>((Voyage voyage) {
+          return DropdownMenuItem<String>(
+            value: voyage.toString(),
+            child: Text(voyage.toString()),
+          );
+        }).toList());
   }
 }
+
 

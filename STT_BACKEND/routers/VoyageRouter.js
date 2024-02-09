@@ -9,7 +9,8 @@ module.exports = {
     updateVoyage,
     deleteVoyage,
     getVoyageByTicket,
-    getVoyageByVilleDateTime
+    getVoyageByVilleDateTime,
+    getVoyagesByDate
  
  }= require('../controllers/VoyageController.js')
 
@@ -20,5 +21,6 @@ router.put('/:VoyageID',updateVoyage)
 router.delete('/deleteVoyage/:VoyageID', deleteVoyage)
 router.get('/getVoyageByTicket/:VoyageID',getVoyageByTicket)
 router.post('/getVoyageByvilleDateTime',getVoyageByVilleDateTime)
+router.post('/getVoyagesByDate',getVoyagesByDate)
 
 module.exports= router
