@@ -3,8 +3,8 @@ import 'package:stt/payment_manager.dart';
 
 const int prixTicket = 25;
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class PaymentScreen extends StatelessWidget {
+  const PaymentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

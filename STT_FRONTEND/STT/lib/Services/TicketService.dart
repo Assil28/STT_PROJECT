@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TicketService {
-  static const String baseUrl = 'http://localhost:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+  static const String baseUrl =
+      'http://192.168.1.16:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));
@@ -35,7 +36,8 @@ class TicketService {
     }
   }
 
-  static Future<void> updateTicket(String ticketId, Map<String, dynamic> ticketData) async {
+  static Future<void> updateTicket(
+      String ticketId, Map<String, dynamic> ticketData) async {
     final response = await http.put(
       Uri.parse('$baseUrl/updateTicket/$ticketId'),
       headers: <String, String>{
