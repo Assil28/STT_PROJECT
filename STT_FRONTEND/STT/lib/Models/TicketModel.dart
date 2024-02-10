@@ -1,5 +1,6 @@
 
 class TicketModel {
+  String id;
   DateTime dateAchat;
   bool etat;
   String cinVoyageur;
@@ -8,6 +9,7 @@ class TicketModel {
   String voyageId; // Notez que vous pouvez utiliser une classe ObjectId si nécessaire
 
   TicketModel({
+    this.id='',
     required this.dateAchat,
     this.etat=false,
     required this.cinVoyageur,
@@ -18,6 +20,7 @@ class TicketModel {
 
   factory TicketModel.fromJson(Map<String, dynamic> json) {
     return TicketModel(
+      id: json['_id'],
       dateAchat: DateTime.parse(json['date_achat']),
       etat: json['etat'],
       cinVoyageur: json['cin_voyageur'],
@@ -29,6 +32,7 @@ class TicketModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'date_achat': dateAchat.toIso8601String(),
       'etat': etat,
       'cin_voyageur': cinVoyageur,
