@@ -1,4 +1,4 @@
-const Ticket = require('../models/ticketModel.js'); // Updated import statement to match the actual filename
+const Ticket = require('../models/TicketModel.js'); // Updated import statement to match the actual filename
 const qr=require("qrcode");
 
 
