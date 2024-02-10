@@ -4,7 +4,7 @@ import 'package:stt/Models/VoyageModel.dart';
 
 
 class VoyageService {
-  static const String baseUrl = 'http://localhost:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
+  static const String baseUrl = 'http://10.0.2.2:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
 
 
   static Future<List<dynamic>> getVoyages() async {

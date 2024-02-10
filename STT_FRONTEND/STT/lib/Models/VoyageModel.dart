@@ -18,7 +18,7 @@ class Voyage {
 
   Map<String, dynamic> toJson() {
     return {
-      '_id':_id,
+      '_id': _id,
       'date': date,
       'ville_depart': ville_depart,
       'ville_arrive': ville_arrive,
@@ -28,7 +28,7 @@ class Voyage {
     };
   }
 
-    factory Voyage.fromJson(Map<String, dynamic> json) {
+  factory Voyage.fromJson(Map<String, dynamic> json) {
     return Voyage(
 
       date: json['date'],
