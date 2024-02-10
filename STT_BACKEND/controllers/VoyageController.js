@@ -67,17 +67,6 @@ const getVoyageByTicket = async (req, res) => {
   };
 
 
-  const getVoyageByDate = async (req, res) => {
-    try {
-             const voyage = await Voyage.findOne({date:req.body.date} );
-
-             res.json({ voyage:voyage});
-            } catch (error) {
-            console.error('Error fetching voyages by villeDateTime:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            }
-  };
-
   const getVoyagesByDate = (req, res) => {
     const { date } = req.body; 
     Voyage.find({ date })
