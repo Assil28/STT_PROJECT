@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TicketModel = new Schema({
-   
     date_achat:{
         type: Date,
         default: Date.now  // Utilise la fonction Date.now pour obtenir la date actuelle par défaut
