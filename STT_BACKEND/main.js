@@ -15,7 +15,7 @@ app.use(cookieParser());
 // cros pour que le front end puisse acceder au backEnd (car les deux non pas le meme port) 
 app.use(cors({
     credentials:true, // pour qu'il puisse acceder au cookie pour s'authentifier
-    origin:['192.168.1.16']
+    origin:['*']
 })) 
 // bodyParser pour récupérer les données avec post/put
 app.use(bodyParser.urlencoded({ extended: true }));
