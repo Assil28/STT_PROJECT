@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stt/stripe_keys.dart';
 
 abstract class PaymentManager {
-  static Future<void> makePayment(int amount, String currency) async {
+  static Future<void> makePayment(double amount, String currency) async {
     try {
+      int amountInMillimes = (amount * 1000).toInt();
+
       String clientSecret =
-          await _getClientSecret((amount * 100).toString(), currency);
+          await _getClientSecret(amountInMillimes.toString(), currency);
       await _initializePaymentSheet(clientSecret);
       await Stripe.instance.presentPaymentSheet();
     } catch (error) {

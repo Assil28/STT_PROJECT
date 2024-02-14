@@ -93,7 +93,37 @@ const getVoyageByTicket = async (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 };
-  
+const getPriceByVoyage =async (req,res) => {
+  try {
+    const voyage = await Voyage.findOne({_id:req.params.VoyageID} );
+    console.log(voyage);
+    res.json({ prix:voyage.prix});
+   } catch (error) {
+   console.error('Error fetching voyages by id:', error);
+   res.status(500).json({ error: 'Internal Server Error' });
+   }
+}
+
+const getHeureOfVoyages = async (req, res) => {
+  try {
+    const voyages = await Voyage.find({
+      $and: [
+        { ville_depart: req.body.ville_depart },
+        { ville_arrive: req.body.ville_arrive },
+        { date: req.body.date }
+      ]
+    });
+
+    // Extract unique hours from the found voyages
+    const uniqueHours = [...new Set(voyages.map(voyage => voyage.heure_depart_voyage))];
+
+    res.json({ uniqueHours });
+  } catch (error) {
+    console.error('Error fetching voyages:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 
@@ -107,6 +137,8 @@ module.exports = {
    deleteVoyage,
    getVoyageByTicket,
    getVoyageByVilleDateTime,
-   getVoyagesByDate
+   getVoyagesByDate,
+   getPriceByVoyage,
+   getHeureOfVoyages
 
 }

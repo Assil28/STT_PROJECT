@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:intl/intl.dart';
 import 'package:stt/Models/TicketModel.dart';
-import 'package:stt/Models/VoyageModel.dart';
 import 'package:stt/Services/TicketService.dart';
 import 'package:stt/Services/VoyageService.dart';
-import 'package:stt/home_screen.dart';
 
-import 'package:intl/intl.dart';
+import '../Models/VoyageModel.dart';
+import 'payment_scree.dart';
 
 List<Voyage> listVoyages =
     <Voyage>[]; // Définir le type de la liste comme Voyage
 List villes = [
-  {"depart": "tunis", "arrive": "djerba"},
+  {"depart": "Tunis", "arrive": "Djerba"},
   {"depart": "djerba", "arrive": "bizerte"},
   {"depart": "bizerte", "arrive": "tunis"},
 ];
@@ -37,7 +36,7 @@ class _FormVoyageState extends State<FormVoyage> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime(2020),
-            lastDate: DateTime.now())
+            lastDate: DateTime(2050))
         .then((pickedDate) {
       // Check if no date is selected
       if (pickedDate == null) {
@@ -128,7 +127,7 @@ class _FormVoyageState extends State<FormVoyage> {
 
                     // Dropdown pour sélectionner les villes de departs
                     DropdownButtonFormField<String>(
-                      value: "tunis",
+                      value: "Tunis",
                       items: villes.map((ville) {
                         return DropdownMenuItem<String>(
                           value: ville["depart"],
@@ -237,7 +236,7 @@ class _FormVoyageState extends State<FormVoyage> {
                     SizedBox(height: 20),
                     // Dropdown pour sélectionner l'utilisateur
                     DropdownButtonFormField<String>(
-                      value: "djerba",
+                      value: "Djerba",
                       items: villes.map((ville) {
                         return DropdownMenuItem<String>(
                           value: ville["arrive"],
@@ -438,13 +437,19 @@ class _FormVoyageState extends State<FormVoyage> {
                               //ticket.qrCode ="${ticket.voyageId} / ${ticket.dateAchat} /" ;
                               print(
                                   "ID du voyage trouvé dans ticket: ${ticket.toJson()}");
-                              await TicketService.createTicket(ticket.toJson());
+                              Map<String, dynamic> ticketMap =
+                                  await TicketService.createTicket(
+                                      ticket.toJson());
+                              TicketModel ticketCreated =
+                                  TicketModel.fromJson(ticketMap);
+
+                              print("Ticket ajouté avec succès");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
+                                    builder: (context) =>
+                                        PaymentScreen(ticket: ticketCreated)),
                               );
-                              print("Ticket ajouté avec succès");
                               // Afficher un message ou effectuer une action supplémentaire si nécessaire
                             } catch (error) {
                               print("Erreur lors de l'ajout du ticket: $error");

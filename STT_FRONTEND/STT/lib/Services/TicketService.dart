@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:stt/Models/TicketModel.dart';
 
 class TicketService {
   static const String baseUrl =
-      'http://192.168.1.16:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+      'http://192.168.1.29:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));
@@ -23,7 +24,7 @@ class TicketService {
     }
   }
 
-  static Future<void> createTicket(Map<String, dynamic> ticketData) async {
+  /* static Future<void> createTicket(Map<String, dynamic> ticketData) async {
     final response = await http.post(
       Uri.parse('$baseUrl'),
       headers: <String, String>{
@@ -32,6 +33,25 @@ class TicketService {
       body: jsonEncode(ticketData),
     );
     if (response.statusCode != 200) {
+      throw Exception('Failed to create ticket');
+    } 
+  }
+*/
+  static Future<Map<String, dynamic>> createTicket(
+      Map<String, dynamic> ticketData) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(ticketData),
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the response body to get the created ticket data
+      Map<String, dynamic> ticket = jsonDecode(response.body)['result'];
+      return ticket;
+    } else {
       throw Exception('Failed to create ticket');
     }
   }

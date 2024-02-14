@@ -4,7 +4,7 @@ import 'package:stt/Models/VoyageModel.dart';
 
 class VoyageService {
   static const String baseUrl =
-      'http://192.168.1.16:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
+      'http://192.168.1.29:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
 
   static Future<List<dynamic>> getVoyages() async {
     final response = await http.get(Uri.parse('$baseUrl/getVoyages'));
@@ -85,6 +85,26 @@ class VoyageService {
       return voyages;
     } else {
       throw Exception('Failed to get voyages by date');
+    }
+  }
+
+  Future<double> getPriceByVoyage(String voyageId) async {
+    final response = await http.get(
+      Uri.parse(
+          '$baseUrl/p/$voyageId'), // Assuming your API expects the voyageId in the URL
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic rawPrice = json.decode(response.body)['prix'];
+
+      // Explicitly cast to double
+      final double price = rawPrice is int ? rawPrice.toDouble() : rawPrice;
+      return price;
+    } else {
+      throw Exception('Failed to get price of a voyage');
     }
   }
 }
