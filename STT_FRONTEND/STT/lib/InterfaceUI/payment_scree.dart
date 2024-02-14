@@ -57,6 +57,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Card(
+            color: Color(0xFFAE5498),
+            elevation: 20,
+            shadowColor: Colors.green,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.all(20),
+            child: ListTile(
+              title: Text('Numero de cin : ${widget.ticket.numTel}'),
+              subtitle: Text("Date d'achat :${widget.ticket.dateAchat}"),
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               try {

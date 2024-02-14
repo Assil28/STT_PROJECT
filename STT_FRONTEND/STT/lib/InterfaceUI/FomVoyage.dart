@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
 import 'package:stt/Models/TicketModel.dart';
@@ -43,13 +46,14 @@ class _FormVoyageState extends State<FormVoyage> {
         return;
       }
       setState(() {
-        // using state so that the UI will be rerendered when date is picked
         _selectedDate = pickedDate;
         this.dateVoyage = _selectedDate.toString().substring(0, 10);
         print(_selectedDate.toString().substring(0, 10));
       });
     });
   }
+
+  List<String> uniqueHours = [];
 
   GlobalKey<FormState> form = GlobalKey<FormState>();
 
@@ -167,72 +171,6 @@ class _FormVoyageState extends State<FormVoyage> {
                       ),
                     ),
 
-                    /*TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Ex: 2024-02-08',
-                        labelText: 'Trip Date',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(40), // Border radius set to 40
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF7949FF)), // Largeur et couleur de la bordure avant le clic
-                          borderRadius: BorderRadius.circular(40), // Rayon de bordure défini sur 40
-                        ),
-
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.red), // Red border color when focused
-                          borderRadius: BorderRadius.circular(40), // Border radius set to 40
-                        ),
-                      ),
-                      onSaved: (val) {
-                        dateVoyage = val! ;
-                        setState(() {
-                          print(val);
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Champs vide";
-                        }
-                        if (value.length < 3) {
-                          return "format yyyy-mm-jj";
-                        }
-                        return null;
-                      },
-                    ),*/ // pour la date
-
-                    /*  TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Ex: Tunis',
-                        labelText: 'Depart City',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(40), // Border radius set to 40
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF7949FF)), // Largeur et couleur de la bordure avant le clic
-                          borderRadius: BorderRadius.circular(40), // Rayon de bordure défini sur 40
-                        ),
-
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.red), // Red border color when focused
-                          borderRadius: BorderRadius.circular(40), // Border radius set to 40
-                        ),
-                      ),
-                      onSaved: (val) {
-                        villeDepart = val!;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Champs vide";
-                        }
-                        return null;
-                      },
-                    ), // pour la ville depart
-*/
                     SizedBox(height: 20),
                     // Dropdown pour sélectionner l'utilisateur
                     DropdownButtonFormField<String>(
