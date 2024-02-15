@@ -3,8 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:stt/Models/VoyageModel.dart';
 
 class VoyageService {
+  List<Voyage> voyages = [];
   static const String baseUrl =
-      'http://192.168.1.29:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
+      'http://192.168.1.166:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
 
   static Future<List<dynamic>> getVoyages() async {
     final response = await http.get(Uri.parse('$baseUrl/getVoyages'));
@@ -70,6 +71,7 @@ class VoyageService {
   }
 
   static Future<List<Voyage>> getVoyagesByDate(String date) async {
+
     final response = await http.post(
       Uri.parse('$baseUrl/getVoyagesByDate'),
       headers: <String, String>{
@@ -87,6 +89,8 @@ class VoyageService {
       throw Exception('Failed to get voyages by date');
     }
   }
+
+
 
   Future<double> getPriceByVoyage(String voyageId) async {
     final response = await http.get(
@@ -107,4 +111,21 @@ class VoyageService {
       throw Exception('Failed to get price of a voyage');
     }
   }
+
+  Future<List<String>> getUniqueHoursOfVoyages(String date, String villeDepart, String villeArrive) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/hours/$villeDepart/$villeArrive/$date'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> uniqueHours = json.decode(response.body)['uniqueHours'];
+      return List<String>.from(uniqueHours); // Convert dynamic list to string list
+    } else {
+      throw Exception('Failed to get unique hours of voyages');
+    }
+  }
+
 }

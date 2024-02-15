@@ -1,19 +1,19 @@
 class Voyage {
   late String _id;
-  late String date;
-  late String ville_depart;
-  late String ville_arrive;
-  late String heure_depart_voyage;
-  late String heure_arrive_voyage;
-  late double prix;
+  String? date;
+  String? ville_depart;
+  String? ville_arrive;
+  String? heure_depart_voyage;
+  String? heure_arrive_voyage;
+  double? prix;
 
   Voyage({
-    this.date = '',
-    this.ville_depart = '',
-    this.ville_arrive = '',
-    this.heure_depart_voyage = '',
-    this.heure_arrive_voyage = '',
-    this.prix = 0.0,
+    this.date,
+    this.ville_depart,
+    this.ville_arrive,
+    this.heure_depart_voyage,
+    this.heure_arrive_voyage,
+    this.prix,
   });
 
   Map<String, dynamic> toJson() {
@@ -30,13 +30,12 @@ class Voyage {
 
   factory Voyage.fromJson(Map<String, dynamic> json) {
     return Voyage(
-
       date: json['date'],
       ville_depart: json['ville_depart'],
       ville_arrive: json['ville_arrive'],
       heure_depart_voyage: json['heure_depart_voyage'],
       heure_arrive_voyage: json['heure_arrive_voyage'],
-      prix: json['prix'],
+      prix: json['prix']?.toDouble(), // Convert null to double or keep null if it's null
     );
   }
 }

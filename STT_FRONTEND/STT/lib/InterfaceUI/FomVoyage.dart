@@ -11,13 +11,10 @@ import 'package:stt/Services/VoyageService.dart';
 import '../Models/VoyageModel.dart';
 import 'payment_scree.dart';
 
-List<Voyage> listVoyages =
-    <Voyage>[]; // Définir le type de la liste comme Voyage
-List villes = [
-  {"depart": "Tunis", "arrive": "Djerba"},
-  {"depart": "djerba", "arrive": "bizerte"},
-  {"depart": "bizerte", "arrive": "tunis"},
-];
+
+
+List<Voyage> voyages = []; // Définir le type de la liste comme Voyage
+List<dynamic> uniqueHours=[];
 
 void main() {
   runApp(const FormVoyage());
@@ -33,6 +30,29 @@ class FormVoyage extends StatefulWidget {
 class _FormVoyageState extends State<FormVoyage> {
   DateTime? _selectedDate;
   String? _selectedUser;
+  VoyageService voyageService=new VoyageService();
+
+
+
+  List<String> getUniqueDepartureCities() {
+    return voyages
+        .map((voyage) => voyage.ville_depart)
+        .where((city) => city != null)
+        .map((city) => city!) // Convertir String? en String après vérification non nulle
+        .toSet()
+        .toList();
+  }
+
+  List<String> getUniqueArrivalCities() {
+    return voyages
+        .map((voyage) => voyage.ville_arrive)
+        .where((city) => city != null)
+        .map((city) => city!) // Convertir String? en String après vérification non nulle
+        .toSet()
+        .toList();
+  }
+
+
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
     showDatePicker(
@@ -49,11 +69,11 @@ class _FormVoyageState extends State<FormVoyage> {
         _selectedDate = pickedDate;
         this.dateVoyage = _selectedDate.toString().substring(0, 10);
         print(_selectedDate.toString().substring(0, 10));
+        fetchVoyage(_selectedDate!);
       });
     });
   }
 
-  List<String> uniqueHours = [];
 
   GlobalKey<FormState> form = GlobalKey<FormState>();
 
@@ -66,6 +86,7 @@ class _FormVoyageState extends State<FormVoyage> {
   void initState() {
     // selectedDate = DateTime.now();
     super.initState();
+
     ticket = TicketModel(
       dateAchat: DateTime.now(),
       etat: false,
@@ -76,8 +97,11 @@ class _FormVoyageState extends State<FormVoyage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+    List<String> uniqueDepartureCities = getUniqueDepartureCities();
+    List<String> uniqueArrivalCities = getUniqueArrivalCities();
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text("STT")),
@@ -131,15 +155,16 @@ class _FormVoyageState extends State<FormVoyage> {
 
                     // Dropdown pour sélectionner les villes de departs
                     DropdownButtonFormField<String>(
-                      value: "Tunis",
-                      items: villes.map((ville) {
+                      value: uniqueDepartureCities.isNotEmpty ? uniqueDepartureCities[0] : null,
+                      items: uniqueDepartureCities.map((city) {
                         return DropdownMenuItem<String>(
-                          value: ville["depart"],
-                          child: Text(ville["depart"]),
+                          value: city,
+                          child: Text(city),
                         );
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
+
                           villeDepart = value!;
                         });
                       },
@@ -172,19 +197,30 @@ class _FormVoyageState extends State<FormVoyage> {
                     ),
 
                     SizedBox(height: 20),
-                    // Dropdown pour sélectionner l'utilisateur
+                    // Dropdown pour sélectionner sélectionner les villes darrivee
                     DropdownButtonFormField<String>(
-                      value: "Djerba",
-                      items: villes.map((ville) {
+                      value: uniqueArrivalCities.isNotEmpty ? uniqueArrivalCities[0] : null,
+
+                      items:  uniqueArrivalCities.map((city) {
                         return DropdownMenuItem<String>(
-                          value: ville["arrive"],
-                          child: Text(ville["arrive"]),
+                          value: city,
+                          child: Text(city),
                         );
                       }).toList(),
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         setState(() {
                           villeArrive = value!;
                         });
+                        try {
+
+                          uniqueHours = await voyageService.getUniqueHoursOfVoyages(dateVoyage, villeDepart, villeArrive);
+                          for (var unHour in uniqueHours) {
+                            print('Hour of trip: $unHour');
+                          }
+                        } catch (error) {
+                          print('Error fetching unique hours: $error');
+                          // Gérer l'erreur, par exemple afficher un message à l'utilisateur
+                        }
                       },
                       decoration: InputDecoration(
                         hintText: 'Ex: Djerba',
@@ -213,7 +249,61 @@ class _FormVoyageState extends State<FormVoyage> {
                         ),
                       ),
                     ),
+
+
+
                     SizedBox(height: 20),
+
+
+                    // Dropdown pour sélectionner sélectionner l'heure de voyage
+                    DropdownButtonFormField<String>(
+                      value: uniqueHours.isNotEmpty ? uniqueHours[0] : null,
+                      items: uniqueHours.isNotEmpty
+                          ? uniqueHours.map((hr) {
+                        return DropdownMenuItem<String>(
+                          value: hr,
+                          child: Text(hr),
+                        );
+                      }).toList()
+                          : [
+                        DropdownMenuItem<String>(
+                          value: null,
+                          child: Text('No available hours'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          heureVoyage = value!;
+
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Ex: 21:00',
+                        labelText: 'Time of trip',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Color(0xFF7949FF),
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Colors.red,
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+
+                    /*SizedBox(height: 20),
+
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'Ex: 21:00',
@@ -253,48 +343,7 @@ class _FormVoyageState extends State<FormVoyage> {
                       },
                     ), // pour time
 
-                    SizedBox(height: 20),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Ex: 000000001',
-                        labelText: "CIN Number",
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                              40), // Border radius set to 40
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color: Color(
-                                  0xFF7949FF)), // Largeur et couleur de la bordure avant le clic
-                          borderRadius: BorderRadius.circular(
-                              40), // Rayon de bordure défini sur 40
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color:
-                                  Colors.red), // Red border color when focused
-                          borderRadius: BorderRadius.circular(
-                              40), // Border radius set to 40
-                        ),
-                      ),
-                      onSaved: (val) {
-                        ticket?.cinVoyageur = val!;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Champs vide";
-                        }
-                        if (value.length > 8) {
-                          return "Nombre de caractères doit être < 9";
-                        }
-                        return null;
-                      },
-                    ), // pour cin
-
+*/
                     SizedBox(height: 20),
                     TextFormField(
                       decoration: InputDecoration(
@@ -330,14 +379,14 @@ class _FormVoyageState extends State<FormVoyage> {
                         if (value == null || value.isEmpty) {
                           return "Champs vide";
                         }
-                        if (value.length > 8) {
-                          return "Nombre de caractères doit être < 9";
+                        if ((value.length > 8)||(value.length < 8)) {
+                          return "Nombre de caractères doit être egale a 8";
                         }
                         return null;
                       },
                     ), // pour tell
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 40),
                     Align(
                       alignment: Alignment.center,
                       child: MaterialButton(
@@ -410,6 +459,7 @@ class _FormVoyageState extends State<FormVoyage> {
                         ),
                       ),
                     ),
+                    Container(height: 80,),
                   ],
                 ),
               ),
@@ -419,6 +469,36 @@ class _FormVoyageState extends State<FormVoyage> {
       ),
     );
   }
+
+  Future<void> fetchVoyage(DateTime selectedDate) async {
+
+    final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+    final response = await http.post(Uri.parse('http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body)['result']; // Extract 'result' key from the response JSON
+      setState(() {
+        voyages.clear();
+        voyages = jsonData.map((item) => Voyage.fromJson(item)).toList(); // Map each JSON object to Voyage object
+        for (var voyage in voyages) {
+          print('Voyage details:');
+          print('Date: ${voyage.date}');
+          print('Departure: ${voyage.ville_depart}');
+          print('Arrival: ${voyage.ville_arrive}');
+          print('Departure time: ${voyage.heure_depart_voyage}');
+          print('Arrival time: ${voyage.heure_arrive_voyage}');
+          print('Price: ${voyage.prix}');
+          print('----------------------');
+        }
+
+      });
+    } else {
+      throw Exception('Failed to load voyages Response body: ${response.body}');
+    }
+  }
+
+
+
 }
 
 class DatePickerExample extends StatefulWidget {
@@ -500,6 +580,8 @@ class _DatePickerExampleState extends State<DatePickerExample>
       }
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {

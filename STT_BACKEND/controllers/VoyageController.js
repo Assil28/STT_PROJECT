@@ -79,7 +79,7 @@ const getVoyageByTicket = async (req, res) => {
   };
 
   const getVoyagesByDate = (req, res) => {
-    const { date } = req.body; 
+    const { date } = req.params; // corrected
     Voyage.find({ date })
         .then(result => {
             if (result.length === 0) {
@@ -108,9 +108,9 @@ const getHeureOfVoyages = async (req, res) => {
   try {
     const voyages = await Voyage.find({
       $and: [
-        { ville_depart: req.body.ville_depart },
-        { ville_arrive: req.body.ville_arrive },
-        { date: req.body.date }
+        { ville_depart: req.params.ville_depart },
+        { ville_arrive: req.params.ville_arrive },
+        { date: req.params.date }
       ]
     });
 
@@ -119,7 +119,7 @@ const getHeureOfVoyages = async (req, res) => {
 
     res.json({ uniqueHours });
   } catch (error) {
-    console.error('Error fetching voyages:', error);
+    console.error('Error fetching hours of voyages:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
