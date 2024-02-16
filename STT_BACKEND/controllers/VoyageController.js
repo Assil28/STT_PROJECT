@@ -1,5 +1,32 @@
 const Voyage = require("../models/VoyageModel");
 
+const nbrPlaceDispoDansVoyage=((req,res)=>{
+  Voyage.findOne({ _id: req.params.idVoyage })
+  .then(result => {
+    if (!result) {
+      return res.json({ msg: 'Voyage not found' });
+    }
+    res.json({nbr_places_reserve:result.nbr_places_reserve });
+  })
+  .catch(error => res.json({ msg: 'Error finding Voyage', error }));
+})
+
+const ajoutUneResertvation = (async(req, res) => {
+  const voyageId = req.params.idVoyage;
+  try {
+    const updatedVoyage = await Voyage.findByIdAndUpdate(voyageId, { $inc: { nbr_places_reserve: 1 } }, { new: true });
+    if (!updatedVoyage) {
+      return res.status(404).json({ message: 'Voyage not found' });
+    }
+    res.status(200).json(updatedVoyage);
+  } catch (error) {
+    console.error('Error updating voyage:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
+
+
+
 const getVoyages = ((req, res) => {
     Voyage.find({})
         .then(result => res.json({ result }))
@@ -31,6 +58,7 @@ const getVoyage = (req, res) => {
 
 
 const createVoyage = ((req, res) => {
+  req.body.nbr_places_reserve=0
     Voyage.create(req.body)
         .then(result => res.status(200).json({ result }))
         .catch((error) => res.status(500).json({ msg: error }))
@@ -139,6 +167,8 @@ module.exports = {
    getVoyageByVilleDateTime,
    getVoyagesByDate,
    getPriceByVoyage,
-   getHeureOfVoyages
+   getHeureOfVoyages,
+   nbrPlaceDispoDansVoyage,
+   ajoutUneResertvation
 
 }

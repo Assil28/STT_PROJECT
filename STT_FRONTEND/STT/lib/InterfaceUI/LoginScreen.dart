@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-
+import 'package:stt/InterfaceUI/qr_scanner.dart';
 
 const users = {
-  'dribbble@gmail.com': '12345',
+  'assil.dkhil28@gmail.com': '12345',
   'hunter@gmail.com': 'hunter',
 };
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key});
 
   Duration get loginTime => const Duration(milliseconds: 2250);
 
@@ -44,17 +44,27 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: 'ECORP',
-      //logo: const AssetImage('assets/images/ecorp-lightblue.png'),
-      onLogin: _authUser,
-      onSignup: _signupUser,
-
-
-      onSubmitAnimationCompleted: () {
-
+    return WillPopScope(
+      onWillPop: () async {
+        // Retourner false pour désactiver le bouton de retour
+        return false;
       },
-      onRecoverPassword: _recoverPassword,
+      child: FlutterLogin(
+        theme: LoginTheme(
+          pageColorLight: Colors.blueGrey, // Couleur de fond de la page de connexion
+        ),
+        title: 'STT tansport',
+        logo: const AssetImage("images/stt_logo.png"),
+        onLogin: _authUser,
+
+        onSubmitAnimationCompleted: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Qr_Scanner()),
+          );
+        },
+        onRecoverPassword: _recoverPassword,
+      ),
     );
   }
 }

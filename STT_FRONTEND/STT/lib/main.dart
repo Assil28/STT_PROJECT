@@ -4,6 +4,7 @@ import 'package:stt/InterfaceUI/FomVoyage.dart';
 //import 'package:flutter_pro/LoginScreen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stt/InterfaceUI/payment_scree.dart';
+import 'package:stt/InterfaceUI/qr_scanner.dart';
 
 void main() {
   Stripe.publishableKey =
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: FormVoyage(),
+      home: const Qr_Scanner(),
     );
   }
 }
