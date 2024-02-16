@@ -274,7 +274,6 @@ class _FormVoyageState extends State<FormVoyage> {
                       onChanged: (value) {
                         setState(() {
                           heureVoyage = value!;
-
                         });
                       },
                       decoration: InputDecoration(
@@ -429,13 +428,20 @@ class _FormVoyageState extends State<FormVoyage> {
                                       ticket.toJson());
                               TicketModel ticketCreated =
                                   TicketModel.fromJson(ticketMap);
-
                               print("Ticket ajouté avec succès");
+
+                              var voyage;
+                               Map<String,dynamic> voyageMap =
+                              await VoyageService.getVoyage(ticket.voyageId);
+                              voyage = Voyage.fromJson(voyageMap);
+                              print(" voy date :" + (voyage.heure_depart_voyage ?? ""));
+
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        PaymentScreen(ticket: ticketCreated)),
+                                        PaymentScreen(ticket: ticketCreated,voyage: voyage,)),
                               );
                               // Afficher un message ou effectuer une action supplémentaire si nécessaire
                             } catch (error) {

@@ -1,5 +1,5 @@
 class Voyage {
-  late String _id;
+  String? id;
   String? date;
   String? ville_depart;
   String? ville_arrive;
@@ -8,6 +8,7 @@ class Voyage {
   double? prix;
 
   Voyage({
+    this.id,
     this.date,
     this.ville_depart,
     this.ville_arrive,
@@ -18,7 +19,7 @@ class Voyage {
 
   Map<String, dynamic> toJson() {
     return {
-      '_id': _id,
+      '_id': id,
       'date': date,
       'ville_depart': ville_depart,
       'ville_arrive': ville_arrive,
