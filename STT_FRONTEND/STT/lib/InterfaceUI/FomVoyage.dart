@@ -479,7 +479,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
 
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-    final response = await http.post(Uri.parse('http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+    final response = await http.post(Uri.parse('http://192.168.98.211:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)['result']; // Extract 'result' key from the response JSON
