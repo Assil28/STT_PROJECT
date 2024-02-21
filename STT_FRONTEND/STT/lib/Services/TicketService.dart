@@ -24,6 +24,44 @@ class TicketService {
     }
   }
 
+  Future<bool> checkTicketValidity(String ticketId) async {
+    // Supprimez les guillemets doubles autour de l'ID du ticket
+    ticketId = ticketId.replaceAll('"', '');
+
+    print("ticketId = $ticketId");
+    final response = await http.get(Uri.parse('$baseUrl/validiteTicket/$ticketId'));
+
+    if (response.statusCode == 200) {
+      // Le ticket est valide
+      return true;
+    } else if (response.statusCode == 400) {
+      // Le ticket n'est pas valide
+      return false;
+    } else {
+      // Erreur lors de la vérification du ticket
+      print("Erreur lors de la vérification du ticket");
+      throw Exception('Erreur lors de la vérification du ticket');
+    }
+  }
+
+  Future<bool> CheckTicket(String ticketId) async {
+    ticketId = ticketId.replaceAll('"', '');
+
+    print("ticketId = $ticketId");
+    final response = await http.put(Uri.parse('$baseUrl/check/$ticketId'));
+
+    if (response.statusCode == 200) {
+      // Le ticket est scanner par le controlleur
+      return true;
+    } else if (response.statusCode == 400) {
+      // Le ticket n'est scanner par le controlleur
+      return false;
+    } else {
+      // Erreur lors de la vérification du ticket
+      throw Exception('Erreur lors de la scanne par le controlleur');
+    }
+  }
+
   /* static Future<void> createTicket(Map<String, dynamic> ticketData) async {
     final response = await http.post(
       Uri.parse('$baseUrl'),
