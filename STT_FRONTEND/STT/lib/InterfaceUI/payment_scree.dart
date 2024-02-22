@@ -4,11 +4,11 @@ import 'package:stt/Models/VoyageModel.dart';
 import 'package:stt/Services/VoyageService.dart';
 import 'package:stt/payment_manager.dart';
 
-
 class PaymentScreen extends StatefulWidget {
   final TicketModel ticket;
   final Voyage voyage;
-  const PaymentScreen({Key? key, required this.ticket, required this.voyage}) : super(key: key);
+  const PaymentScreen({Key? key, required this.ticket, required this.voyage})
+      : super(key: key);
 
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
@@ -17,14 +17,13 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   double _price = 0.0;
 
-  VoyageService voyageService=new VoyageService();
+  VoyageService voyageService = new VoyageService();
 
   @override
   void initState() {
     super.initState();
     _initializePrice();
   }
-
 
   Future<void> _initializePrice() async {
     try {
@@ -80,7 +79,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   child: Container(
                     width: constraints.maxWidth - 60,
                     height: constraints.maxHeight - 129, // Adjusted height
-                    padding: const EdgeInsets.only(top: 20, right: 50, left: 50),
+                    padding:
+                        const EdgeInsets.only(top: 20, right: 50, left: 50),
                     decoration: ShapeDecoration(
                       color: Colors.white.withOpacity(0.6),
                       shape: RoundedRectangleBorder(
@@ -113,18 +113,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("images/backgroundSTT.jpg"),
-                      fit: BoxFit.cover, // Ajuste l'image pour couvrir toute la zone
+                      fit: BoxFit
+                          .cover, // Ajuste l'image pour couvrir toute la zone
                     ),
                   ),
                   child: Stack(
                     children: [
                       Positioned(
-                        left: 20,
-                        top: 109,
+                        left: 15,
+                        top: 80,
                         child: Container(
-                          width: 360,
+                          width: 330,
                           height: 480,
-                          padding: const EdgeInsets.only(top:20,right: 50,left: 50),
+                          padding: const EdgeInsets.only(
+                              top: 20, right: 50, left: 50),
                           decoration: ShapeDecoration(
                             color: Colors.white.withOpacity(0.6000000238418579),
                             shape: RoundedRectangleBorder(
@@ -146,7 +148,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     height: 0,
                                   ),
                                 ),
-
                               ),
                               Container(
                                 width: 320,
@@ -158,7 +159,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 15,),
+                              SizedBox(
+                                height: 15,
+                              ),
                               SizedBox(
                                 width: 215,
                                 height: 46,
@@ -174,17 +177,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Row(
                                 children: [
                                   Column(
                                     children: [
                                       Text(
                                         '${widget.voyage.heure_depart_voyage}',
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 31,
+                                          fontSize: 28,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w600,
                                           height: 0,
@@ -195,25 +200,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 29,
+                                          fontSize: 26,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w600,
                                           height: 0,
                                         ),
                                       ),
-
                                     ],
                                   ),
-                                  Text("--------->",style: TextStyle(fontWeight: FontWeight.bold,
-                                      fontSize: 20),),
+                                  Text(
+                                    "------->",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
                                   Column(
                                     children: [
                                       Text(
                                         '${widget.voyage.heure_arrive_voyage}',
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 31,
+                                          fontSize: 28,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w600,
                                           height: 0,
@@ -224,84 +232,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 29,
+                                          fontSize: 26,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w600,
                                           height: 0,
                                         ),
                                       ),
-
                                     ],
                                   ),
-
                                 ],
                               ),
-                              SizedBox(height: 20,),
-                              Row(
-                                children: [
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Bought In ',
-                                          style: TextStyle(
-                                            color: Color(0xCCC7C7C7),
-                                            fontSize: 23,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            height: 0,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: ': ${widget.ticket.dateAchat.toString().substring(0,10)}',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 25,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                  ),
-                                ],
+                              SizedBox(
+                                height: 10,
                               ),
-
-                              SizedBox(height: 20,),
-                              Row(
-                                children: [
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: "Tipe Date ",
-                                          style: TextStyle(
-                                            color: Color(0xCCC7C7C7),
-                                            fontSize: 23,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            height: 0,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: ': ${widget.voyage.date.toString().substring(0,10)}',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 25,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 40),
                               Container(
                                 width: 320,
                                 height: 4,
@@ -312,8 +255,76 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30),
-
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  Text('Bought In ',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 26,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      )),
+                                  Text(
+                                    '${widget.ticket.dateAchat.toString().substring(0, 10)}',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 29,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Tipe Date ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 26,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${widget.voyage.date.toString().substring(0, 10)}',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 30,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                              Container(
+                                width: 320,
+                                height: 4,
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFFD9D9D9),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
                               Align(
                                 alignment: Alignment.center,
                                 child: MaterialButton(
@@ -323,7 +334,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       print('Fetched price: $_price');
                                     } catch (error) {
                                       print('Error making payment: $error');
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(
                                           content: Text('Error making payment'),
                                           duration: Duration(seconds: 3),
@@ -348,7 +360,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 )
@@ -359,5 +370,4 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
-
 }
