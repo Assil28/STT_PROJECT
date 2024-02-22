@@ -11,10 +11,8 @@ import 'package:stt/Services/VoyageService.dart';
 import '../Models/VoyageModel.dart';
 import 'payment_scree.dart';
 
-
-
 List<Voyage> voyages = []; // Définir le type de la liste comme Voyage
-List<dynamic> uniqueHours=[];
+List<dynamic> uniqueHours = [];
 
 void main() {
   runApp(const FormVoyage());
@@ -30,15 +28,14 @@ class FormVoyage extends StatefulWidget {
 class _FormVoyageState extends State<FormVoyage> {
   DateTime? _selectedDate;
   String? _selectedUser;
-  VoyageService voyageService=new VoyageService();
-
-
+  VoyageService voyageService = new VoyageService();
 
   List<String> getUniqueDepartureCities() {
     return voyages
         .map((voyage) => voyage.ville_depart)
         .where((city) => city != null)
-        .map((city) => city!) // Convertir String? en String après vérification non nulle
+        .map((city) =>
+            city!) // Convertir String? en String après vérification non nulle
         .toSet()
         .toList();
   }
@@ -47,11 +44,11 @@ class _FormVoyageState extends State<FormVoyage> {
     return voyages
         .map((voyage) => voyage.ville_arrive)
         .where((city) => city != null)
-        .map((city) => city!) // Convertir String? en String après vérification non nulle
+        .map((city) =>
+            city!) // Convertir String? en String après vérification non nulle
         .toSet()
         .toList();
   }
-
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -74,7 +71,6 @@ class _FormVoyageState extends State<FormVoyage> {
     });
   }
 
-
   GlobalKey<FormState> form = GlobalKey<FormState>();
 
   late TicketModel ticket;
@@ -96,7 +92,6 @@ class _FormVoyageState extends State<FormVoyage> {
       voyageId: '',
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +150,9 @@ class _FormVoyageState extends State<FormVoyage> {
 
                     // Dropdown pour sélectionner les villes de departs
                     DropdownButtonFormField<String>(
-                      value: uniqueDepartureCities.isNotEmpty ? uniqueDepartureCities[0] : null,
+                      value: uniqueDepartureCities.isNotEmpty
+                          ? uniqueDepartureCities[0]
+                          : null,
                       items: uniqueDepartureCities.map((city) {
                         return DropdownMenuItem<String>(
                           value: city,
@@ -164,7 +161,6 @@ class _FormVoyageState extends State<FormVoyage> {
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-
                           villeDepart = value!;
                         });
                       },
@@ -199,9 +195,10 @@ class _FormVoyageState extends State<FormVoyage> {
                     SizedBox(height: 20),
                     // Dropdown pour sélectionner sélectionner les villes darrivee
                     DropdownButtonFormField<String>(
-                      value: uniqueArrivalCities.isNotEmpty ? uniqueArrivalCities[0] : null,
-
-                      items:  uniqueArrivalCities.map((city) {
+                      value: uniqueArrivalCities.isNotEmpty
+                          ? uniqueArrivalCities[0]
+                          : null,
+                      items: uniqueArrivalCities.map((city) {
                         return DropdownMenuItem<String>(
                           value: city,
                           child: Text(city),
@@ -212,8 +209,9 @@ class _FormVoyageState extends State<FormVoyage> {
                           villeArrive = value!;
                         });
                         try {
-
-                          uniqueHours = await voyageService.getUniqueHoursOfVoyages(dateVoyage, villeDepart, villeArrive);
+                          uniqueHours =
+                              await voyageService.getUniqueHoursOfVoyages(
+                                  dateVoyage, villeDepart, villeArrive);
                           for (var unHour in uniqueHours) {
                             print('Hour of trip: $unHour');
                           }
@@ -250,27 +248,24 @@ class _FormVoyageState extends State<FormVoyage> {
                       ),
                     ),
 
-
-
                     SizedBox(height: 20),
-
 
                     // Dropdown pour sélectionner sélectionner l'heure de voyage
                     DropdownButtonFormField<String>(
                       value: uniqueHours.isNotEmpty ? uniqueHours[0] : null,
                       items: uniqueHours.isNotEmpty
                           ? uniqueHours.map((hr) {
-                        return DropdownMenuItem<String>(
-                          value: hr,
-                          child: Text(hr),
-                        );
-                      }).toList()
+                              return DropdownMenuItem<String>(
+                                value: hr,
+                                child: Text(hr),
+                              );
+                            }).toList()
                           : [
-                        DropdownMenuItem<String>(
-                          value: null,
-                          child: Text('No available hours'),
-                        ),
-                      ],
+                              DropdownMenuItem<String>(
+                                value: null,
+                                child: Text('No available hours'),
+                              ),
+                            ],
                       onChanged: (value) {
                         setState(() {
                           heureVoyage = value!;
@@ -378,7 +373,7 @@ class _FormVoyageState extends State<FormVoyage> {
                         if (value == null || value.isEmpty) {
                           return "Champs vide";
                         }
-                        if ((value.length > 8)||(value.length < 8)) {
+                        if ((value.length > 8) || (value.length < 8)) {
                           return "Nombre de caractères doit être egale a 8";
                         }
                         return null;
@@ -431,17 +426,20 @@ class _FormVoyageState extends State<FormVoyage> {
                               print("Ticket ajouté avec succès");
 
                               var voyage;
-                               Map<String,dynamic> voyageMap =
-                              await VoyageService.getVoyage(ticket.voyageId);
+                              Map<String, dynamic> voyageMap =
+                                  await VoyageService.getVoyage(
+                                      ticket.voyageId);
                               voyage = Voyage.fromJson(voyageMap);
-                              print(" voy date :" + (voyage.heure_depart_voyage ?? ""));
-
+                              print(" voy date :" +
+                                  (voyage.heure_depart_voyage ?? ""));
 
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        PaymentScreen(ticket: ticketCreated,voyage: voyage,)),
+                                    builder: (context) => PaymentScreen(
+                                          ticket: ticketCreated,
+                                          voyage: voyage,
+                                        )),
                               );
                               // Afficher un message ou effectuer une action supplémentaire si nécessaire
                             } catch (error) {
@@ -465,7 +463,9 @@ class _FormVoyageState extends State<FormVoyage> {
                         ),
                       ),
                     ),
-                    Container(height: 80,),
+                    Container(
+                      height: 80,
+                    ),
                   ],
                 ),
               ),
@@ -477,15 +477,18 @@ class _FormVoyageState extends State<FormVoyage> {
   }
 
   Future<void> fetchVoyage(DateTime selectedDate) async {
-
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-    final response = await http.post(Uri.parse('http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+    final response = await http.post(Uri.parse(
+        'http://192.168.224.211:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body)['result']; // Extract 'result' key from the response JSON
+      final List<dynamic> jsonData = json.decode(response.body)[
+          'result']; // Extract 'result' key from the response JSON
       setState(() {
         voyages.clear();
-        voyages = jsonData.map((item) => Voyage.fromJson(item)).toList(); // Map each JSON object to Voyage object
+        voyages = jsonData
+            .map((item) => Voyage.fromJson(item))
+            .toList(); // Map each JSON object to Voyage object
         for (var voyage in voyages) {
           print('Voyage details:');
           print('Date: ${voyage.date}');
@@ -496,15 +499,11 @@ class _FormVoyageState extends State<FormVoyage> {
           print('Price: ${voyage.prix}');
           print('----------------------');
         }
-
       });
     } else {
       throw Exception('Failed to load voyages Response body: ${response.body}');
     }
   }
-
-
-
 }
 
 class DatePickerExample extends StatefulWidget {
@@ -586,8 +585,6 @@ class _DatePickerExampleState extends State<DatePickerExample>
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
