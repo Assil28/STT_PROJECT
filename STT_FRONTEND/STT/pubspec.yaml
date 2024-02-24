@@ -43,7 +43,7 @@ dependencies:
 
   flutter_stripe: ^10.0.0
   dio: ^5.4.0
-
+  image_downloader: ^0.31.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
