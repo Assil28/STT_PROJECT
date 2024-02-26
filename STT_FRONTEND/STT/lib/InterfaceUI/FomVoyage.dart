@@ -69,6 +69,17 @@ class _FormVoyageState extends State<FormVoyage> {
         .toList();
   }
 
+  void _updateDateAndFetchData(DateTime pickedDate) async {
+    await fetchVoyage(pickedDate);
+    await fetchUniqueHours();
+
+    setState(() {
+      _selectedDate = pickedDate;
+      this.dateVoyage = _selectedDate.toString().substring(0, 10);
+      print(_selectedDate.toString().substring(0, 10));
+    });
+  }
+
 // date pop up
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -82,13 +93,16 @@ class _FormVoyageState extends State<FormVoyage> {
       if (pickedDate == null) {
         return;
       }
-      setState(() async {
+      /*      setState(() async {
         _selectedDate = pickedDate;
         this.dateVoyage = _selectedDate.toString().substring(0, 10);
         print(_selectedDate.toString().substring(0, 10));
         fetchVoyage(_selectedDate!);
         await fetchUniqueHours();
-      });
+      }); */
+      if (pickedDate != null) {
+        _updateDateAndFetchData(pickedDate);
+      }
     });
   }
 
@@ -145,9 +159,9 @@ class _FormVoyageState extends State<FormVoyage> {
                     ElevatedButton(
                       onPressed: _presentDatePicker,
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(500.0, 60.0), // Set minimum size
-                        primary: Colors.white, // Button background color
-                        onPrimary: Color(0xFF7949FF), // Button text color
+                        foregroundColor: Color(0xFF7949FF),
+                        backgroundColor: Colors.white,
+                        minimumSize: Size(500.0, 60.0), // Button text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               40), // Border radius set to 40
@@ -501,7 +515,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     final response = await http.post(Uri.parse(
-        'http://192.168.1.15:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+        'http://192.168.137.65:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)[
