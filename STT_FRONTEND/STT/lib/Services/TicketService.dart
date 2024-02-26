@@ -4,7 +4,7 @@ import 'package:stt/Models/TicketModel.dart';
 
 class TicketService {
   static const String baseUrl =
-      'http://192.168.1.166:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+      'http://192.168.224.211:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));
@@ -32,7 +32,8 @@ class TicketService {
     print("2 ticket id=");
     print(ticketId);
     print("ticketId = $ticketId");
-    final response = await http.get(Uri.parse('$baseUrl/validiteTicket/$ticketId'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/validiteTicket/$ticketId'));
 
     if (response.statusCode == 200) {
       // Le ticket est valide
