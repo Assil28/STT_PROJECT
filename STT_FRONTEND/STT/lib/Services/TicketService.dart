@@ -25,9 +25,12 @@ class TicketService {
   }
 
   Future<bool> checkTicketValidity(String ticketId) async {
+    print(" fn checkTicketValidity ticket id=");
+    print(ticketId);
     // Supprimez les guillemets doubles autour de l'ID du ticket
     ticketId = ticketId.replaceAll('"', '');
-
+    print("2 ticket id=");
+    print(ticketId);
     print("ticketId = $ticketId");
     final response = await http.get(Uri.parse('$baseUrl/validiteTicket/$ticketId'));
 
@@ -47,7 +50,6 @@ class TicketService {
   Future<bool> CheckTicket(String ticketId) async {
     ticketId = ticketId.replaceAll('"', '');
 
-    print("ticketId = $ticketId");
     final response = await http.put(Uri.parse('$baseUrl/check/$ticketId'));
 
     if (response.statusCode == 200) {

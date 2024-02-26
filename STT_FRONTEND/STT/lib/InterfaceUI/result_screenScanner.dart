@@ -21,6 +21,7 @@ class _ResultScreenState extends State<ResultScreen> {
     super.initState();
     print("===");
     print(widget.code);
+    print("===");
     _ticketValidity = TicketService().checkTicketValidity(widget.code);
   }
 

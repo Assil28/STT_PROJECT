@@ -126,6 +126,7 @@ class Qr_ScannerState extends State<Qr_Scanner> {
                       onDetect: (capture) {
                         if (!isScanCompleted && capture.barcodes.isNotEmpty) {
                           final String code = capture.barcodes.first.rawValue ?? '---';
+                          print("fl cam id= "+code);
                           isScanCompleted = true;
                           Navigator.push(
                             context,

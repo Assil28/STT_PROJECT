@@ -1,4 +1,6 @@
-const Ticket = require('../models/TicketModel.js'); // Updated import statement to match the actual filename
+const Ticket = require('../models/TicketModel.js');
+const Voyage = require('../models/VoyageModel.js');
+// Updated import statement to match the actual filename
 const qr = require("qrcode");
 
 
@@ -111,23 +113,36 @@ const ValiditeTicket = async (req, res) => {
   try {
     // Recherche du ticket par son ID
     const ticket = await Ticket.findOne({ _id: req.params.TicketID });
-
-    if (ticket) {
-      if ((ticket.etat === false) && (ticket.date_achat.subtring(0,10)==new Date().toISOString().substring(0, 10))) {
-        console.log('Ticket nest pas utiliser');
-        return res.status(200).json({ message: 'Ticket nest pas utiliser' });
-      } else {
-        console.log('Le ticket n est pas valide');
-        return res.status(400).json({ message: 'Le ticket n est pas valide.' });
-      }
-    } else {
+    if (!ticket) {
       console.log('Ticket non trouvé.');
       return res.status(404).json({ message: 'Ticket non trouvé.' });
     }
+
+    // Accès à la voyage_id du ticket
+    console.log("voyage id = " + ticket.voyage_id);
+
+    // Recherche du voyage correspondant au ticket
+    const voyage = await Voyage.findOne({ _id: ticket.voyage_id });
+    if (!voyage) {
+      console.log('Voyage non trouvé.');
+      return res.status(404).json({ message: 'Voyage non trouvé.' });
+    }
+
+    // Vérification de la validité du ticket
+    if (!ticket.etat && voyage.date.toISOString().substring(0, 10) === new Date().toISOString().substring(0, 10)) {
+      console.log('Le ticket n\'est pas utilisé.');
+      return res.status(200).json({ message: 'Le ticket n\'est pas utilisé.' });
+    } else {
+      console.log('Le ticket n\'est pas valide.');
+      return res.status(400).json({ message: 'Le ticket n\'est pas valide.' });
+    }
   } catch (error) {
-    return res.status(500).json({ message: 'Erreur lors de la vérification du ticket' });
+    console.error('Erreur lors de la vérification du ticket :', error);
+    return res.status(500).json({ message: 'Erreur lors de la vérification du ticket.' });
   }
 }
+
+
 
 
 
