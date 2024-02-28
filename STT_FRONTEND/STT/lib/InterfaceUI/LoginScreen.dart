@@ -25,6 +25,8 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
+
+
   Future<String?> _signupUser(SignupData data) {
     debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
     return Future.delayed(loginTime).then((_) {
@@ -55,7 +57,28 @@ class LoginScreen extends StatelessWidget {
         ),
         title: 'STT tansport',
         logo: const AssetImage("images/stt_logo.png"),
-        onLogin: _authUser,
+        onLogin: (loginData) async {
+          String? authResult = await _authUser(loginData);
+          if (authResult == null) {
+            // L'authentification a réussi, vous pouvez accéder aux données de l'utilisateur ici
+            String email = loginData.name;
+            String password = loginData.password;
+
+            // Faites quelque chose avec les données de l'utilisateur
+            print('Email de l\'utilisateur connecté : $email');
+            print('Mot de passe de l\'utilisateur connecté : $password');
+
+            // Naviguez vers une autre page ou effectuez d'autres actions nécessaires
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Qr_Scanner()),
+            );
+          } else {
+            // L'authentification a échoué, gérer en conséquence
+            print('Erreur d\'authentification : $authResult');
+          }
+        },
+
 
         onSubmitAnimationCompleted: () {
           Navigator.push(

@@ -1,56 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:stt/InterfaceUI/TicketFinal.dart';
 import 'package:stt/Models/TicketModel.dart';
 import 'package:stt/Models/VoyageModel.dart';
 import 'package:stt/Services/VoyageService.dart';
-import 'package:stt/payment_manager.dart';
+import 'dart:convert';
 
-class PaymentScreen extends StatefulWidget {
+class TicketFinal extends StatefulWidget {
   final TicketModel ticket;
   final Voyage voyage;
-  const PaymentScreen({Key? key, required this.ticket, required this.voyage})
+  const TicketFinal({Key? key, required this.ticket, required this.voyage})
       : super(key: key);
 
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  _TicketFinalState createState() => _TicketFinalState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
-  double _price = 0.0;
-
+class _TicketFinalState extends State<TicketFinal> {
   VoyageService voyageService = new VoyageService();
+  String qrCodeBase64="";
 
   @override
   void initState() {
     super.initState();
-    _initializePrice();
-  }
+    print("ticket=");
 
-  Future<void> _initializePrice() async {
-    try {
-      double price = await _fetchPrice();
-      setState(() {
-        _price = price;
-      });
-    } catch (error) {
-      print('Error initializing price: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error initializing price'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    }
-  }
-
-  Future<double> _fetchPrice() async {
-    try {
-      VoyageService voyageService = VoyageService();
-      return await voyageService.getPriceByVoyage(widget.ticket.voyageId);
-    } catch (error) {
-      print('Error fetching voyage price: $error');
-      throw 'Error fetching price';
-    }
+    print(widget.ticket.qrCode.split(",")[1]);
   }
 
   @override
@@ -90,7 +63,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Booking Ticket',
+                            'Ticket',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
@@ -136,7 +109,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  'Booking Ticket',
+                                  'Ticket',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -176,7 +149,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 1,
                               ),
                               Row(
                                 children: [
@@ -258,34 +231,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ),
                               Column(
                                 children: [
-                                  Text('Bought In ',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 26,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                        height: 0,
-                                      )),
-                                  Text(
-                                    '${widget.ticket.dateAchat.toString().substring(0, 10)}',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 29,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w800,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 10,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Column(
-                                children: [
                                   Text(
                                     'Tipe Date ',
                                     style: TextStyle(
@@ -311,7 +256,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 5),
                               Container(
                                 width: 320,
                                 height: 4,
@@ -322,44 +267,68 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.center,
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    try {
-                                      await PaymentManager.makePayment(
-                                          _price, "TND");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                TicketFinal(ticket: widget.ticket,voyage: widget.voyage,)),
-                                      );
-                                      print('Fetched price: $_price');
-                                    } catch (error) {
-                                      print('Error making payment: $error');
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text('Error making payment'),
-                                          duration: Duration(seconds: 3),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  color: Color(0x99FF79B9),
-                                  textColor: Colors.white,
-                                  padding: EdgeInsets.all(10),
-                                  minWidth: 200,
+                              SizedBox(height: 5),
+                Container(
+                  width: 100,
+                  height: 100,
+                  child:
+                  Image.memory(
+                    base64Decode(widget.ticket.qrCode.split(",")[1]),
+                  ),
+                ),
+                              SizedBox(height: 5),
+                              Container(
+                                width: 320,
+                                height: 4,
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFFD9D9D9),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    "Pay $_price",
-                                    style: TextStyle(fontSize: 25),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
+                              ),
+                              SizedBox(height: 10),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Row(
+                                  children: [
+                                    MaterialButton(
+                                      onPressed: () async {
+                                        try {} catch (error) {}
+                                      },
+                                      color: Color(0x99FF79B9),
+                                      textColor: Colors.white,
+                                      padding: EdgeInsets.all(10),
+                                      minWidth: 100,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        "Share",
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 20,
+                                    ),
+                                    MaterialButton(
+                                      onPressed: () async {
+                                        try {} catch (error) {}
+                                      },
+                                      color: Color(0x99FF79B9),
+                                      textColor: Colors.white,
+                                      padding: EdgeInsets.all(10),
+                                      minWidth: 100,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        "Save",
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ),
                             ],
                           ),

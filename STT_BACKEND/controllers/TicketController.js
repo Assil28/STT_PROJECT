@@ -1,4 +1,6 @@
-const Ticket = require('../models/TicketModel.js'); // Updated import statement to match the actual filename
+const Ticket = require('../models/TicketModel.js');
+const Voyage = require('../models/VoyageModel.js');
+// Updated import statement to match the actual filename
 const qr = require("qrcode");
 
 
@@ -43,6 +45,20 @@ const createTicket = (req, res) => {
 
 };
 
+const getQrCodeOfTicket = ((req, res) => {
+  Ticket.findOne({ _id: req.params.TicketID })
+    .then(result => {
+      if (!result) {
+        return res.json({ msg: 'Ticket not found' });
+      }
+      // Extrait la sous-chaîne à partir du 21e caractère jusqu'à la fin
+      const qrCodeSubstring = result.qr_code.substring(22);
+      res.json({ qr_code: qrCodeSubstring });
+    })
+    .catch(() => res.json({ msg: 'Tickets not found' }));
+});
+
+
 
 
 
@@ -81,7 +97,7 @@ const updateTicket = ((req, res) => {
 
 
 // Fonction pour mettre à jour l'état du ticket après être scanné par le contrôleur
-const CheckTicket = async () => {
+const CheckTicket = async (req, res) => {
   try {
     // Recherche du ticket par son ID
     const ticket = await Ticket.findOne({ _id: req.params.TicketID });
@@ -89,18 +105,58 @@ const CheckTicket = async () => {
     if (ticket) {
       if (ticket.etat === false) {
         // Mettre à jour l'état du ticket à true
-        const updatedTicket = await Ticket.findByIdAndUpdate(ticketId, { etat: true }, { new: true });
+        const updatedTicket = await Ticket.findByIdAndUpdate(req.params.TicketID, { etat: true }, { new: true });
         console.log('Ticket a été marqué comme utilisé :', updatedTicket);
+        return res.status(200).json({ message: 'Ticket mis à jour avec succès' });
       } else {
         console.log('Le ticket a déjà été utilisé.');
+        return res.status(400).json({ message: 'Le ticket a déjà été utilisé.' });
       }
     } else {
       console.log('Ticket non trouvé.');
+      return res.status(404).json({ message: 'Ticket non trouvé.' });
     }
   } catch (error) {
     console.error('Erreur lors de la vérification et de la mise à jour de l\'état du ticket :', error);
+    return res.status(500).json({ message: 'Erreur lors de la vérification et de la mise à jour de l\'état du ticket' });
   }
 }
+
+
+const ValiditeTicket = async (req, res) => {
+  try {
+    // Recherche du ticket par son ID
+    const ticket = await Ticket.findOne({ _id: req.params.TicketID });
+    if (!ticket) {
+      console.log('Ticket non trouvé.');
+      return res.status(404).json({ message: 'Ticket non trouvé.' });
+    }
+
+    // Accès à la voyage_id du ticket
+    console.log("voyage id = " + ticket.voyage_id);
+
+    // Recherche du voyage correspondant au ticket
+    const voyage = await Voyage.findOne({ _id: ticket.voyage_id });
+    if (!voyage) {
+      console.log('Voyage non trouvé.');
+      return res.status(404).json({ message: 'Voyage non trouvé.' });
+    }
+
+    // Vérification de la validité du ticket
+    if (!ticket.etat && voyage.date.toISOString().substring(0, 10) === new Date().toISOString().substring(0, 10)) {
+      console.log('Le ticket n\'est pas utilisé.');
+      return res.status(200).json({ message: 'Le ticket n\'est pas utilisé.' });
+    } else {
+      console.log('Le ticket n\'est pas valide.');
+      return res.status(400).json({ message: 'Le ticket n\'est pas valide.' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la vérification du ticket :', error);
+    return res.status(500).json({ message: 'Erreur lors de la vérification du ticket.' });
+  }
+}
+
+
 
 
 
@@ -116,5 +172,7 @@ module.exports = {
   getTicket,
   createTicket,
   updateTicket,
-  CheckTicket
+  CheckTicket,
+  ValiditeTicket,
+  getQrCodeOfTicket
 }
