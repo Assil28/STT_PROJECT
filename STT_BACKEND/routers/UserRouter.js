@@ -11,11 +11,13 @@ const  {
     deleteUser ,
     Login,
     Logout,
-    UserLogin
+    UserLogin,
+    getUserByMatricule
 } = require('../controllers/UserController.js')
 
 router.get('/',getUsers)
 router.get('/getUser/:UserID',getUser)
+router.get('/getUserByMatricule/:matricule',getUserByMatricule)
 router.post('/',createUser)
 router.put('/:UserID',updateUser)
 router.delete('/deleteUser/:UserID', deleteUser)

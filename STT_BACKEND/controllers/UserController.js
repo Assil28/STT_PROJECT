@@ -23,6 +23,16 @@ const getUser = (req, res) => {
         })
         .catch(error => res.json({ msg: 'Error finding User', error }));
 };
+const getUserByMatricule = (req, res) => {
+    User.findOne({ matricule: req.params.matricule })
+        .then(result => {
+            if (!result) {
+                return res.json({ msg: ' search by matricule :User  not found' });
+            }
+            res.json({ result });
+        })
+        .catch(error => res.json({ msg: 'Error finding User', error }));
+};
 
 
 const deleteUser = ((req, res) => {
@@ -51,9 +61,11 @@ const createUser = async (req, res) => {
             // Remplacer le mot de passe en texte brut par le mot de passe haché
             req.body.password = hashedPassword;
 
-            const token =jwt.sign({_id:req.body._id},SECRET_KEY)
+            // Assuming matricule is automatically generated
+            const token = jwt.sign({ _id: req.body._id }, SECRET_KEY);
             const result = await User.create(req.body);
-            res.status(200).json({ user:result,token });
+            
+            res.status(200).json({ user: result, token });
         }
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -89,10 +101,10 @@ const updateUser = (req, res) => {
 };
 const Login = async (req, res) => {
     try {
-        const existingUser = await User.findOne({ email: req.body.email });
+        const existingUser = await User.findOne({ matricule: req.body.matricule });
 
         if (!existingUser) {
-            return res.status(401).json({ error: "User Email does not exist" });
+            return res.status(401).json({ error: "User matricule does not exist" });
         }
 
         const isPasswordMatch = await bcrypt.compare(req.body.password, existingUser.password);
@@ -155,5 +167,6 @@ module.exports = {
     deleteUser,
     Login,
     Logout,
-    UserLogin
+    UserLogin,
+    getUserByMatricule
 }
