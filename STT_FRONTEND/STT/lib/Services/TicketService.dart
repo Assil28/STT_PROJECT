@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class TicketService {
   static const String baseUrl =
-      'http://192.168.1.27:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+      'http://192.168.1.120:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));
@@ -131,7 +131,6 @@ class TicketService {
     }
   }
 
-
   static Future<String> getQrCodeOfTicket(String ticketId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/getQrCodeOfTicket/$ticketId'),
@@ -148,5 +147,4 @@ class TicketService {
     final String qrCode = responseData['qr_code'];
     return qrCode;
   }
-
 }

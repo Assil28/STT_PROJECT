@@ -47,7 +47,6 @@ class _FormVoyageState extends State<FormVoyage> {
     }
   }
 
-
 // to get the depart city
   List<String> getUniqueDepartureCities() {
     return voyages
@@ -161,8 +160,9 @@ class _FormVoyageState extends State<FormVoyage> {
                     ElevatedButton(
                       onPressed: _presentDatePicker,
                       style: ElevatedButton.styleFrom(
-
-                        foregroundColor: Color(0xFF7949FF), backgroundColor: Colors.white, minimumSize: Size(500.0, 60.0), // Button text color
+                        foregroundColor: Color(0xFF7949FF),
+                        backgroundColor: Colors.white,
+                        minimumSize: Size(500.0, 60.0), // Button text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               40), // Border radius set to 40
@@ -444,7 +444,7 @@ class _FormVoyageState extends State<FormVoyage> {
                               // Mettre l'ID du voyage dans ticket.voyageId
                               ticket.voyageId = voyageId;
                               print("ID du voyage trouvé: $voyageId");
-                            
+
                               // Appeler le service TicketService pour ajouter le ticket
                               print(
                                   "ID du voyage trouvé dans ticket: ${ticket.voyageId}");
@@ -512,8 +512,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     final response = await http.post(Uri.parse(
-
-        'http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+        'http://192.168.1.120:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)[
