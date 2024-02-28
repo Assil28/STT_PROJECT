@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stt/InterfaceUI/QrCodeSave.dart';
 import 'package:stt/Models/TicketModel.dart';
 import 'package:stt/Models/VoyageModel.dart';
 import 'package:stt/Services/VoyageService.dart';
@@ -24,17 +23,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     _initializePrice();
-  }
-
-  void navigateToNextScreen(TicketModel ticket) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => QrCodeSave(
-          ticket: ticket,
-        ),
-      ),
-    );
   }
 
   Future<void> _initializePrice() async {
@@ -344,7 +332,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     try {
                                       PaymentManager.makePayment(_price, "TND");
                                       print('Fetched price: $_price');
-                                      navigateToNextScreen(widget.ticket);
                                     } catch (error) {
                                       print('Error making payment: $error');
                                       ScaffoldMessenger.of(context)
