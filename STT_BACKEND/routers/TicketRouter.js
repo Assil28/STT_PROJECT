@@ -10,7 +10,8 @@ const  {
     createTicket,
     updateTicket,
     CheckTicket,
-    ValiditeTicket
+    ValiditeTicket,
+    getQrCodeOfTicket
 
 } = require('../controllers/TicketController.js')
 
@@ -20,6 +21,7 @@ router.post('/',createTicket)
 router.put('/:TicketID',updateTicket)
 router.put('/check/:TicketID', CheckTicket);
 router.get('/validiteTicket/:TicketID', ValiditeTicket);
+router.get('/getQrCodeOfTicket/:TicketID', getQrCodeOfTicket);
 
 
 

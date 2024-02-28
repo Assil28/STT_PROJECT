@@ -124,9 +124,7 @@ class _FormVoyageState extends State<FormVoyage> {
                     ElevatedButton(
                       onPressed: _presentDatePicker,
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(500.0, 60.0), // Set minimum size
-                        primary: Colors.white, // Button background color
-                        onPrimary: Color(0xFF7949FF), // Button text color
+                        foregroundColor: Color(0xFF7949FF), backgroundColor: Colors.white, minimumSize: Size(500.0, 60.0), // Button text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               40), // Border radius set to 40
@@ -367,7 +365,7 @@ class _FormVoyageState extends State<FormVoyage> {
                         ),
                       ),
                       onSaved: (val) {
-                        ticket?.numTel = val!;
+                        ticket.numTel = val!;
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -389,7 +387,7 @@ class _FormVoyageState extends State<FormVoyage> {
                             form.currentState!.save();
                             print("Ticket:");
                             print(
-                                "Date: ${dateVoyage}\n VilleDepart :${villeDepart}\n Ville Arrivé : ${villeArrive}\n Heure :${heureVoyage}\n Cin Voyageur :${ticket!.cinVoyageur}\n NumTell : ${ticket!.numTel}\n");
+                                "Date: ${dateVoyage}\n VilleDepart :${villeDepart}\n Ville Arrivé : ${villeArrive}\n Heure :${heureVoyage}\n Cin Voyageur :${ticket.cinVoyageur}\n NumTell : ${ticket.numTel}\n");
 
                             try {
                               // Appeler la fonction getVoyageByVilleDateTime pour obtenir l'ID du voyage
@@ -404,14 +402,9 @@ class _FormVoyageState extends State<FormVoyage> {
                               print("ID du voyage trouvé: $voyageId");
 
                               // Mettre l'ID du voyage dans ticket.voyageId
-                              if (voyageId != null) {
-                                ticket.voyageId = voyageId;
-                                print("ID du voyage trouvé: $voyageId");
-                              } else {
-                                print(
-                                    "Aucun voyage trouvé avec les critères spécifiés");
-                              }
-
+                              ticket.voyageId = voyageId;
+                              print("ID du voyage trouvé: $voyageId");
+                            
                               // Appeler le service TicketService pour ajouter le ticket
                               print(
                                   "ID du voyage trouvé dans ticket: ${ticket.voyageId}");
@@ -479,7 +472,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     final response = await http.post(Uri.parse(
-        'http://192.168.224.211:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+        'http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)[

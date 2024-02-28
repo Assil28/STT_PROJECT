@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:stt/Models/TicketModel.dart';
 
 class TicketService {
   static const String baseUrl =
-      'http://192.168.224.211:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+      'http://192.168.1.166:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));
@@ -110,4 +109,23 @@ class TicketService {
       throw Exception('Failed to update ticket');
     }
   }
+
+
+  static Future<String> getQrCodeOfTicket(String ticketId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/getQrCodeOfTicket/$ticketId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Failed to get QR code of ticket');
+    }
+    // Convertir la réponse JSON en une carte
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    // Extraire le QR code de la carte
+    final String qrCode = responseData['qr_code'];
+    return qrCode;
+  }
+
 }

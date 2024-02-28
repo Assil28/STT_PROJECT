@@ -5,7 +5,7 @@ import 'package:stt/Models/VoyageModel.dart';
 class VoyageService {
   List<Voyage> voyages = [];
   static const String baseUrl =
-      'http://192.168.224.211:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
+      'http://192.168.1.166:3800/api/voyages'; // Remplacez l'URL par l'URL de votre serveur
 
   static Future<List<dynamic>> getVoyages() async {
     final response = await http.get(Uri.parse('$baseUrl/getVoyages'));

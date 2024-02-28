@@ -45,6 +45,20 @@ const createTicket = (req, res) => {
 
 };
 
+const getQrCodeOfTicket = ((req, res) => {
+  Ticket.findOne({ _id: req.params.TicketID })
+    .then(result => {
+      if (!result) {
+        return res.json({ msg: 'Ticket not found' });
+      }
+      // Extrait la sous-chaîne à partir du 21e caractère jusqu'à la fin
+      const qrCodeSubstring = result.qr_code.substring(22);
+      res.json({ qr_code: qrCodeSubstring });
+    })
+    .catch(() => res.json({ msg: 'Tickets not found' }));
+});
+
+
 
 
 
@@ -159,5 +173,6 @@ module.exports = {
   createTicket,
   updateTicket,
   CheckTicket,
-  ValiditeTicket
+  ValiditeTicket,
+  getQrCodeOfTicket
 }

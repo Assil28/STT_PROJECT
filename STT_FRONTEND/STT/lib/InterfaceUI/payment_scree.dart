@@ -44,9 +44,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Future<double> _fetchPrice() async {
-    if (widget.ticket == null) {
-      print("ticket is null");
-    }
     try {
       VoyageService voyageService = VoyageService();
       return await voyageService.getPriceByVoyage(widget.ticket.voyageId);
