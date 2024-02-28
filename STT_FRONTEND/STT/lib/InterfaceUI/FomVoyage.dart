@@ -15,7 +15,8 @@ List<Voyage> voyages = []; // Définir le type de la liste comme Voyage
 List<dynamic> uniqueHours = [];
 
 void main() {
-  runApp(const FormVoyage());
+  runApp(MaterialApp(home: FormVoyage()));
+  //runApp(const FormVoyage());
 }
 
 class FormVoyage extends StatefulWidget {
@@ -29,7 +30,25 @@ class _FormVoyageState extends State<FormVoyage> {
   DateTime? _selectedDate;
   String? _selectedUser;
   VoyageService voyageService = new VoyageService();
+  Future<void> fetchUniqueHours() async {
+    try {
+      uniqueHours = await voyageService.getUniqueHoursOfVoyages(
+          dateVoyage, villeDepart, villeArrive);
+      setState(() {
+        // Update state after fetching unique hours
+      });
 
+      for (var unHour in uniqueHours) {
+        print('Hour of trip: $unHour');
+      }
+    } catch (error) {
+      print('Error fetching unique hours: $error');
+      // Handle the error, for example, show a message to the user
+    }
+  }
+
+
+// to get the depart city
   List<String> getUniqueDepartureCities() {
     return voyages
         .map((voyage) => voyage.ville_depart)
@@ -40,6 +59,7 @@ class _FormVoyageState extends State<FormVoyage> {
         .toList();
   }
 
+// to get the arrived city
   List<String> getUniqueArrivalCities() {
     return voyages
         .map((voyage) => voyage.ville_arrive)
@@ -49,6 +69,19 @@ class _FormVoyageState extends State<FormVoyage> {
         .toSet()
         .toList();
   }
+
+  void _updateDateAndFetchData(DateTime pickedDate) async {
+    await fetchVoyage(pickedDate);
+    await fetchUniqueHours();
+
+    setState(() {
+      _selectedDate = pickedDate;
+      this.dateVoyage = _selectedDate.toString().substring(0, 10);
+      print(_selectedDate.toString().substring(0, 10));
+    });
+  }
+
+// date pop up
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -62,12 +95,16 @@ class _FormVoyageState extends State<FormVoyage> {
       if (pickedDate == null) {
         return;
       }
-      setState(() {
+      /*      setState(() async {
         _selectedDate = pickedDate;
         this.dateVoyage = _selectedDate.toString().substring(0, 10);
         print(_selectedDate.toString().substring(0, 10));
         fetchVoyage(_selectedDate!);
-      });
+        await fetchUniqueHours();
+      }); */
+      if (pickedDate != null) {
+        _updateDateAndFetchData(pickedDate);
+      }
     });
   }
 
@@ -124,6 +161,7 @@ class _FormVoyageState extends State<FormVoyage> {
                     ElevatedButton(
                       onPressed: _presentDatePicker,
                       style: ElevatedButton.styleFrom(
+
                         foregroundColor: Color(0xFF7949FF), backgroundColor: Colors.white, minimumSize: Size(500.0, 60.0), // Button text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -206,7 +244,9 @@ class _FormVoyageState extends State<FormVoyage> {
                         setState(() {
                           villeArrive = value!;
                         });
-                        try {
+                        await fetchUniqueHours();
+                        /* try {
+
                           uniqueHours =
                               await voyageService.getUniqueHoursOfVoyages(
                                   dateVoyage, villeDepart, villeArrive);
@@ -216,7 +256,7 @@ class _FormVoyageState extends State<FormVoyage> {
                         } catch (error) {
                           print('Error fetching unique hours: $error');
                           // Gérer l'erreur, par exemple afficher un message à l'utilisateur
-                        }
+                        }*/
                       },
                       decoration: InputDecoration(
                         hintText: 'Ex: Djerba',
@@ -472,6 +512,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     final response = await http.post(Uri.parse(
+
         'http://192.168.1.166:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {

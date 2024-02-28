@@ -4,6 +4,8 @@ import 'package:stt/InterfaceUI/FomVoyage.dart';
 //import 'package:flutter_pro/LoginScreen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
+ 
+
 void main() {
   Stripe.publishableKey =
       "pk_test_51ObMplKMb9izxsLhCho5F2R9fvurExAmUzn2Nu9EeLC9szpEGkPAPGuKGaAnlT63cP3fNHNwIdDA9oqQ4gCmCJEy00t1cIJOoN";
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: const FormVoyage( ),
+      home: const FormVoyage(),
+
     );
   }
 }
