@@ -25,8 +25,6 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
-
-
   Future<String?> _signupUser(SignupData data) {
     debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
     return Future.delayed(loginTime).then((_) {
@@ -53,7 +51,8 @@ class LoginScreen extends StatelessWidget {
       },
       child: FlutterLogin(
         theme: LoginTheme(
-          pageColorLight: Colors.blueGrey, // Couleur de fond de la page de connexion
+          pageColorLight:
+              Colors.blueGrey, // Couleur de fond de la page de connexion
         ),
         title: 'STT tansport',
         logo: const AssetImage("images/stt_logo.png"),
@@ -65,8 +64,9 @@ class LoginScreen extends StatelessWidget {
             String password = loginData.password;
 
             // Faites quelque chose avec les données de l'utilisateur
-            print('Email de l\'utilisateur connecté : $email');
-            print('Mot de passe de l\'utilisateur connecté : $password');
+            print('**************Email de l\'utilisateur connecté : $email');
+            print(
+                '**********Mot de passe de l\'utilisateur connecté : $password');
 
             // Naviguez vers une autre page ou effectuez d'autres actions nécessaires
             Navigator.push(
@@ -78,8 +78,6 @@ class LoginScreen extends StatelessWidget {
             print('Erreur d\'authentification : $authResult');
           }
         },
-
-
         onSubmitAnimationCompleted: () {
           Navigator.push(
             context,

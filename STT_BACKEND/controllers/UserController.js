@@ -119,7 +119,7 @@ const Login = async (req, res) => {
             });
 
             console.log(existingUser);
-            return res.status(200).json({ message: "Login Successful" });
+            return res.status(200).json({ message: "Login Successful" , user: existingUser});
         } else {
             return res.status(401).json({ error: "Wrong password" });
         }

@@ -41,6 +41,8 @@ dependencies:
   qr_scanner_overlay: ^0.0.2
   flutter_stripe: ^10.0.0
   dio: ^5.4.0
+  api_cache_manager: ^1.0.1
+  snippet_coder_utils: ^1.0.15
 
 dev_dependencies:
   flutter_test:
