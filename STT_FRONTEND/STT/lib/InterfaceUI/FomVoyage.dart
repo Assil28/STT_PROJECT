@@ -88,20 +88,14 @@ class _FormVoyageState extends State<FormVoyage> {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(2020),
+            firstDate: DateTime.now(),
             lastDate: DateTime(2050))
         .then((pickedDate) {
       // Check if no date is selected
       if (pickedDate == null) {
         return;
       }
-      /*      setState(() async {
-        _selectedDate = pickedDate;
-        this.dateVoyage = _selectedDate.toString().substring(0, 10);
-        print(_selectedDate.toString().substring(0, 10));
-        fetchVoyage(_selectedDate!);
-        await fetchUniqueHours();
-      }); */
+
       if (pickedDate != null) {
         _updateDateAndFetchData(pickedDate);
       }
@@ -117,7 +111,6 @@ class _FormVoyageState extends State<FormVoyage> {
 
   @override
   void initState() {
-    // selectedDate = DateTime.now();
     super.initState();
 
     ticket = TicketModel(
@@ -245,18 +238,7 @@ class _FormVoyageState extends State<FormVoyage> {
                           villeArrive = value!;
                         });
                         await fetchUniqueHours();
-                        /* try {
 
-                          uniqueHours =
-                              await voyageService.getUniqueHoursOfVoyages(
-                                  dateVoyage, villeDepart, villeArrive);
-                          for (var unHour in uniqueHours) {
-                            print('Hour of trip: $unHour');
-                          }
-                        } catch (error) {
-                          print('Error fetching unique hours: $error');
-                          // Gérer l'erreur, par exemple afficher un message à l'utilisateur
-                        }*/
                       },
                       decoration: InputDecoration(
                         hintText: 'Ex: Djerba',

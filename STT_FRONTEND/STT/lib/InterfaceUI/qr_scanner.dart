@@ -13,17 +13,27 @@ import 'LoginScreen.dart';
 const bgColor=Color(0xfffafafa);
 
 class Qr_Scanner extends StatefulWidget {
-  const Qr_Scanner({super.key});
+  final String email;
+
+  const Qr_Scanner({Key? key, required this.email}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState()=>Qr_ScannerState();
+  _Qr_ScannerState createState()=>_Qr_ScannerState();
 }
-class Qr_ScannerState extends State<Qr_Scanner> {
+class _Qr_ScannerState extends State<Qr_Scanner> {
 
   bool isScanCompleted=false;
 
   void closeScreen(){
     this.isScanCompleted=false;
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("Email=");
+    print(widget.email);
   }
 
   @override
@@ -39,7 +49,7 @@ class Qr_ScannerState extends State<Qr_Scanner> {
             children: [
               const Icon(Icons.person,color: Colors.white,),
               Container(width: 5,),
-              const Text("user name", style: TextStyle(
+               Text('${widget.email}', style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.white),),

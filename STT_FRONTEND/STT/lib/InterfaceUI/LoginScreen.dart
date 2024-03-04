@@ -3,7 +3,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:stt/InterfaceUI/qr_scanner.dart';
 
 const users = {
-  'assil.dkhil28@gmail.com': '12345',
+  'assil': '12345',
   'hunter@gmail.com': 'hunter',
 };
 
@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
             // Naviguez vers une autre page ou effectuez d'autres actions nécessaires
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Qr_Scanner()),
+              MaterialPageRoute(builder: (context) => Qr_Scanner(email: email,)),
             );
           } else {
             // L'authentification a échoué, gérer en conséquence
@@ -81,10 +81,7 @@ class LoginScreen extends StatelessWidget {
 
 
         onSubmitAnimationCompleted: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Qr_Scanner()),
-          );
+
         },
         onRecoverPassword: _recoverPassword,
       ),
