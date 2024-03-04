@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:flutter/material.dart';
+import 'package:stt/InterfaceUI/SignInScreen.dart';
 import 'package:stt/Models/LoginResponseModel.dart';
 
 class SharedService {
@@ -20,7 +21,7 @@ class SharedService {
 
     if (isCacheKeyExist) {
       var cacheData = await APICacheManager().getCacheData("login_details");
-//bech taamel el decode mtaa data mel database w t synchroni maa model
+//bech taamel el decode mtaa data mel database w t synchroni maa model w tenregister les details de login fi cache
       return loginResponseJson(cacheData.syncData);
     }
   }
@@ -38,9 +39,9 @@ class SharedService {
 
   static Future<void> logout(BuildContext context) async {
     await APICacheManager().deleteCache("login_details");
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
       context,
-      '/login',
+      MaterialPageRoute(builder: (context) => SignInScreen()),
       (route) => false,
     );
   }

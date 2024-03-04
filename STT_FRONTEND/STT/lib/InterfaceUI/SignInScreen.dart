@@ -4,9 +4,12 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:stt/InterfaceUI/LoginDetailsScreen.dart';
 import 'package:stt/InterfaceUI/qr_scanner.dart';
 import 'package:stt/Models/LoginRequestModel.dart';
+import 'package:stt/Models/LoginResponseModel.dart';
 import 'package:stt/Services/AuthService.dart';
+import 'package:stt/Services/SharedService.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -30,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#283B71"),
+        backgroundColor: HexColor("#9B5EA3"),
         body: ProgressHUD(
           child: Form(
             key: globalFormKey,
@@ -78,6 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     "images/stt_logo.png",
                     fit: BoxFit.contain,
                     width: 250,
+                    height: 200,
                   ),
                 ),
               ],
@@ -98,7 +102,6 @@ class _SignInScreenState extends State<SignInScreen> {
             padding: const EdgeInsets.only(bottom: 10),
             child: FormHelper.inputFieldWidget(
               context,
-
               "Matricule", // Change here from Icon to String
               "matricule",
               (onValidateVal) {
@@ -158,31 +161,8 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 25,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.grey, fontSize: 14.0),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Forget Password ?',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()..onTap = () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
           const SizedBox(
-            height: 20,
+            height: 60,
           ),
           Center(
             child: FormHelper.submitButton(
@@ -199,22 +179,32 @@ class _SignInScreenState extends State<SignInScreen> {
                   );
 
                   AuthService.login(model).then(
-                    (response) {
+                    (response) async {
                       setState(() {
                         isApicallProcess = false;
                       });
 
                       if (response) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Qr_Scanner()),
-                          (route) => false,
-                        );
+                        LoginResponseModel? loginResponse =
+                            await SharedService.loginDetails();
+                        print("*******************************************");
+                        if (loginResponse != null) {
+                          print(loginResponse.user.toString());
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginDetailsScreen(
+                                    loginResponseModel: loginResponse)),
+                            (route) => false,
+                          );
+                        } else {
+                          print("ferghaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                        }
                       } else {
                         FormHelper.showSimpleAlertDialog(
                           context,
                           "Controller",
-                          "Invalid Username/Password !!",
+                          "Invalid Username or Password !!",
                           "OK",
                           () {
                             Navigator.of(context).pop();
@@ -233,51 +223,6 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           const SizedBox(
             height: 20,
-          ),
-          const Center(
-            child: Text(
-              "OR",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 25,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.white, fontSize: 14.0),
-                  children: <TextSpan>[
-                    const TextSpan(
-                      text: 'Dont have an account? ',
-                    ),
-                    TextSpan(
-                      text: 'Sign up',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(
-                            context,
-                            '/register',
-                          );
-                        },
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
           const SizedBox(
             height: 20,

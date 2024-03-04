@@ -87,20 +87,14 @@ class _FormVoyageState extends State<FormVoyage> {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(2020),
+            firstDate: DateTime.now(),
             lastDate: DateTime(2050))
         .then((pickedDate) {
       // Check if no date is selected
       if (pickedDate == null) {
         return;
       }
-      /*      setState(() async {
-        _selectedDate = pickedDate;
-        this.dateVoyage = _selectedDate.toString().substring(0, 10);
-        print(_selectedDate.toString().substring(0, 10));
-        fetchVoyage(_selectedDate!);
-        await fetchUniqueHours();
-      }); */
+
       if (pickedDate != null) {
         _updateDateAndFetchData(pickedDate);
       }
@@ -512,7 +506,7 @@ class _FormVoyageState extends State<FormVoyage> {
   Future<void> fetchVoyage(DateTime selectedDate) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     final response = await http.post(Uri.parse(
-        'http://192.168.1.120:3800/api/voyages/getVoyagesByDate/$formattedDate'));
+        'http://192.168.1.162:3800/api/voyages/getVoyagesByDate/$formattedDate'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)[

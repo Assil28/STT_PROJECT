@@ -67,22 +67,16 @@ class LoginScreen extends StatelessWidget {
             print('**************Email de l\'utilisateur connecté : $email');
             print(
                 '**********Mot de passe de l\'utilisateur connecté : $password');
-
-            // Naviguez vers une autre page ou effectuez d'autres actions nécessaires
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Qr_Scanner()),
-            );
           } else {
             // L'authentification a échoué, gérer en conséquence
             print('Erreur d\'authentification : $authResult');
           }
         },
         onSubmitAnimationCompleted: () {
-          Navigator.push(
+          /*    Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Qr_Scanner()),
-          );
+          ); */
         },
         onRecoverPassword: _recoverPassword,
       ),
