@@ -1,3 +1,4 @@
+import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -83,7 +84,8 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
              const Spacer(),
               IconButton(
                 icon: const Icon(Icons.logout),
-                onPressed: () {
+                onPressed: () async {
+                  await APICacheManager().deleteCache("login_details");
                   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>SignInScreen()));
                 },
               ),

@@ -52,7 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 5.2,
+            height: MediaQuery.of(context).size.height / 4,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -77,14 +77,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Image.asset(
                     "images/stt_logo.png",
                     fit: BoxFit.contain,
-                    width: 220,
+                    width: 240,
                   ),
                 ),
               ],
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
+            padding: EdgeInsets.only(left: 150, bottom: 30, top: 90),
             child: Text(
               "Login",
               style: TextStyle(
@@ -92,10 +92,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 fontSize: 25,
                 color: Colors.white,
               ),
+                textAlign:TextAlign.center
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 30),
             child: FormHelper.inputFieldWidget(
               context,
 
@@ -122,7 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 20),
             child: FormHelper.inputFieldWidget(
               context,
               "Password", // Change here from Icon to String
@@ -158,29 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 25,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.grey, fontSize: 14.0),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Forget Password ?',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()..onTap = () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+
           const SizedBox(
             height: 20,
           ),
@@ -234,51 +213,11 @@ class _SignInScreenState extends State<SignInScreen> {
           const SizedBox(
             height: 20,
           ),
-          const Center(
-            child: Text(
-              "OR",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
-          ),
+
           const SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 25,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.white, fontSize: 14.0),
-                  children: <TextSpan>[
-                    const TextSpan(
-                      text: 'Dont have an account? ',
-                    ),
-                    TextSpan(
-                      text: 'Sign up',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(
-                            context,
-                            '/register',
-                          );
-                        },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+
           const SizedBox(
             height: 20,
           ),
