@@ -180,7 +180,7 @@ class _TicketFinalState extends State<TicketFinal> {
                                     ],
                                   ),
                                   Text(
-                                    "------->",
+                                    "->",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),

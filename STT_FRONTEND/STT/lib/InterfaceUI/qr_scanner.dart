@@ -23,6 +23,7 @@ class Qr_Scanner extends StatefulWidget {
 class _Qr_ScannerState extends State<Qr_Scanner> {
 
   bool isScanCompleted=false;
+  late LoginResponseModel user;
 
   @override
   void initState() {
@@ -34,8 +35,9 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
     // Appeler la méthode loginDetails de SharedService pour récupérer les données
     LoginResponseModel? loginResponse = await SharedService.loginDetails();
     if (loginResponse != null) {
+      user=loginResponse;
       // Traitement des données récupérées selon vos besoins
-      print("Logged in user: ${loginResponse.user.userName}");
+      print("Logged in user: ${user.user.userName}");
       // Vous pouvez mettre à jour l'état de votre widget ici si nécessaire
     } else {
       // Aucune donnée n'a été trouvée dans le cache
@@ -61,7 +63,7 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
             children: [
               const Icon(Icons.person,color: Colors.white,),
               Container(width: 5,),
-              const Text("user name", style: TextStyle(
+               Text("${user.user.userName}", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.white),),
@@ -92,11 +94,19 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text('Controller Name',style: TextStyle(fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+              child:
+              Column(
+                children: [
+                  Text("${user.user.userName}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),textAlign: TextAlign.center,),
+                  Text("${user.user.email}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
+                  Text("${user.user.matricule}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
+
+                ],
+              ),
             ),
             ListTile(
               title: const Text('Home'),

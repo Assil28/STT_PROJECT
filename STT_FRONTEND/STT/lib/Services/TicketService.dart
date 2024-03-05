@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class TicketService {
   static const String baseUrl =
-      'http://192.168.218.211:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
+      'http://192.168.1.166:3800/api/tickets'; // Remplacez ceci par l'URL de votre API Express.js
 
   static Future<List<dynamic>> getTickets() async {
     final response = await http.get(Uri.parse('$baseUrl'));

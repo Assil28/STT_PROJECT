@@ -29,7 +29,6 @@ class User {
   String? userName; // garder tel quel
   String? matricule; // garder tel quel
   String? email;
-  String? password;
   String? phone_number;
   DateTime? birthday;
   String? role;
@@ -39,7 +38,6 @@ class User {
     required this.id, // changer en _id
     required this.userName,
     required this.email,
-    required this.password,
     required this.phone_number,
     required this.birthday,
     required this.role,
@@ -51,7 +49,6 @@ class User {
       '_id': id, // changer en _id
       'userName': userName,
       'email': email,
-      'password': password,
       'phone_number': phone_number,
       'role': role,
       'cin': cin,
@@ -65,7 +62,6 @@ class User {
       id: json['_id'], // changer en _id
       userName: json['userName'],
       email: json['email'],
-      password: json['password'],
       phone_number: json['phone_number'],
       role: json['role'],
       cin: json['cin'],

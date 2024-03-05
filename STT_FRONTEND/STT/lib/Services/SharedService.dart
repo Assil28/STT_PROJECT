@@ -6,6 +6,7 @@ import 'package:stt/Models/LoginResponseModel.dart';
 
 class SharedService {
   static Future<bool> isLoggedIn() async {
+    await APICacheManager().deleteCache("login_details");
     // bch ychouf if the login_details mawjoud wela lee fi cache c-a-d fama login wel lee
 
     var isCacheKeyExist =
@@ -15,6 +16,7 @@ class SharedService {
   }
 
   static Future<LoginResponseModel?> loginDetails() async {
+
     var isCacheKeyExist =
         await APICacheManager().isAPICacheKeyExist("login_details");
     if (isCacheKeyExist) {
@@ -29,7 +31,7 @@ class SharedService {
   }
 
   static Future<void> setLoginDetails(
-      LoginResponseModel loginResponse,
+       loginResponse,
       ) async {
     var isCacheKeyExist =
     await APICacheManager().isAPICacheKeyExist("login_details");
