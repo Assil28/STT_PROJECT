@@ -23,7 +23,7 @@ class Qr_Scanner extends StatefulWidget {
 class _Qr_ScannerState extends State<Qr_Scanner> {
 
   bool isScanCompleted=false;
-  late LoginResponseModel user;
+  late LoginResponseModel? user;
 
   @override
   void initState() {
@@ -35,9 +35,11 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
     // Appeler la méthode loginDetails de SharedService pour récupérer les données
     LoginResponseModel? loginResponse = await SharedService.loginDetails();
     if (loginResponse != null) {
-      user=loginResponse;
+      setState(() {
+        user = loginResponse;
+      });
       // Traitement des données récupérées selon vos besoins
-      print("Logged in user: ${user.user.userName}");
+      print("Logged in user: ${user?.user.userName}");
       // Vous pouvez mettre à jour l'état de votre widget ici si nécessaire
     } else {
       // Aucune donnée n'a été trouvée dans le cache
@@ -59,23 +61,27 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
         backgroundColor: Color(0x99FF79B9),
         centerTitle: true,
         title: Container(
+
           child: Row(
             children: [
               const Icon(Icons.person,color: Colors.white,),
-              Container(width: 5,),
-               Text("${user.user.userName}", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white),),
+
+
               Container(width: 10,),
-              const Text("Controller", style: TextStyle(
+              const Text("Controller :", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.lightBlue),),
 
-              Container(width: 1,),
-              IconButton(
+              const Spacer(),
 
+              Text("${user?.user.userName}", style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white),),
+
+             const Spacer(),
+              IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>SignInScreen()));
@@ -101,9 +107,9 @@ class _Qr_ScannerState extends State<Qr_Scanner> {
               child:
               Column(
                 children: [
-                  Text("${user.user.userName}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),textAlign: TextAlign.center,),
-                  Text("${user.user.email}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
-                  Text("${user.user.matricule}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
+                  Text("${user?.user.userName}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),textAlign: TextAlign.center,),
+                  Text("${user?.user.email}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
+                  Text("${user?.user.matricule}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black54),textAlign: TextAlign.center,),
 
                 ],
               ),
