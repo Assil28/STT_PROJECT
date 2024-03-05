@@ -4,7 +4,9 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
 import 'package:stt/InterfaceUI/result_screenScanner.dart';
 
-import 'LoginScreen.dart';
+import '../Models/LoginResponseModel.dart';
+import '../Services/SharedService.dart';
+import 'SignInScreen.dart';
 
 
 
@@ -16,15 +18,35 @@ class Qr_Scanner extends StatefulWidget {
   const Qr_Scanner({super.key});
 
   @override
-  State<StatefulWidget> createState()=>Qr_ScannerState();
+  State<Qr_Scanner> createState()=>_Qr_ScannerState();
 }
-class Qr_ScannerState extends State<Qr_Scanner> {
+class _Qr_ScannerState extends State<Qr_Scanner> {
 
   bool isScanCompleted=false;
 
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Appel de la méthode pour récupérer les données lors de l'initialisation du widget
+  }
+
+  Future<void> fetchData() async {
+    // Appeler la méthode loginDetails de SharedService pour récupérer les données
+    LoginResponseModel? loginResponse = await SharedService.loginDetails();
+    if (loginResponse != null) {
+      // Traitement des données récupérées selon vos besoins
+      print("Logged in user: ${loginResponse.user.userName}");
+      // Vous pouvez mettre à jour l'état de votre widget ici si nécessaire
+    } else {
+      // Aucune donnée n'a été trouvée dans le cache
+      print("No login details found in cache.");
+    }
+  }
   void closeScreen(){
     this.isScanCompleted=false;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +76,7 @@ class Qr_ScannerState extends State<Qr_Scanner> {
 
                 icon: const Icon(Icons.logout),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LoginScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>SignInScreen()));
                 },
               ),
             ],

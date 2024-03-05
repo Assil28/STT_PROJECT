@@ -14,7 +14,8 @@ module.exports = {
     getPriceByVoyage,
     getHeureOfVoyages,
     nbrPlaceDispoDansVoyage,
-    ajoutUneResertvation
+    ajoutUneResertvation,
+    createVoyagesBetweenDates
  
  }= require('../controllers/VoyageController.js')
 
@@ -31,6 +32,8 @@ router.get('/hours/:ville_depart/:ville_arrive/:date',getHeureOfVoyages)
 router.get('/nbrPlaceDispoDansVoyage/:idVoyage',nbrPlaceDispoDansVoyage)
 
 router.put('/ajoutUneResertvation/:idVoyage',ajoutUneResertvation)
+
+router.post('/createVoyagesBetweenDates',createVoyagesBetweenDates)
 
 
 

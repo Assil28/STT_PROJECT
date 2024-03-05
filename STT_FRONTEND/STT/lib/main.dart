@@ -3,7 +3,6 @@ import 'package:stt/InterfaceUI/FomVoyage.dart';
 
 //import 'package:flutter_pro/LoginScreen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:stt/InterfaceUI/LoginScreen.dart';
 import 'package:stt/InterfaceUI/SignInScreen.dart';
 
 void main() {

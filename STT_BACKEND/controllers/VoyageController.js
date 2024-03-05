@@ -152,6 +152,47 @@ const getHeureOfVoyages = async (req, res) => {
   }
 };
 
+const createVoyagesBetweenDates = async (req, res) => {
+  try {
+      const { heure_depart_voyage, heure_arrive_voyage, ville_depart, ville_arrive, prix, bus_id } = req.body;
+      const { dateFrom, dateTo } = req.body;
+
+      let currentDate = new Date(dateFrom);
+
+      // Parse dates
+      const endDate = new Date(dateTo);
+      const voyages = [];
+
+      // Create voyages for each day between dateFrom and dateTo
+      while (currentDate <= endDate) {
+          const newVoyage = {
+              heure_depart_voyage,
+              heure_arrive_voyage,
+              date: currentDate,
+              ville_depart,
+              ville_arrive,
+              prix,
+              bus_id
+          };
+
+          // Create voyage
+          const createdVoyage = await Voyage.create(newVoyage);
+
+          // Add created voyage to list
+          voyages.push(createdVoyage);
+
+          // Move to next day
+          currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+      }
+
+      res.status(201).json({ voyages });
+  } catch (error) {
+      console.error('Error creating voyages between dates:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 
 
 
@@ -169,6 +210,7 @@ module.exports = {
    getPriceByVoyage,
    getHeureOfVoyages,
    nbrPlaceDispoDansVoyage,
-   ajoutUneResertvation
+   ajoutUneResertvation,
+   createVoyagesBetweenDates
 
 }

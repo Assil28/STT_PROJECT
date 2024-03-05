@@ -25,9 +25,9 @@ class LoginResponseModel {
 }
 
 class User {
-  String? id;
-  String? userName;
-  String? matricule;
+  String? id; // changer en _id
+  String? userName; // garder tel quel
+  String? matricule; // garder tel quel
   String? email;
   String? password;
   String? phone_number;
@@ -36,6 +36,7 @@ class User {
   String? cin;
 
   User({
+    required this.id, // changer en _id
     required this.userName,
     required this.email,
     required this.password,
@@ -43,32 +44,35 @@ class User {
     required this.birthday,
     required this.role,
     required this.cin,
-    String? matricule,
+    required this.matricule, // garder tel quel
   });
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
-      'birthday': birthday?.toIso8601String(),
+      '_id': id, // changer en _id
+      'userName': userName,
       'email': email,
       'password': password,
       'phone_number': phone_number,
       'role': role,
       'cin': cin,
-      'matricule': matricule,
+      'matricule': matricule, // garder tel quel
+      'birthday': birthday?.toIso8601String(),
     };
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        userName: json['userName'],
-        email: json['email'],
-        phone_number: json['phone_number'],
-        password: json['password'],
-        role: json['role'],
-        cin: json['cin'],
-        matricule: json['matricule'],
-        birthday: json['birthday'] != null
-            ? DateTime.parse(json['birthday'])
-            : DateTime.now());
+      id: json['_id'], // changer en _id
+      userName: json['userName'],
+      email: json['email'],
+      password: json['password'],
+      phone_number: json['phone_number'],
+      role: json['role'],
+      cin: json['cin'],
+      matricule: json['matricule'], // garder tel quel
+      birthday: json['birthday'] != null
+          ? DateTime.parse(json['birthday'])
+          : DateTime.now(),
+    );
   }
 }

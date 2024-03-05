@@ -8,7 +8,7 @@ import 'package:stt/Services/SharedService.dart';
 class AuthService {
   static var client = http.Client();
   static const loginAPI = "api/users/login";
-  static const String apiURL = '192.168.218.211:3800';
+  static const String apiURL = '192.168.1.166:3800';
   static Future<bool> login(
     LoginRequestModel model,
   ) async {

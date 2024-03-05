@@ -17,24 +17,38 @@ class SharedService {
   static Future<LoginResponseModel?> loginDetails() async {
     var isCacheKeyExist =
         await APICacheManager().isAPICacheKeyExist("login_details");
-
     if (isCacheKeyExist) {
       var cacheData = await APICacheManager().getCacheData("login_details");
-//bech taamel el decode mtaa data mel database w t synchroni maa model
+      print("Cache data length: ${cacheData.syncData.length}");
+      print("Cache data: ${cacheData.syncData}");
       return loginResponseJson(cacheData.syncData);
+    } else {
+      return null;
     }
+
   }
 
   static Future<void> setLoginDetails(
-    LoginResponseModel loginResponse,
-  ) async {
-    APICacheDBModel cacheModel = APICacheDBModel(
-      key: "login_details",
-      syncData: jsonEncode(loginResponse.toJson()),
-    );
+      LoginResponseModel loginResponse,
+      ) async {
+    var isCacheKeyExist =
+    await APICacheManager().isAPICacheKeyExist("login_details");
 
-    await APICacheManager().addCacheData(cacheModel);
+    if (isCacheKeyExist) {
+      var cacheData = await APICacheManager().getCacheData("login_details");
+      cacheData.syncData = jsonEncode(loginResponse.toJson());
+      print("Cache updated successfully");
+    } else {
+      APICacheDBModel cacheModel = APICacheDBModel(
+        key: "login_details",
+        syncData: jsonEncode(loginResponse.toJson()),
+      );
+
+      await APICacheManager().addCacheData(cacheModel);
+      print("Cache added successfully");
+    }
   }
+
 
   static Future<void> logout(BuildContext context) async {
     await APICacheManager().deleteCache("login_details");
