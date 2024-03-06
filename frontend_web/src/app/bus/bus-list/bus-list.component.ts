@@ -4,6 +4,7 @@ import { BusService } from '../service/bus.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BusEditComponent } from '../bus-edit/bus-edit.component';
 import Swal from 'sweetalert2';
+import { BusAddComponent } from '../bus-add/bus-add.component';
 
 @Component({
   selector: 'app-bus-list',
@@ -72,12 +73,22 @@ openEditBusDialog(idbus:any): void {
   });
 }
 
-openAddBusDialog(): void {
-  console.log("t7alet")
-  const dialogRef = this.dialog.open(BusEditComponent, {
-    width: '600px', // Adjust width as needed
+// Method to reload data when dialog is closed
+  reloadData(): void {
+    this.getBusList();
+  }
+
+  openAddBusDialog(): void {
+    console.log("t7alet");
+    const dialogRef = this.dialog.open(BusAddComponent, {
+      width: '600px', // Adjust width as needed
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.reloadData(); // Reload data when dialog is closed
+    });
   
-  });
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
