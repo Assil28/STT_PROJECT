@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <script src="/docs/5.3/assets/js/color-modes.js"></script>
+
+
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+
+    <main class="form-signin w-100 m-auto">
+        
+        
+        <form [formGroup]="form" (submit)="register()">
+
+            <div class="d-flex justify-content-center">
+                <div class="col-lg-6 card card-body"> 
+
+            <h1 class="h3 mb-3 fw-normal">Please Register</h1>
+
+            <div class="form-floating mb-3">
+                <label for="profilePicture">Profile Picture</label>
+                <input formControlName="profilePicture" type="file" class="form-control" id="profilePicture" accept="image/*">
+              </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">fullName</label>
+                <input formControlName="fullName" type="text" class="form-control" id="floatingInput" placeholder="fullName">
+                
+                <div class="erreur" *ngIf="form.get('fullName')?.value=='' && form.get('fullName')?.touched">
+                    fullName est obligatoire
+                </div>
+                <div class="erreur"
+                    *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched && !(form.get('fullName')?.value=='')">
+                    fullName n'est pas valide
+                </div>
+
+            </div>
+          
+
+            <div class="form-floating mb-3">
+                 <label for="floatingInput">description</label>
+                <input formControlName="description" type="text" class="form-control" id="floatingInput" placeholder="description">
+               
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">email</label>
+                <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="email">
+                
+                <div class="erreur" *ngIf="form.get('email')?.value=='' && form.get('email')?.touched">
+                    email est obligatoire
+                </div>
+                <div class="erreur"
+                    *ngIf="form.get('email')?.invalid && form.get('email')?.touched && !(form.get('email')?.value=='')">
+                    email n'est pas valide
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="statusDropdown">Status</label>
+                <select formControlName="status" class="form-control" id="statusDropdown">
+                  <option value="">Select Status</option>
+                  <option value="Etudiant">Etudiant</option>
+                  <option value="Work">Work</option>
+                  <option value="Job seeker">Job seeker</option>
+                </select>
+
+                <div class="erreur" *ngIf="form.get('status')?.value=='' && form.get('status')?.touched">
+                    status est obligatoire
+                </div>
+               
+              </div>
+              
+              
+              
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">birthday</label>
+                <input formControlName="birthday" type="date" class="form-control" id="floatingInput" placeholder="birthday">
+                
+                <div class="erreur" *ngIf="form.get('birthday')?.value==null && form.get('birthday')?.touched">
+                    birthday est obligatoire
+                </div>
+              
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">adresse</label>
+                <input formControlName="adresse" type="text" class="form-control" id="floatingInput" placeholder="adresse">
+                
+                <div class="erreur" *ngIf="form.get('adresse')?.value=='' && form.get('adresse')?.touched">
+                    adresse est obligatoire
+                </div>
+
+            </div>
+            
+            <div class="form-floating mb-3">
+                <label for="floatingInput">skills</label>
+                <input  formControlName="skills" type="text" class="form-control" id="floatingInput" placeholder="skills">
+                
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Password</label>
+                <input formControlName="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                
+                <div class="erreur" *ngIf="form.get('password')?.value=='' && form.get('password')?.touched">
+                    password est obligatoire
+                </div>
+                <div class="erreur"
+                    *ngIf="form.get('password')?.invalid && form.get('password')?.touched && !(form.get('password')?.value=='')">
+                    password contient 3 caractéres minimum
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Retype Password</label>
+                <input formControlName="retypepassword" type="password" class="form-control" id="floatingPassword" placeholder="********">
+                
+                <div class="erreur" *ngIf="form2.get('retypepassword')?.value=='' && form2.get('retypepassword')?.touched">
+                    Retype Password is required
+                </div>
+                <div class="erreur" *ngIf="form2.get('retypepassword')?.invalid && form2.get('retypepassword')?.touched && !(form2.get('retypepassword')?.value=='')">
+                    Passwords do not match
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end" >
+                <button class="btn btn-primary " type="submit" >Sign up</button>
+              </div>
+
+                <p class="mt-5 mb-3 text-body-secondary"></p>
+        
+        </div>
+    </div>
+        </form>
+       
+    </main>
+   
+
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+  <script src="/docs/5.3/assets/js/color-modes.js"></script>
+
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+
+
+
+
+  <main class="form-signin w-100 m-auto">
+    <form [formGroup]="form" (submit)="login()">
+
+      <div class="d-flex justify-content-center">
+        <div class="col-lg-6 card card-body">
+          <div class="d-flex justify-content-center">
+            <img class="mb-4" src="assets/img/logo/logo.png" alt="" width="72" height="57">
+          </div>
+
+          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          <div class="form-floating mb-3">
+            <label for="floatingInput">Email address</label>
+            <input formControlName="email" type="email" class="form-control" placeholder="name@example.com">
+
+            <div class="erreur2" *ngIf="error==true">
+              L'adresse e-mail ou mot de passe est incorrecte
+            </div>
+            <div class="erreur" *ngIf="form.get('email')?.value=='' && form.get('email')?.touched">
+              L'adresse e-mail est obligatoire
+            </div>
+            <div class="erreur"
+              *ngIf="form.get('email')?.invalid && form.get('email')?.touched && !(form.get('email')?.value=='')">
+              L'adresse email n'est pas valide
+            </div>
+
+          </div>
+          <div class="form-floating mb-3">
+            <label for="floatingPassword">Password</label>
+            <input formControlName="password" type="password" class="form-control" placeholder="Password">
+
+
+            <div class="erreur" *ngIf="form.get('password')?.value=='' && form.get('password')?.touched">
+              Le mot de passe est obligatoire
+          </div>
+          <div class="erreur" *ngIf="form.get('password')?.invalid && form.get('password')?.touched && !(form.get('password')?.value=='')">
+              Le mot de passe doit étre 3 caractére au minumum
+          </div>
+
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-primary " type="submit">Sign in</button>
+          </div>
+        </div>
+      </div>
+
+
+
+      <p class="mt-5 mb-3 text-body-secondary"> </p>
+    </form>
+  </main>
+  <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

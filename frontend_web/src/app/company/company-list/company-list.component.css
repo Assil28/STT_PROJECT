@@ -1,0 +1,13 @@
+.logo-container {
+    width: 100px; /* Set the width of the container div */
+    height: 100px; /* Set the height of the container div */
+    overflow: hidden; /* Hide any overflow beyond the set dimensions */
+  }
+  
+  .logo-container img {
+    width: auto; /* Maintain the aspect ratio */
+    height: 100%; /* Make the image fill the height of the container */
+    display: block; /* Ensure the image is a block element */
+    object-fit: contain; /* Maintain aspect ratio and fit image within the container */
+  }
+  

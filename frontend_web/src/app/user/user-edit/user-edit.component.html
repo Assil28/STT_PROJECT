@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <script src="/docs/5.3/assets/js/color-modes.js"></script>
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+
+
+
+
+    <main class="form-signin w-100 m-auto">
+        
+        
+        <form [formGroup]="editForm" (submit)="editUser()">
+
+            <div class="d-flex justify-content-center">
+                <div class="col-lg-6 card card-body"> 
+
+            <h1 class="h3 mb-3 fw-normal">Please Register</h1>
+
+            <div class="form-floating mb-3">
+                <label for="image">Profile Picture</label>
+                <input formControlName="image" type="file" class="form-control" id="image" accept="image/*">
+              </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">fullName</label>
+                <input formControlName="fullName" type="text" class="form-control" id="floatingInput" placeholder="fullName">
+                
+            </div>
+          
+
+            <div class="form-floating mb-3">
+                 <label for="floatingInput">description</label>
+                <input formControlName="description" type="text" class="form-control" id="floatingInput" placeholder="description">
+               
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">email</label>
+                <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="email">
+                
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="statusDropdown">Status</label>
+                <select formControlName="status" class="form-control" id="statusDropdown">
+                  <option value="">Select Status</option>
+                  <option value="Etudiant">Etudiant</option>
+                  <option value="Work">Work</option>
+                  <option value="Job seeker">Job seeker</option>
+                </select>
+              </div>
+              
+             
+              
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">birthday</label>
+                <input formControlName="birthday" type="date" class="form-control" id="floatingInput" placeholder="birthday">
+                
+            </div>
+
+            <div class="form-floating mb-3">
+                <label for="floatingInput">adresse</label>
+                <input formControlName="adresse" type="text" class="form-control" id="floatingInput" placeholder="adresse">
+                
+            </div>
+            
+            <div class="form-floating mb-3">
+                <label for="floatingInput">skills</label>
+                <input  formControlName="skills" type="text" class="form-control" id="floatingInput" placeholder="skills">
+                
+            </div>
+
+  
+      
+
+            <div class="d-flex justify-content-end" >
+                <button class="btn btn-primary " type="submit" >Update</button>
+              </div>
+
+                <p class="mt-5 mb-3 text-body-secondary"></p>
+        
+        </div>
+    </div>
+        </form>
+       
+    </main>
+   
+
+</body>
+
+</html>

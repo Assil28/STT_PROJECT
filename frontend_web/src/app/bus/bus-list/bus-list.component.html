@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>STT </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+
+</head>
+
+<body>
+    <!-- Preloader Start -->
+
+    <!-- Preloader Start -->
+
+    <div class="row">
+        
+        <div class="col-lg-12">
+            <div class="count-job mb-35">
+                 <h2 >
+                    Nombre de Bus disponible : {{ bus_found }}
+                    <a  (click)="openAddBusDialog()"><span style="margin-left: 700px;">Ajouter un bus: <i class="bi bi-plus-circle"></i></span>
+                </a>
+                </h2>
+               
+            </div>
+        </div>
+    </div>
+    
+
+   
+
+    
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">numBus</th>
+                <th scope="col">Type</th>
+                <th scope="col">nbrPlace</th>
+                <th scope="col">Disponibilité</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let bus of getCurrentPageBus()">
+                <td>{{bus.numBus}}</td>
+                <td>{{bus.type}}</td>
+                <td>{{bus.nbr_places}}</td>
+                <td>{{bus.est_disponible}}</td>
+                <td>
+                    <ul>
+                        
+                        <li><a  (click)="openEditBusDialog(bus._id)"><i  class="bi bi-pencil-square"></i> </a></li>
+
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li> <a  (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a></li>
+                    </ul>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="center-pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+                    <a class="page-link" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</body>
+
+</html>
