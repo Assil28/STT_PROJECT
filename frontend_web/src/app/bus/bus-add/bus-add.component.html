@@ -9,10 +9,16 @@
         <form [formGroup]="form" (submit)="addBus()" class="form">
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
-                <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
+                <input type="text" formControlName="numBus" class="form-control" id="recipient-name"
+                    placeholder="123 TU 2121">
 
                 <div class="erreur" *ngIf="form.get('numBus')?.value=='' && form.get('numBus')?.touched">
-                    numBus est obligatoire
+                    La matricule est obligatoire
+                </div>
+
+                <div class="erreur"
+                    *ngIf="form.get('numBus')?.invalid && form.get('numBus')?.touched && !(form.get('numBus')?.value=='')">
+                    La matricule n'est pas valide , Format a suivre : 123 TU 2121
                 </div>
 
 
@@ -35,7 +41,7 @@
 
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Nombre de places :</label>
-                <input type="text" class="form-control" formControlName="nbr_places" id="recipient-name">
+                <input type="number" class="form-control" formControlName="nbr_places" id="recipient-name">
 
                 <div class="erreur" *ngIf="form.get('nbr_places')?.value=='' && form.get('nbr_places')?.touched">
                     nbr_places est obligatoire

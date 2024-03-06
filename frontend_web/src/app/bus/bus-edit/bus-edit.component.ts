@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BusService } from '../service/bus.service';
@@ -15,7 +15,7 @@ export class BusEditComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private formBuilder: FormBuilder, private http: HttpClient, public dialogRef: MatDialogRef<BusEditComponent>, private service: BusService,
   ) {
     this.busForm = this.formBuilder.group({
-      numBus: data.busForEdit.numBus,
+      numBus: [data.busForEdit.numBus, [Validators.required, this.validateNumBusFormat]],
       type: data.busForEdit.type,
       nbr_places: data.busForEdit.nbr_places,
       est_disponible:data.busForEdit.est_disponible
@@ -59,6 +59,12 @@ export class BusEditComponent {
       console.error('Error during form submission:', error);
 
     }
+  }
+
+  validateNumBusFormat(control: AbstractControl): { [key: string]: any } | null {
+    const numBusValue: string = control.value;
+    const valid = numBusValue.includes('Tu'); // Vérifie si la chaîne contient 'Tu'
+    return valid ? null : { invalidNumBus: true };
   }
 
 

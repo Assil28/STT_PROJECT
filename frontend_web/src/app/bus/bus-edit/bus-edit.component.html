@@ -9,6 +9,16 @@
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
         <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
+
+        <div class="erreur" *ngIf="busForm.get('numBus')?.value=='' && busForm.get('numBus')?.touched">
+          La matricule est obligatoire
+      </div>
+
+      <div class="erreur"
+          *ngIf="busForm.get('numBus')?.invalid && busForm.get('numBus')?.touched && !(busForm.get('numBus')?.value=='')">
+          La matricule n'est pas valide
+      </div>
+
       </div>
 
 
@@ -27,7 +37,7 @@
 
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Nombre de places :</label>
-        <input type="text" class="form-control" formControlName="nbr_places" id="recipient-name">
+        <input type="number" class="form-control" formControlName="nbr_places" id="recipient-name">
       </div>
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BusService } from '../service/bus.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ export class BusAddComponent implements OnInit {
   constructor(private router:Router,private formBuilder: FormBuilder, private busService: BusService,public dialogRef: MatDialogRef<BusAddComponent>) {}
 
   form = this.formBuilder.group({
-    numBus: ['', Validators.required],
+    numBus: ['', [Validators.required, this.validateNumBusFormat]],
     type: ['', Validators.required],
     nbr_places: ['', Validators.required],
     est_disponible: [ Validators.required],
@@ -40,5 +40,13 @@ export class BusAddComponent implements OnInit {
   close(): void {
     this.dialogRef.close();
     this.dialogClosed.emit(); // Emit event when dialog is closed
+  }
+
+
+
+  validateNumBusFormat(control: AbstractControl): { [key: string]: any } | null {
+    const numBusValue: string = control.value;
+    const valid = numBusValue.includes('Tu'); // Vérifie si la chaîne contient 'Tu'
+    return valid ? null : { invalidNumBus: true };
   }
 }
