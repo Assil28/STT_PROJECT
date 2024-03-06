@@ -1,43 +1,56 @@
-<h1 mat-dialog-title>Edit Bus</h1>
-<div mat-dialog-content>
+<div class="container">
+    <div class="titleDiag">
+        <h1 mat-dialog-title>Ajouer Un Bus</h1>
+        <hr class="divider">
 
-    <form [formGroup]="form" (submit)="addBus()">
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
-            <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
+    </div>
+    <div mat-dialog-content>
 
-            <div class="erreur" *ngIf="form.get('numBus')?.value=='' && form.get('numBus')?.touched">
-                numBus est obligatoire
+        <form [formGroup]="form" (submit)="addBus()" class="form">
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
+                <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
+
+                <div class="erreur" *ngIf="form.get('numBus')?.value=='' && form.get('numBus')?.touched">
+                    numBus est obligatoire
+                </div>
+
+
             </div>
-          
 
-        </div>
 
-        <div class="form-group">
-            <label for="message-text" class="col-form-label">Type de bus:</label>
-            <textarea class="form-control" formControlName="type" id="message-text"></textarea>
-
-            <div class="erreur" *ngIf="form.get('type')?.value=='' && form.get('type')?.touched">
-                type est obligatoire
+            <div class="form-floating mb-3">
+                <label for="statusDropdown">Type de bus:</label>
+                <select formControlName="type" class="form-control" id="statusDropdown">
+                    <option value="">Select Type</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Mini Bus">Mini Bus</option>
+                </select>
+                <div class="erreur" *ngIf="form.get('type')?.value=='' && form.get('type')?.touched">
+                    type est obligatoire
+                </div>
             </div>
-        
-        </div>
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Nombre de places :</label>
-            <input type="text" class="form-control" formControlName="nbr_places" id="recipient-name">
-        
-            <div class="erreur" *ngIf="form.get('nbr_places')?.value=='' && form.get('nbr_places')?.touched">
-                nbr_places est obligatoire
+
+
+
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Nombre de places :</label>
+                <input type="text" class="form-control" formControlName="nbr_places" id="recipient-name">
+
+                <div class="erreur" *ngIf="form.get('nbr_places')?.value=='' && form.get('nbr_places')?.touched">
+                    nbr_places est obligatoire
+                </div>
+
             </div>
-          
-        </div>
 
 
-    </form>
+        </form>
 
-</div>
-<div class="custom-dialog-actions ml-190">
-    <button mat-button (click)="addBus()">Save</button>
-    <button mat-button (click)="close()">Cancel</button>
+    </div>
+
+    <div class="custom-dialog-actions ml-190">
+        <button type="button" class="btn btn-custom-success" (click)="addBus()">Save</button>
+        <button type="button" class="btn btn-custom-secondary" (click)="close()">Cancel</button>
+    </div>
 
 </div>

@@ -61,16 +61,27 @@ openAddBusModal() {
 closeAddBusModal(event: boolean) {
   this.showAddCBusModal = event;
 }
+
 openEditBusDialog(idbus:any): void {
+  let busforEdit = this.bus.find((p)=>{
+    return p._id === idbus
+  })
+  console.log(busforEdit)
   console.log("t7alet")
   const dialogRef = this.dialog.open(BusEditComponent, {
     width: '600px', // Adjust width as needed
-    data: { idbus: idbus }
+    data: { busForEdit: busforEdit }
   });
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
+    this.reloadData(); // Reload data when dialog is closed
   });
+
+
+dialogRef.afterClosed().subscribe(result => {
+  console.log('The dialog was closed');
+});
 }
 
 // Method to reload data when dialog is closed
