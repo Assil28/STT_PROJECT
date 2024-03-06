@@ -9,8 +9,7 @@ const BusModel = new Schema({
     numBus:String,
     type:String,
     nbr_places:Number,
-    est_disponible:Boolean,
-  
+    est_disponible: { type: Boolean, default: true }  
 })
 
 

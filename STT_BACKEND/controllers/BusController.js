@@ -1,4 +1,5 @@
-const Bus = require("../models/busModel");
+const Bus = require("../models/BusModel");
+
 
 const getAllBus = ((req, res) => {
     Bus.find({})

@@ -1,2 +1,4 @@
 STT_BACKEND/node_modules
 STT_FRONTEND/node_modules
+frontend_web/node_modules
+frontend_web/.angular/cache/16.2.10/
