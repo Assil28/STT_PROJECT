@@ -17,7 +17,7 @@ export class UserLoginComponent implements OnInit {
 
   }
   form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    matricule: ['', [Validators.required, Validators.minLength(4)]],
     password: ['', [Validators.required, Validators.minLength(3)]],
   });
 

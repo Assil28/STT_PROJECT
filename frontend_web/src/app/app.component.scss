@@ -12,15 +12,17 @@ height: 100vh;
 background-color:white;
 }
 
-mat-toolbar{
-     mat-icon{
-        margin-left: 15p;
-         color: gray;
-
-     }
-     justify-content: space-between;
-     .box {
-        display: flex;
-        gap: 10px; 
-      }
-}
+mat-toolbar {
+    mat-icon {
+      margin-left: 15px; /* You had "15p" which is incorrect, it should be "15px" */
+      color: gray;
+    }
+  
+    justify-content: space-between;
+  
+    .box {
+      display: flex;
+      gap: 10px; /* You had "10p" which is incorrect, it should be "10px" */
+    }
+  }
+  

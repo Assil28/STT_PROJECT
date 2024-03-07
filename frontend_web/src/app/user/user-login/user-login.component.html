@@ -23,17 +23,17 @@
 
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
           <div class="form-floating mb-3">
-            <label for="floatingInput">Email address</label>
-            <input formControlName="email" type="email" class="form-control" placeholder="name@example.com">
+            <label for="floatingInput">Matricule</label>
+            <input formControlName="matricule" type="text" class="form-control" placeholder="name-aaaa">
 
             <div class="erreur2" *ngIf="error==true">
-              L'adresse e-mail ou mot de passe est incorrecte
+              matricule  ou mot de passe est incorrecte
             </div>
-            <div class="erreur" *ngIf="form.get('email')?.value=='' && form.get('email')?.touched">
-              L'adresse e-mail est obligatoire
+            <div class="erreur" *ngIf="form.get('matricule')?.value=='' && form.get('matricule')?.touched">
+              matricule est obligatoire
             </div>
             <div class="erreur"
-              *ngIf="form.get('email')?.invalid && form.get('email')?.touched && !(form.get('email')?.value=='')">
+              *ngIf="form.get('matricule')?.invalid && form.get('matricule')?.touched && !(form.get('matricule')?.value=='')">
               L'adresse email n'est pas valide
             </div>
 

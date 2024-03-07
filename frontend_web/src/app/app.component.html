@@ -7,11 +7,14 @@
             <div class="toolbar">
                 <mat-toolbar>
                     <mat-icon (click)="sidebar.toggle()">notes</mat-icon> 
-                    <div class="box" *ngIf="authenticated==false">
-                        <mat-icon>search</mat-icon>
-                        <mat-raised-button routerLink="/users/register"><mat-icon>perm_identity</mat-icon>Register</mat-raised-button>
-                        <mat-raised-button  routerLink="/users/login"><mat-icon>account_box</mat-icon>Login</mat-raised-button> 
+                    <div class="header-btn d-none f-right d-lg-block"  *ngIf="authenticated==false">
+                        <a  class="btn head-btn1"  routerLink="/users/login"><mat-icon>account_box</mat-icon>Login</a> 
+                       
                     </div>  
+                    <div class="header-btn d-none f-right d-lg-block" *ngIf="authenticated==true">
+                        <a (click)="logout()" class="btn head-btn1">Logout</a>
+                     </div>
+
                 </mat-toolbar>
             </div>
             <router-outlet></router-outlet>
