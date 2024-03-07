@@ -14,14 +14,22 @@ import { CompanyModule } from './company/company.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list'; 
 
+
+import { SidenavComponent } from './sidenav/sidenav.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AppFooterComponent,
     AppNavbarComponent,
-    
+    SidenavComponent    
     
   ],
   imports: [
@@ -33,8 +41,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatInputModule,
     MatDialogModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    MatToolbarModule,
+        MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

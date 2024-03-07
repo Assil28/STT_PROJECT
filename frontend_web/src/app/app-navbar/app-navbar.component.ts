@@ -4,16 +4,20 @@ import { UserService } from '../user/service/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyAddComponent } from '../company/company-add/company-add.component';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-app-navbar',
   templateUrl: './app-navbar.component.html',
-  styleUrls: ['./app-navbar.component.css']
+  styleUrls: ['./app-navbar.component.scss']
 })
 export class AppNavbarComponent implements OnInit {
   authenticated = false
   showAddCompanyModal = false;
-
+  isMobile: boolean = false;
+  observer: ResizeObserver | null = null;
+  sidenav!: MatSidenav;
+  isCollapsed = true;
   constructor(private userservice: UserService, private router: Router,public dialog: MatDialog ) { }
 
 
@@ -29,7 +33,17 @@ export class AppNavbarComponent implements OnInit {
       }
     )
   }
-
+ 
+  toggleMenu() {
+    if(this.isMobile){
+      this.sidenav.toggle();
+      this.isCollapsed = false; // On mobile, the menu can never be collapsed
+    } else {
+      this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
+      this.isCollapsed = !this.isCollapsed;
+    }
+  }  
+  
   openAddCompanyModal() {
     this.showAddCompanyModal = true;
   }

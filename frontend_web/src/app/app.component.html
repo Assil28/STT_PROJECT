@@ -1,25 +1,21 @@
-<app-app-navbar></app-app-navbar>
-<div class="online-cv cv-bg section-overly" style="height:100px">
-
-  <div class="slider-area " >
-    <div class="single-slider section-overly  d-flex align-items-center" style="height:100px">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="hero-cap text-center">
-                        <h2>Get your job,I mean your DREAM job</h2>
-                    </div>
-                </div>
+<mat-sidenav-container class="container">
+    <mat-sidenav #sidebar mode="side" opened>
+        <app-sidenav></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content">
+            <div class="toolbar">
+                <mat-toolbar>
+                    <mat-icon (click)="sidebar.toggle()">notes</mat-icon> 
+                    <div class="box" *ngIf="authenticated==false">
+                        <mat-icon>search</mat-icon>
+                        <mat-raised-button routerLink="/users/register"><mat-icon>perm_identity</mat-icon>Register</mat-raised-button>
+                        <mat-raised-button  routerLink="/users/login"><mat-icon>account_box</mat-icon>Login</mat-raised-button> 
+                    </div>  
+                </mat-toolbar>
             </div>
+            <router-outlet></router-outlet>
         </div>
-    </div>
-</div>
-</div>
-
- 
-  <div class="container">
-    
-    <router-outlet></router-outlet>
-
-  </div>
-  <app-app-footer></app-app-footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<app-app-footer></app-app-footer>
