@@ -20,6 +20,7 @@ export class UserProfilComponent implements OnInit {
 
     this.user = new User("","","", "","",  "",new Date() ,"","")
     this.userid=localStorage.getItem("user_id")
+    
     console.log(this.userid)
   }
     
@@ -29,6 +30,7 @@ export class UserProfilComponent implements OnInit {
     this.userService.userLogin().subscribe(
       res=>{
         this.user=res
+        console.log(this.user);
       },
       err =>{
         console.error(err)
@@ -38,7 +40,9 @@ export class UserProfilComponent implements OnInit {
     
   }
 
-  
+  editUser(){
+
+  }
 
 
 }

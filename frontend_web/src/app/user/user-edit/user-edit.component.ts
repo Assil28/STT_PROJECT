@@ -54,25 +54,22 @@ export class UserEditComponent implements OnInit {
         console.log(params['id'])
         this.userservice.getUserById(params['id']).subscribe(
           (res: any) => {
-            this.user = new User(params['id'], '', '', '', '', '', new Date(), '','');
+            this.user = new User(params['id'],"" , '', '', '', '', new Date(), '','');
             
-            this.user.userName = res.result.fullName
+            this.user.userName = res.result.userName
             this.user.email = res.result.email
-            this.user.matricule = res.result.matricule
             this.user.password = res.result.password
             this.user.birthday = res.result.birthday
             this.user.role = res.result.role
+            this.user.phone_number = res.result.phone_number
             this.user.cin = res.result.cin
-            
-
-
             this.editForm.setValue({
               userName: this.user.userName,
               email: this.user.email,
               matricule: this.user.matricule,
               password: this.user.password,
               phone_number: this.user.phone_number,
-              birthday: new Date(this.user.birthday),
+              birthday: this.user.birthday,
               role: this.user.role,
           
               cin: this.user.cin,
