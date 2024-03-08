@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     console.log(this.authenticated)
-    Emitters.authEmitter.subscribe(
+    Emitters.authEmitter.subscribe(  
       
       (auth: boolean) => {
         this.authenticated = auth
@@ -29,6 +29,10 @@ export class AppComponent implements OnInit{
       }
     )
   }
+  redirectToLogin() {
+    // Use router to navigate to the login page
+    this.router.navigate(['users/login']);
+}
   toggleSidebar() {
     this.sidenav.toggle();
   }

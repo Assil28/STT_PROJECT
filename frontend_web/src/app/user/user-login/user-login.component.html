@@ -27,14 +27,14 @@
             <input formControlName="matricule" type="text" class="form-control" placeholder="name-aaaa">
 
             <div class="erreur2" *ngIf="error==true">
-              matricule  ou mot de passe est incorrecte
+              matricule  or mot de passe is incorrect
             </div>
             <div class="erreur" *ngIf="form.get('matricule')?.value=='' && form.get('matricule')?.touched">
               matricule est obligatoire
             </div>
             <div class="erreur"
               *ngIf="form.get('matricule')?.invalid && form.get('matricule')?.touched && !(form.get('matricule')?.value=='')">
-              L'adresse email n'est pas valide
+                matricule is not valid
             </div>
 
           </div>
@@ -44,10 +44,11 @@
 
 
             <div class="erreur" *ngIf="form.get('password')?.value=='' && form.get('password')?.touched">
-              Le mot de passe est obligatoire
+              Password is  OBLIGATORY
           </div>
           <div class="erreur" *ngIf="form.get('password')?.invalid && form.get('password')?.touched && !(form.get('password')?.value=='')">
-              Le mot de passe doit étre 3 caractére au minumum
+            The password must be at least 3 characters long
+
           </div>
 
           </div>
@@ -55,6 +56,11 @@
           <div class="d-flex justify-content-end">
             <button class="btn btn-primary " type="submit">Sign in</button>
           </div>
+          <button  mat-fab extended color="accent"  class="ml-auto">
+            <mat-icon>arrow_right_alt</mat-icon>
+            Sign in
+        </button>
+        
         </div>
       </div>
 

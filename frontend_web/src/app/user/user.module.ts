@@ -10,7 +10,6 @@ import { UsersListComponent } from './users-list/users-list.component';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UserAddComponent } from './user-add/user-add.component';
-
 @NgModule({
   declarations: [
 

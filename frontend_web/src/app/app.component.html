@@ -1,18 +1,25 @@
 <mat-sidenav-container class="container" >
-    <mat-sidenav #sidebar mode="side" opened >
+    <mat-sidenav #sidebar mode="side" opened *ngIf="authenticated==true" >
         <app-sidenav></app-sidenav>
     </mat-sidenav>
+    
     <mat-sidenav-content>
         <div class="content">
             <div class="toolbar">
                 <mat-toolbar>
-                    <mat-icon (click)="sidebar.toggle()">notes</mat-icon> 
+                    <mat-icon (click)="sidenav.toggle()">notes</mat-icon> 
                     <div class="header-btn d-none f-right d-lg-block"  *ngIf="authenticated==false">
-                        <a  class="btn head-btn1"  routerLink="/users/login"><mat-icon>account_box</mat-icon>Login</a> 
-                      
+                        <button (click)="redirectToLogin()" mat-fab extended color="accent"  class="ml-auto">
+                            <mat-icon>account_box</mat-icon>
+                            Login
+                        </button>
+                        
                     </div>  
                     <div class="header-btn d-none f-right d-lg-block" *ngIf="authenticated==true">
-                        <a (click)="logout()" class="btn head-btn1">Logout</a>
+                        <button (click)="logout()" mat-fab extended color="accent"  class="ml-auto">
+                            <mat-icon>exit_to_app</mat-icon>
+                            Login
+                        </button>
                      </div>
 
                 </mat-toolbar>
