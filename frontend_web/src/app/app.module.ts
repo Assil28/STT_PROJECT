@@ -20,8 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list'; 
-
-
+import {MatCardModule} from '@angular/material/card';
 import { SidenavComponent } from './sidenav/sidenav.component';
 @NgModule({
   declarations: [
@@ -47,7 +46,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

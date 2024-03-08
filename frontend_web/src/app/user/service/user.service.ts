@@ -41,16 +41,14 @@ export class UserService {
       withCredentials: true, // Include credentials in the request
     };
     const body = {
-      fullName : user.fullName,
-      description : user.description,
+      userName : user.userName,
       email : user.email,
-      status : user.status,
-      adresse : user.adresse,
+      matricule : user.matricule,
+      cin : user.cin,
       birthday : user.birthday,
-      skills : user.skills,
-      pdf: user.pdf,
-      
-      image: user.image,
+      phone_number : user.phone_number,
+       role:user.role,
+      password: user.password,
     }
     console.log(body)
 

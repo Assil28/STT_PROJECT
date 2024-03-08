@@ -1,4 +1,8 @@
 
+*{
+  margin-left: 0px;
+  margin-right: 0px;
+}
 mat-sidenav{
 
 background-color: #0f172a;
@@ -13,6 +17,7 @@ background-color:white;
 }
 
 mat-toolbar {
+  height: 80px;
     mat-icon {
       margin-left: 15px; /* You had "15p" which is incorrect, it should be "15px" */
       color: gray;

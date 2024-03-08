@@ -1,5 +1,5 @@
-<mat-sidenav-container class="container">
-    <mat-sidenav #sidebar mode="side" opened>
+<mat-sidenav-container class="container" >
+    <mat-sidenav #sidebar mode="side" opened >
         <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -9,7 +9,7 @@
                     <mat-icon (click)="sidebar.toggle()">notes</mat-icon> 
                     <div class="header-btn d-none f-right d-lg-block"  *ngIf="authenticated==false">
                         <a  class="btn head-btn1"  routerLink="/users/login"><mat-icon>account_box</mat-icon>Login</a> 
-                       
+                      
                     </div>  
                     <div class="header-btn d-none f-right d-lg-block" *ngIf="authenticated==true">
                         <a (click)="logout()" class="btn head-btn1">Logout</a>
@@ -17,6 +17,10 @@
 
                 </mat-toolbar>
             </div>
+            <br>
+          
+            <br>
+            <br>  
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

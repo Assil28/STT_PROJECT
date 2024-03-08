@@ -1,0 +1,80 @@
+<body>
+    <!-- Preloader Start -->
+
+    <!-- Preloader Start -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="count-job mb-35">
+                <h6>
+                    Nombre des contrôleurs disponibles : {{ users_found }}
+                   
+                </h6>
+                <div class="add">
+                    <button (click)="openAddUserDialog()" mat-fab extended color="accent"  class="ml-auto">
+                        <mat-icon>plus_one</mat-icon>
+                        Ajouter Contrôleur
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+
+   
+
+    
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">Nom </th>
+                <th scope="col">Matricule</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">CIN</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of getCurrentPageUsers()">
+                <td>{{user.userName}}</td>
+                <td>{{user.matricule}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phone_number}}</td>
+                <td>{{user.cin}}</td>
+                <td>{{user.Birthday}}</td>
+                <td>
+                    <ul>
+                        
+                        <li><a  (click)="openEditUserDialog(user.id)"><i  class="bi bi-pencil-square"></i> </a></li>
+
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li> <a  (click)="openAlert(user.id)"><i class="bi bi-trash"></i></a></li>
+                    </ul>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="center-pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+                    <a class="page-link" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</body>

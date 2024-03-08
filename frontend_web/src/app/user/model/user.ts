@@ -14,8 +14,9 @@ export class User {
       userName: string,
      
       email: string,
-      password: string,
       matricule: string,
+      password: string,
+      
       phone_number: string,
       birthday: Date,
       role: string,

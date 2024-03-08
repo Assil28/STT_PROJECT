@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Ajouter un controlleur </h2>
+<div mat-dialog-content>
+    <form [formGroup]="userForm" (submit)="submitForm()">
+       
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Nom:</label>
+          <input type="text" formControlName="userName" class="form-control" id="recipient-name">
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label">Email</label>
+          <input type="text" class="form-control" formControlName="email" id="recipient-name">
+        </div>
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Birthday</label>
+            <input type="text" class="form-control" formControlName="birthday" id="recipient-name">
+          </div>
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Password</label>
+            <input type="text" class="form-control" formControlName="password" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Num telephone</label>
+            <input type="text" class="form-control" formControlName="phone_number" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">CIN</label>
+            <input type="text" class="form-control" formControlName="cin" id="recipient-name">
+          </div>
+        
+        
+      </form>
+
+</div>
+<div  class="custom-dialog-actions ml-190">
+  <button mat-button  (click)="submitForm()">Save</button>
+  <button mat-button (click)="close()"  >Cancel</button>
+  
+</div>

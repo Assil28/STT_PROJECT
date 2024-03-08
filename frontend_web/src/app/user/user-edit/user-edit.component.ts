@@ -20,22 +20,24 @@ export class UserEditComponent implements OnInit {
   user?: User
 
   editForm = this.formBuilder.group({
-    fullName: '',
-    description: '',
+    userName: '',
     email: '',
-    status: '',  // <-- Initialize with an empty string
-    adresse: '',
+    matricule: '',  
+    password: '',
+    phone_number: '',
     birthday: new Date(),
-    skills: '',
-    pdf: '',
-    image: ''
+    role: '',
+    cin: '',
+  
+    
+  
   });
 
   editUser = () => {
-    //console.log(this.editForm);
+    console.log(this.editForm);
     const values = this.editForm.value;
     this.userservice.editUser(
-      new User(this.user!.id, values.fullName!, values.description!, values.email!,"", values.status!, values.adresse!, values.birthday!, values.skills!, values.pdf!, values.image!)
+      new User(this.user!.id, values.userName!,values.email!, values.matricule!, values.password!,values.phone_number!, values.birthday!, values.role!,values.cin!)
     ).subscribe(
       user => 
       {
@@ -52,29 +54,28 @@ export class UserEditComponent implements OnInit {
         console.log(params['id'])
         this.userservice.getUserById(params['id']).subscribe(
           (res: any) => {
-            this.user = new User(params['id'], '', '', '', '', '', '', new Date(), '', '', '');
+            this.user = new User(params['id'], '', '', '', '', '', new Date(), '','');
             
-            this.user.fullName = res.result.fullName
-            this.user.description = res.result.description
+            this.user.userName = res.result.fullName
             this.user.email = res.result.email
-            this.user.status = res.result.status
-            this.user.adresse = res.result.adresse
+            this.user.matricule = res.result.matricule
+            this.user.password = res.result.password
             this.user.birthday = res.result.birthday
-            this.user.skills = res.result.skills
+            this.user.role = res.result.role
+            this.user.cin = res.result.cin
             
 
 
             this.editForm.setValue({
-              fullName: this.user.fullName,
-              description: this.user.description,
+              userName: this.user.userName,
               email: this.user.email,
-              status: this.user.status,
-              adresse: this.user.adresse,
+              matricule: this.user.matricule,
+              password: this.user.password,
+              phone_number: this.user.phone_number,
               birthday: new Date(this.user.birthday),
-              skills: this.user.skills,
+              role: this.user.role,
           
-              pdf: this.user.pdf,
-              image:  this.user.image
+              cin: this.user.cin,
             })
           }
         )

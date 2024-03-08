@@ -18,7 +18,7 @@ export class UserProfilComponent implements OnInit {
 
   constructor(private userService:UserService,private router: Router) {
 
-    this.user = new User("","","", "","",  "", "",new Date(), "","","")
+    this.user = new User("","","", "","",  "",new Date() ,"","")
     this.userid=localStorage.getItem("user_id")
     console.log(this.userid)
   }

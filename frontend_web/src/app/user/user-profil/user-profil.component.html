@@ -31,16 +31,14 @@
                 <i routerLink="/users/edituser/{{userid}}"  class="fa fa-pen fa-xs edit"></i>
                 <table>
                     <tbody>
-                        <div class="d-flex justify-content-center">
-                            <img [src]="user.image" alt="profilpic"/>
-                        </div>
+                     
                         
                             
                      
                         <tr>
                             <th>Full Name</th>
                             <td>:</td>
-                            <td>{{ user.fullName }}</td>
+                            <td>{{ user.userName }}</td>
                         </tr>
                         <tr>
                             <th>Birthday Date</th>
@@ -48,24 +46,20 @@
                             <td>{{ user.birthday | date:'yyyy-MM-dd' | slice:0:10 }}</td>
                         </tr>
                         <tr>
-                            <th>Status</th>
+                            <th>Role</th>
                             <td>:</td>
-                            <td>{{ user.status }}</td>
+                            <td>{{ user.role }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>CIN </th>
+                            <td>:</td>
+                            <td>{{ user.cin }}</td>
                         </tr>
                         <tr>
-                            <th>Description</th>
+                            <th>Num Tel</th>
                             <td>:</td>
-                            <td>{{ user.description }}</td>
-                        </tr>
-                        <tr>
-                            <th>Adress</th>
-                            <td>:</td>
-                            <td>{{ user.adresse }}</td>
-                        </tr>
-                        <tr>
-                            <th>Skills</th>
-                            <td>:</td>
-                            <td>{{ user.skills }}</td>
+                            <td>{{ user.phone_number }}</td>
                         </tr>
 
                         <tr>
@@ -74,11 +68,7 @@
                             <td>{{ user.email }}</td>
                         </tr>
 
-                        <tr>
-                            <th>CV</th>
-                            <td>:</td>
-                            <td>{{ user.pdf }}</td>
-                        </tr>
+                     
                     </tbody>
                 </table>
             </div>
