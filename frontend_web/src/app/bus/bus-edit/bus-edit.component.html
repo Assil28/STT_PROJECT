@@ -1,26 +1,60 @@
-<h1 mat-dialog-title>Edit Bus</h1>
-<div mat-dialog-content>
-  <form [formGroup]="busForm" (submit)="submitForm()">
-    <div class="form-group">
-      <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
-      <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
-    </div>
-   
-    <div class="form-group">
-      <label for="message-text" class="col-form-label">Type de bus:</label>
-      <textarea class="form-control" formControlName="type" id="message-text"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="recipient-name" class="col-form-label">Nombre de places :</label>
-      <input type="text" class="form-control" formControlName="nbr_places" id="recipient-name">
-    </div>
-    
-    
-  </form>
+<div class="container">
+  <div class="titleDiag">
+    <h1 mat-dialog-title>Modifier Un Bus</h1>
+    <hr class="divider">
 
-</div>
-<div  class="custom-dialog-actions ml-190">
-  <button mat-button (click)="submitForm()">Save</button>
-  <button mat-button  (click)="close()" >Cancel</button>
-  
+  </div>
+  <div mat-dialog-content>
+    <form [formGroup]="busForm" (submit)="submitForm()" class="form">
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Matricule du bus:</label>
+        <input type="text" formControlName="numBus" class="form-control" id="recipient-name">
+
+        <div class="erreur" *ngIf="busForm.get('numBus')?.value=='' && busForm.get('numBus')?.touched">
+          La matricule est obligatoire
+      </div>
+
+      <div class="erreur"
+          *ngIf="busForm.get('numBus')?.invalid && busForm.get('numBus')?.touched && !(busForm.get('numBus')?.value=='')">
+          La matricule n'est pas valide
+      </div>
+
+      </div>
+
+
+
+
+      <div class="form-floating mb-3">
+        <label for="statusDropdown">Type de bus:</label>
+        <select formControlName="type" class="form-control" id="statusDropdown">
+          <option value="">Select Type</option>
+          <option value="Bus">Bus</option>
+          <option value="Mini Bus">Mini Bus</option>
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Nombre de places :</label>
+        <input type="number" class="form-control" formControlName="nbr_places" id="recipient-name">
+      </div>
+
+
+      <div class="form-check form-check-reverse">
+        <input class="form-check-input" type="checkbox" value="" formControlName="est_disponible">
+        <label class="form-check-label" for="est_disponible">
+          Est Disponible
+        </label>
+      </div>
+
+    </form>
+
+  </div>
+  <div class="custom-dialog-actions ml-190">
+    <button type="button" class="btn btn-custom-success" (click)="submitForm()">Save</button>
+    <button type="button" class="btn btn-custom-secondary" (click)="close()">Cancel</button>
+
+  </div>
+
 </div>
