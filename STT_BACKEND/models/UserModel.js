@@ -23,7 +23,10 @@ const UserModel = new Schema({
     },
     phone_number:String,
     birthday:Date,
-    role:String,
+    role: {
+        type: String,
+    default: 'controlleur',
+    },
     cin:String
 })
 

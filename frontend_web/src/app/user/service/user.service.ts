@@ -56,7 +56,7 @@ export class UserService {
 
   }
 
-  deleteBook = (id : number) : Observable<Object> =>{
+  deleteController = (id : number) : Observable<Object> =>{
     return this.http.delete(`${this.baseUrl}/api/users/deleteUser/${id}`)
   }
 
@@ -85,4 +85,7 @@ export class UserService {
   logout(): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/logout`,'',{withCredentials:true});
   }
+
+
+  
 }

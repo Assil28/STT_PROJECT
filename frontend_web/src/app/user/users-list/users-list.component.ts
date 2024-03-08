@@ -4,11 +4,15 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { UserService } from '../service/user.service';
 import { UserAddComponent } from '../user-add/user-add.component';
+import { DatePipe } from '@angular/common';
+import { EditControlleurComponent } from '../../controller/edit-controlleur/edit-controlleur.component';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.css'],
+  providers: [DatePipe],
+
 })
 export class UsersListComponent {
   users:User [] = [];
@@ -18,7 +22,7 @@ export class UsersListComponent {
   userPerPage = 5;
   showAddUserModal = false;
 
-  constructor(private userService:UserService,public dialog: MatDialog) {}
+  constructor(private userService:UserService,public dialog: MatDialog, private datePipe: DatePipe) {}
 
  ngOnInit(): void {
   this.getUsersList()
@@ -28,12 +32,15 @@ export class UsersListComponent {
 getUsersList():any{
    
   this.userService.getUsers().subscribe(
-    (res:any)=>{
-      this.users=res.result
-      console.log(res.result)
-      this.users_found=this.users.length
-
-    }
+   (res: any) => {
+        this.users = res.result.map((user: any) => {
+          // Format the birthday field using DatePipe
+          if (user.birthday) {
+            user.birthday = this.datePipe.transform(user.birthday, 'yyyy-MM-dd') || '';
+          }
+          return user;
+        });
+      }
   )
 
 
@@ -60,17 +67,32 @@ openAddUserModal() {
 closeAddUserModal(event: boolean) {
   this.showAddUserModal = event;
 }
-openEditUserDialog(idbus:any): void {
+
+
+openEditControllerDialog(idController:any): void {
+  let controllerforEdit = this.users.find((p)=>{
+    return p.id === idController
+  })
+  console.log(controllerforEdit)
   console.log("t7alet")
-  const dialogRef = this.dialog.open(UserAddComponent, {
+  const dialogRef = this.dialog.open(EditControlleurComponent, {
     width: '600px', // Adjust width as needed
-    data: { idbus: idbus }
+    data: { controllerforEdit: controllerforEdit }
   });
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
-  }); 
+    this.reloadData(); // Reload data when dialog is closed
+  });
+
+dialogRef.afterClosed().subscribe(result => {
+  console.log('The dialog was closed');
+});
 }
+reloadData(): void {
+  this.getUsersList();
+}
+
 
 openAddUserDialog(): void {
    console.log("t7alet")
@@ -85,8 +107,8 @@ openAddUserDialog(): void {
   
 }
 
-openAlert(idbus: any): void {
- /*  Swal.fire({
+openAlert(idControlleur: any): void {
+  Swal.fire({
     title: 'Suppression ',
     text: 'Voulez-vous vraiment supprimer ce bus ?',
     icon: 'warning',
@@ -95,15 +117,15 @@ openAlert(idbus: any): void {
     cancelButtonText: 'Annuler', // Bouton pour annuler
   }).then((result) => {
     if (result.isConfirmed) {
-      this.userService.(idbus).subscribe(
+      this.userService.deleteController(idControlleur).subscribe(
         () => {
           // Mettez ici le code à exécuter après la suppression réussie
-          console.log('Bus supprimé avec succès');
+          console.log('controlleur supprimé avec succès');
           // Rechargez la liste des bus après la suppression réussie si nécessaire
-          this.getBusList();
+          this.getUsersList();
         },
         (error) => {
-          console.error('Échec de la suppression du bus:', error);
+          console.error('Échec de la suppression du controlleur :', error);
           // Affichez un message d'erreur ou effectuez une action appropriée en cas d'échec de la suppression
         }
       );
@@ -111,6 +133,6 @@ openAlert(idbus: any): void {
       console.log('L\'utilisateur a cliqué sur Annuler');
       // L'utilisateur a cliqué sur Annuler, rien ne se passe
     }
-  }); */
+  }); 
 }
 }

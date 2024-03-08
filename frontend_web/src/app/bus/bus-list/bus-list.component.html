@@ -1,18 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>STT </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
-
-</head>
-
 <body>
     <!-- Preloader Start -->
 
@@ -22,12 +10,16 @@
         
         <div class="col-lg-12">
             <div class="count-job mb-35">
-                 <h2 >
+                 <h6 >
                     Nombre de Bus disponible : {{ bus_found }}
-                    <a  (click)="openAddBusDialog()"><span style="margin-left: 700px;">Ajouter un bus: <i class="bi bi-plus-circle"></i></span>
-                </a>
-                </h2>
-               
+           
+                </h6>
+                <div class="add">
+                    <button (click)="openAddBusDialog()" mat-fab extended color="accent"  class="ml-auto">
+                        <mat-icon>plus_one</mat-icon>
+                        Ajouter bus
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -41,12 +33,12 @@
 
         <thead>
             <tr>
-                <th scope="col">Matricule Bus</th>
+                <th scope="col">numBus</th>
                 <th scope="col">Type</th>
-                <th scope="col">Nombre de Place</th>
+                <th scope="col">nbrPlace</th>
                 <th scope="col">Disponibilité</th>
-                <th scope="col">Modifier</th>
-                <th scope="col">Supprimer</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
 
 
             </tr>

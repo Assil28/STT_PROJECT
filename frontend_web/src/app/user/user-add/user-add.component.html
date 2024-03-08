@@ -1,43 +1,74 @@
+<div class="titleDiag">
+  <h1 mat-dialog-title>Ajouter Un controlleur</h1>
+  <hr class="divider">
+</div>
 
-<div class ="addModal">
-
-<h2 mat-dialog-title class="title">Ajouter un controlleur </h2>
 <div mat-dialog-content>
-    <form [formGroup]="userForm" (submit)="submitForm()">
-      <div class="form-group form-group-inline">
-        <label for="userName" class="col-form-label">Nom</label>
-        <input type="text" formControlName="userName" class="form-control" id="userName">
+  <form [formGroup]="userForm" (submit)="submitForm()" class="form">
+
+    <div class="form-group">
+      <label for="userName" class="col-form-label">Nom</label>
+      <input type="text" formControlName="userName" class="form-control" id="userName">
+
+      <div class="erreur" *ngIf="userForm.get('userName')?.hasError('required') && userForm.get('userName')?.touched">
+        Le nom est obligatoire
+      </div>
+
+      <div class="erreur" *ngIf="userForm.get('userName')?.hasError('minlength') && userForm.get('userName')?.touched">
+        Le nom doit avoir au moins 3 caractères
+      </div>
     </div>
-    <div class="form-group form-group-inline">
-        <label for="email" class="col-form-label">Email</label>
-        <input type="text" class="form-control" formControlName="email" id="email">
+
+    <div class="form-group">
+      <label for="email" class="col-form-label">Email</label>
+      <input type="text" formControlName="email" class="form-control" id="email">
+
+      <div class="erreur" *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
+        Le email est obligatoire
+      </div>
+
+      <div class="erreur" *ngIf="userForm.get('email')?.hasError('email') && userForm.get('email')?.touched">
+        Email non valide
+      </div>
     </div>
-    
-        <div class="form-group">
-            <label for="birthday" class="col-form-label">Birthday</label>
-            <input type="text" class="form-control" formControlName="birthday" id="birthday">
+
+    <div class="form-group">
+      <label for="birthday" class="col-form-label">Birthday</label>
+      <input type="date" class="form-control" formControlName="birthday" id="birthday">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="phone_number" class="col-form-label">Num telephone</label>
+        <input type="text" formControlName="phone_number" class="form-control" id="phone_number">
+
+        <div class="erreur" *ngIf="userForm.get('phone_number')?.hasError('required') && userForm.get('phone_number')?.touched">
+          Le numéro de téléphone est obligatoire
         </div>
-        <div class="form-group">
-            <label for="password" class="col-form-label">Password</label>
-            <input type="text" class="form-control" formControlName="password" id="password">
+
+        <div class="erreur" *ngIf="userForm.get('phone_number')?.hasError('minlength') && userForm.get('phone_number')?.touched">
+          Le numéro de téléphone doit avoir 8 caractères
         </div>
-        <div class="form-group">
-            <label for="phone_number" class="col-form-label">Num telephone</label>
-            <input type="text" class="form-control" formControlName="phone_number" id="phone_number">
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="cin" class="col-form-label">CIN</label>
+        <input type="text" formControlName="cin" class="form-control" id="cin">
+
+        <div class="erreur" *ngIf="userForm.get('cin')?.hasError('required') && userForm.get('cin')?.touched">
+          Le CIN est obligatoire
         </div>
-        <div class="form-group">
-            <label for="cin" class="col-form-label">CIN</label>
-            <input type="text" class="form-control" formControlName="cin" id="cin">
+
+        <div class="erreur" *ngIf="userForm.get('cin')?.hasError('minlength') && userForm.get('cin')?.touched">
+          Le CIN doit avoir 8 caractères
         </div>
-        
-    </form>
+      </div>
+    </div>
+
+  </form>
 </div>
-<div class="actions" class="custom-dialog-actions ">
-    <button mat-fab extended color="accent" (click)="submitForm()">
-      <mat-icon>save</mat-icon>
-      Save</button>
-    <button mat-fab extended color="accent" (click)="close()">
-      <mat-icon>cancel</mat-icon>
-      Cancel</button>
-</div>
+
+<div class="custom-dialog-actions ml-190">
+  <button type="button" class="btn btn-custom-success" (click)="submitForm()">Save</button>
+  <button type="button" class="btn btn-custom-secondary" (click)="close()">Cancel</button>
 </div>

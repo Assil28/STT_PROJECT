@@ -49,17 +49,17 @@
                 <td>{{user.email}}</td>
                 <td>{{user.phone_number}}</td>
                 <td>{{user.cin}}</td>
-                <td>{{user.Birthday}}</td>
+                <td>{{user.birthday}}</td>
                 <td>
                     <ul>
                         
-                        <li><a  (click)="openEditUserDialog(user.id)"><i  class="bi bi-pencil-square"></i> </a></li>
+                        <li><a  (click)="openEditControllerDialog(user.id)"><i  class="bi bi-pencil-square"></i> </a></li>
 
                     </ul>
                 </td>
                 <td>
                     <ul>
-                        <li> <a  (click)="openAlert(user.id)"><i class="bi bi-trash"></i></a></li>
+                        <li> <a  (click)="openAlert(user._id)"><i class="bi bi-trash"></i></a></li>
                     </ul>
                 </td>
             </tr>

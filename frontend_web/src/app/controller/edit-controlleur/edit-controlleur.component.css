@@ -1,6 +1,6 @@
 
 .titleDiag{
-    margin-top: 6px;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -32,4 +32,6 @@
     background-color: gray; /* Couleur de fond personnalisée pour le bouton Cancel */
     color: white; /* Couleur du texte personnalisée */
 }
+
+
 
