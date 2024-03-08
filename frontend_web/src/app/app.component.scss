@@ -1,33 +1,31 @@
 
-*{
-  margin-left: 0px;
-  margin-right: 0px;
-}
-mat-sidenav{
-
-background-color: #0f172a;
-width: 230px;
-height: 100%;
-}
-mat-sidenav-content{
-
-
-height: 100vh;
-background-color:white;
-}
-
-mat-toolbar {
-  height: 80px;
-    mat-icon {
-      margin-left: 15px; /* You had "15p" which is incorrect, it should be "15px" */
-      color: gray;
-    }
-  
-    justify-content: space-between;
-  
-    .box {
-      display: flex;
-      gap: 10px; /* You had "10p" which is incorrect, it should be "10px" */
-    }
+  *{
+    margin-left: 0px;
+    margin-right: 0px;
   }
-  
+  mat-sidenav{
+
+  background-color: #0f172a;
+  width: 230px;
+  height: 100%;
+  }
+  mat-sidenav-content{
+
+
+  height: 100vh;
+  background-color:white;
+  }
+
+  mat-toolbar {
+    height: 80px;
+      mat-icon {
+        margin-left: 15px; /* You had "15p" which is incorrect, it should be "15px" */
+        color: gray;
+      }
+    
+      justify-content: space-between;
+    
+    
+    }
+    
+    

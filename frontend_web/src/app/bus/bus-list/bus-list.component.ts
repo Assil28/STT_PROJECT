@@ -31,7 +31,7 @@ getBusList():any{
    
   this.BusService.getBuss().subscribe(
     (res:any)=>{
-      this.bus=res.result
+      this.bus=res.result.reverse()
       console.log(res.result)
       this.bus_found=this.bus.length
 
