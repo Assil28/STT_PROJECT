@@ -13,23 +13,15 @@
 
     <main class="form-signin w-100 m-auto">
         
-        
         <form [formGroup]="editForm" (submit)="editUser()">
-
             <div class="d-flex justify-content-center">
                 <div class="col-lg-6 card card-body"> 
-
             <h1 class="h3 mb-3 fw-normal">Edit Profile</h1>
-
-          
-
             <div class="form-floating mb-3">
                 <label for="floatingInput">User Name</label>
                 <input formControlName="userName"type="text" class="form-control" id="floatingInput" placeholder="userName">
-                
-            </div>
-            
-
+             </div>
+          
             <div class="form-floating mb-3">
                 <label for="floatingInput">Email</label>
                 <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="email">
@@ -41,9 +33,7 @@
                 <input formControlName="birthday" type="date" class="form-control" id="floatingInput" placeholder="birthday">
                 
             </div>
-
-         
-            
+      
             <div class="form-floating mb-3">
                 <label for="floatingInput">CIN</label>
                 <input  formControlName="cin" type="text" class="form-control" id="floatingInput" placeholder="cin">
@@ -55,18 +45,15 @@
                 
             </div>
   
-      
-
             <div class="d-flex justify-content-end" >
                 <button class="btn btn-primary " type="submit" >Edit</button>
               </div>
-
                 <p class="mt-5 mb-3 text-body-secondary"></p>
         
         </div>
     </div>
         </form>
-       
+      
     </main>
    
 
