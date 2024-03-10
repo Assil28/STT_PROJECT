@@ -28,6 +28,19 @@ export class VoyageService {
       options));
   }
 
+  createVoyagesBetweenDates=(Voyage : Object) : Observable<Voyage>=>{
+    const options = {
+      headers: new HttpHeaders(
+        { 'content-type': 'application/json'}
+        )
+    };
+
+    return(this.http.post<Voyage>(
+      `${this.baseUrl}/api/voyages/createVoyagesBetweenDates`,
+      Voyage,
+      options));
+  }
+
   getVoyageById = (id : any) : Observable<Voyage>=> {
     return this.http.get<Voyage>(`${this.baseUrl}/api/voyages/getVoyage/${id}`)
   }

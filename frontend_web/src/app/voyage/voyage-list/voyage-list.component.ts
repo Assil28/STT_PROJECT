@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { VoyageAddComponent } from '../voyage-add/voyage-add.component';
 import { DatePipe } from '@angular/common';
 import { BusService } from 'src/app/bus/service/bus.service';
+import { VoyageAddParMoisComponent } from '../voyage-add-par-mois/voyage-add-par-mois.component';
 
 @Component({
   selector: 'app-voyage-list',
@@ -104,6 +105,24 @@ export class VoyageListComponent {
   openAddVoyageDialog(): void {
     console.log("t7alet");
     const dialogRef = this.dialog.open(VoyageAddComponent, {
+      width: '600px', // Adjust width as needed
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.reloadData(); // Reload data when dialog is closed
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+
+  openAddVoyageParMoisDialog(): void {
+    console.log("t7alet");
+    const dialogRef = this.dialog.open(VoyageAddParMoisComponent, {
       width: '600px', // Adjust width as needed
     });
 
