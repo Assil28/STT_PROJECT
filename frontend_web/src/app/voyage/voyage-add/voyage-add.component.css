@@ -1,0 +1,41 @@
+.titleDiag {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.divider {
+    border-top: 3px solid #ccc;
+    /* Couleur plus légère */
+    opacity: 0.5;
+    /* Opacité réduite */
+}
+
+.form {
+    margin: 30px;
+}
+
+.erreur {
+    color: red;
+}
+
+.mat-dialog-container.container {
+    border-radius: 20px !important;
+    /* Ajoutez des coins arrondis */
+}
+
+.btn-custom-success {
+    background-color: green;
+    /* Couleur de fond personnalisée pour le bouton Save */
+    color: white;
+    /* Couleur du texte personnalisée */
+    margin-right: 10px;
+    /* Ajoute une marge à droite pour séparer les boutons */
+    margin-left: -40px;
+}
+
+.btn-custom-secondary {
+    background-color: gray;
+    /* Couleur de fond personnalisée pour le bouton Cancel */
+    color: white;
+    /* Couleur du texte personnalisée */
+}

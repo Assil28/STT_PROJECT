@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="titleDiag">
+        <h1 mat-dialog-title>Ajouter Un Voyage pendant un mois</h1>
+        <hr class="divider">
+    </div>
+    <div mat-dialog-content>
+        <form [formGroup]="form" (submit)="addVoyage()" class="form">
+
+            <!-- Matricule Bus -->
+            <div class="form-group row">
+                <label for="statusDropdown" class="col-sm-3 col-form-label">Matricule Bus:</label>
+                <div class="col-sm-9">
+                    <select formControlName="bus_id" class="form-control" id="statusDropdown">
+                      <option value="" disabled selected>Sélectionner un bus</option>
+                      <option *ngFor="let bus of bus" [value]="bus._id">{{ bus.numBus }}</option>
+                  </select>
+                    <div class="erreur" *ngIf="form.get('bus_id')?.invalid && form.get('bus_id')?.touched">
+                        Matricule du bus est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heure de départ -->
+            <div class="form-group row">
+                <label for="heureDepart" class="col-sm-3 col-form-label">Heure de départ du bus:</label>
+                <div class="col-sm-9">
+                    <input type="time" formControlName="heure_depart_voyage" class="form-control" id="heureDepart">
+                    <div class="erreur" *ngIf="form.get('heure_depart_voyage')?.value=='' && form.get('heure_depart_voyage')?.touched">
+                        Mettre un temps valide
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heure d'arrivée -->
+            <div class="form-group row">
+                <label for="heureArrivee" class="col-sm-3 col-form-label">Heure d'arrivée du bus :</label>
+                <div class="col-sm-9">
+                    <input type="time" formControlName="heure_arrive_voyage" class="form-control" id="heureArrivee">
+                    <div class="erreur" *ngIf="form.get('heure_arrive_voyage')?.value=='' && form.get('heure_arrive_voyage')?.touched">
+                        Mettre un temps valide
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date du voyage -->
+            <div class="form-group row">
+                <label for="dateVoyage" class="col-sm-3 col-form-label">Date du voyage :</label>
+                <div class="col-sm-9">
+                    <input type="date" formControlName="dateFrom" class="form-control" id="dateVoyage">
+                    <div class="erreur" *ngIf="form.get('dateFrom')?.value=='' && form.get('dateFrom')?.touched">
+                        dateFrom est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="dateVoyage" class="col-sm-3 col-form-label">Date du voyage :</label>
+                <div class="col-sm-9">
+                    <input type="date" formControlName="dateTo" class="form-control" id="dateVoyage">
+                    <div class="erreur" *ngIf="form.get('dateTo')?.value=='' && form.get('dateTo')?.touched">
+                        dateTo est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="statusDropdown" class="col-sm-3 col-form-label">Ville de départ :</label>
+                <div class="col-sm-9">
+                    <select formControlName="ville_depart" class="form-control" id="statusDropdown">
+                    <option value="" disabled selected>Sélectionner une ville</option>
+                    <option *ngFor="let citie of cities" [value]="citie">{{ citie }}</option>
+                </select>
+                    <div class="erreur" *ngIf="form.get('ville_depart')?.invalid && form.get('ville_depart')?.touched">
+                        Ville de départ est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ville d'arrivée -->
+            <div class="form-group row">
+                <label for="statusDropdown" class="col-sm-3 col-form-label">Ville d'arrivée :</label>
+                <div class="col-sm-9">
+                    <select formControlName="ville_arrive" class="form-control" id="statusDropdown">
+                  <option value="" disabled selected>Sélectionner une ville</option>
+                  <option *ngFor="let citie of cities" [value]="citie">{{ citie }}</option>
+              </select>
+                    <div class="erreur" *ngIf="form.get('ville_arrive')?.invalid && form.get('ville_depart')?.touched">
+                        Ville d'arrivée est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prix du voyage -->
+            <div class="form-group row">
+                <label for="prixVoyage" class="col-sm-3 col-form-label">Prix du voyage :</label>
+                <div class="col-sm-9">
+                    <input type="text" formControlName="prix" class="form-control" id="prixVoyage">
+                    <div class="erreur" *ngIf="form.get('prix')?.value=='' && form.get('prix')?.touched">
+                        Prix est obligatoire
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="custom-dialog-actions ml-190">
+        <button type="button" class="btn btn-custom-success" (click)="addVoyage()">Save</button>
+        <button type="button" class="btn btn-custom-secondary" (click)="close()">Cancel</button>
+    </div>
+
+</div>

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:stt/Models/TicketModel.dart';
 import 'package:stt/Models/VoyageModel.dart';
@@ -7,6 +9,7 @@ import 'dart:convert';
 class TicketFinal extends StatefulWidget {
   final TicketModel ticket;
   final Voyage voyage;
+  
   const TicketFinal({Key? key, required this.ticket, required this.voyage})
       : super(key: key);
 
@@ -16,7 +19,7 @@ class TicketFinal extends StatefulWidget {
 
 class _TicketFinalState extends State<TicketFinal> {
   VoyageService voyageService = new VoyageService();
-  String qrCodeBase64="";
+  
 
   @override
   void initState() {
@@ -274,6 +277,7 @@ class _TicketFinalState extends State<TicketFinal> {
                   child:
                   Image.memory(
                     base64Decode(widget.ticket.qrCode.split(",")[1]),
+                    
                   ),
                 ),
                               SizedBox(height: 5),
