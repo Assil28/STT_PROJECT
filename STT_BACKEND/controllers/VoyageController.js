@@ -64,11 +64,22 @@ const createVoyage = ((req, res) => {
         .catch((error) => res.status(500).json({ msg: error }))
 })
 
-const updateVoyage = ((req, res) => {
-    Voyage.findOneAndUpdate({ _id: req.params.VoyageID })
-        .then(result => res.json({ result }))
-        .catch(() => res.json({ msg: 'Voyage not found' }))
-})
+const updateVoyage = (req, res) => {
+  const voyageId = req.params.VoyageID;
+
+  Voyage.findOneAndUpdate({ _id: voyageId }, req.body, { new: true }) // { new: true } returns the updated document
+      .then(updatedVoyage => {
+          if (updatedVoyage) {
+              res.json({ result: updatedVoyage });
+          } else {
+              res.status(404).json({ msg: 'Bus not found' });
+          }
+      })
+      .catch(error => {
+          console.error('Error updating company:', error);
+          res.status(500).json({ msg: 'Internal server error' });
+      });
+};
 
 
 const getVoyageByTicket = async (req, res) => {

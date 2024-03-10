@@ -1,0 +1,82 @@
+<body>
+    <!-- Preloader Start -->
+
+    <!-- Preloader Start -->
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="count-job mb-35">
+                <h2>
+                    Liste des voyages disponibles : {{ voyage_found }}
+                    <a (click)="openAddVoyageDialog()"><span style="margin-left: 600px;">Ajouter un voyage: <i class="bi bi-plus-circle"></i></span>
+                </a>
+                </h2>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">Matricule Bus</th>
+                <th scope="col">Heure de départ du bus</th>
+                <th scope="col">Heure d'arrivée du bus</th>
+                <th scope="col">Date de voyage</th>
+                <th scope="col">Nombre de place reservé</th>
+                <th scope="col">Ville de départ du bus</th>
+                <th scope="col">Ville d'arrivée du bus</th>
+                <th scope="col">Prix de voyage</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let voyage of getCurrentPageVoyage()">
+                <td>{{ voyage.busDetails?.result.numBus }}</td>
+                <td>{{voyage.heure_depart_voyage}}</td>
+                <td>{{voyage.heure_arrive_voyage}}</td>
+                <td>{{ voyage.date.substring(0, 10) }}</td>
+                <td>{{voyage.nbr_places_reserve }}</td>
+
+                <td>{{voyage.ville_depart}}</td>
+                <td>{{voyage.ville_arrive}}</td>
+                <td>{{voyage.prix}}</td>
+
+                <td>
+                    <ul>
+
+                        <li><a (click)="openEditVoyageDialog(voyage._id)"><i  class="bi bi-pencil-square"></i> </a></li>
+
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li> <a (click)="openAlert(voyage._id)"><i class="bi bi-trash"></i></a></li>
+                    </ul>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="center-pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+                    <a class="page-link" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</body>
