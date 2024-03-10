@@ -10,7 +10,8 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-voyage-add-par-mois',
   templateUrl: './voyage-add-par-mois.component.html',
-  styleUrls: ['./voyage-add-par-mois.component.css']
+  styleUrls: ['./voyage-add-par-mois.component.css'],
+  providers: [DatePipe],
 })
 export class VoyageAddParMoisComponent implements OnInit {
 
