@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Bus } from '../model/bus.model';
 import { BusService } from '../service/bus.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BusEditComponent } from '../bus-edit/bus-edit.component';
 import Swal from 'sweetalert2';
 import { BusAddComponent } from '../bus-add/bus-add.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-bus-list',
@@ -14,7 +16,10 @@ import { BusAddComponent } from '../bus-add/bus-add.component';
 export class BusListComponent {
   
   bus:Bus [] = [];
-  
+  displayedColumns = ['numBus', 'type', 'nbr_places', 'est_disponible','edit','supp'];
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
   bus_found?:Number
   currentPage = 1;
   busPerPage = 5;
@@ -27,11 +32,24 @@ export class BusListComponent {
 
 
 }
+dataSource = new MatTableDataSource(this.bus);
+ngAfterViewInit() {
+  this.dataSource.sort = this.sort;
+} 
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value.toLowerCase().trim();
+  console.log ("****************************");
+  console.log (filterValue)
+  this.dataSource.filter = filterValue;
+  console.log (this.dataSource.filter);
+
+}
 getBusList():any{
    
   this.BusService.getBuss().subscribe(
     (res:any)=>{
       this.bus=res.result.reverse()
+      this.dataSource.data = this.bus; // Update the MatTableDataSource with new data
       console.log(res.result)
       this.bus_found=this.bus.length
 

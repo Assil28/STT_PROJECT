@@ -25,11 +25,59 @@
     </div>
     
 
-   
+    <div class="example-container mat-elevation-z8">
+        <br>
 
+        <div class="example-header">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter">        </div>
     
+        <mat-table #table [dataSource]="bus"  >
+            <!-- Position Column -->
+            <ng-container matColumnDef="numBus" matSort>
+                <mat-header-cell *matHeaderCellDef> numBus </mat-header-cell>
+                <mat-cell *matCellDef="let b"> {{b.numBus}} </mat-cell>
+            </ng-container>
+    
+            <!-- Name Column -->
+            <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                <mat-cell *matCellDef="let b"> {{b.type}} </mat-cell>
+            </ng-container>
+    
+            <!-- Weight Column -->
+            <ng-container matColumnDef="nbr_places">
+                <mat-header-cell *matHeaderCellDef> Nombre de places </mat-header-cell>
+                <mat-cell *matCellDef="let b"> {{b.nbr_places}} </mat-cell>
+            </ng-container>
+    
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="est_disponible">
+                <mat-header-cell *matHeaderCellDef> Disponibilité </mat-header-cell>
+                <mat-cell *matCellDef="let b"> {{b.est_disponible}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="edit">
+                <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+                <mat-cell *matCellDef="let bus">
+                    <a (click)="openEditBusDialog(bus._id)"><i class="bi bi-pencil-square"></i></a>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="supp">
+                <mat-header-cell *matHeaderCellDef> Suppression </mat-header-cell>
 
-    <table class="table table-hover">
+                <mat-cell *matCellDef="let bus">
+                    <a (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a>
+
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+    
+      <br>
+      
+
+    <!-- <table class="table table-bordered">
 
         <thead>
             <tr>
@@ -49,23 +97,21 @@
                 <td>{{bus.type}}</td>
                 <td>{{bus.nbr_places}}</td>
                 <td>{{bus.est_disponible}}</td>
-                <td>
-                    <ul>
-                        
-                        <li><a  (click)="openEditBusDialog(bus._id)"><i  class="bi bi-pencil-square"></i> </a></li>
+                <td >
+             
+                        <a  (click)="openEditBusDialog(bus._id)"><i  class="bi bi-pencil-square"></i> </a>
 
-                    </ul>
                 </td>
                 <td>
-                    <ul>
-                        <li> <a  (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a></li>
-                    </ul>
+                    
+                       <a (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a>
+                  
                 </td>
             </tr>
 
         </tbody>
 
-    </table>
+    </table> -->
     <div class="center-pagination">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">

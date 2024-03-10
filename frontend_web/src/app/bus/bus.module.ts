@@ -8,8 +8,10 @@ import { BusEditComponent } from './bus-edit/bus-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
 
 
+import {MatFormFieldModule} from '@angular/material/form-field'; 
 @NgModule({
   declarations: [
     BusAddComponent,
@@ -22,7 +24,8 @@ import {MatButtonModule} from '@angular/material/button';
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
-
+    MatTableModule,
+    MatFormFieldModule
 
   ]
 })
