@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { User } from '../model/user';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
@@ -6,6 +6,9 @@ import { UserService } from '../service/user.service';
 import { UserAddComponent } from '../user-add/user-add.component';
 import { DatePipe } from '@angular/common';
 import { EditControlleurComponent } from '../../controller/edit-controlleur/edit-controlleur.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-users-list',
@@ -14,13 +17,17 @@ import { EditControlleurComponent } from '../../controller/edit-controlleur/edit
   providers: [DatePipe],
 
 })
-export class UsersListComponent {
+export class UsersListComponent implements AfterViewInit{
   users:User [] = [];
+  displayedColumns = ['matricule', 'username','email', 'phone_number', 'cin','birthday','edit','supp'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   
   users_found?:Number
   currentPage = 1;
   userPerPage = 5;
   showAddUserModal = false;
+  public dataSource = new MatTableDataSource<User>();
 
   constructor(private userService:UserService,public dialog: MatDialog, private datePipe: DatePipe) {}
 
@@ -29,18 +36,39 @@ export class UsersListComponent {
 
 
 }
+ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
+}
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  if (this.dataSource.paginator) {
+    this.dataSource.paginator.firstPage();
+  }
+}
+
 getUsersList():any{
    
   this.userService.getUsers().subscribe(
    (res: any) => {
+    this.users=res.result.reverse();
+    this.dataSource.data=this.users;
+    console.log(res.result)
+    
         this.users = res.result.map((user: any) => {
+         
           // Format the birthday field using DatePipe
           if (user.birthday) {
             user.birthday = this.datePipe.transform(user.birthday, 'yyyy-MM-dd') || '';
           }
           return user;
         });
+        this.users_found=this.dataSource.data.length
       }
+      
   )
 
 
@@ -48,7 +76,9 @@ getUsersList():any{
 getCurrentPageUsers(): any[] {
   const startIndex = (this.currentPage - 1) * this.userPerPage;
   const endIndex = startIndex + this.userPerPage;
-  return this.users.slice(startIndex, endIndex);
+  const currentPageData = this.dataSource.filteredData.slice(startIndex, endIndex);
+  console.log("lenghth", this.dataSource.filteredData.length);
+  return currentPageData;
 }
 
 // Fonction pour changer de page
@@ -56,8 +86,10 @@ changePage(pageNumber: number): void {
   this.currentPage = pageNumber;
 }
 getPageNumbers(): number[] {
-  const pageCount = Math.ceil(this.users.length / this.userPerPage);
-  return Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pageCount = Math.ceil(this.dataSource.data.length / this.userPerPage);
+  const pageNumbers = Array.from({ length: pageCount }, (_, index) => index + 1);
+  console.log("data source de data:", this.dataSource.data.length);
+  return pageNumbers;
 }
 openAddUserModal() {
   this.showAddUserModal = true;

@@ -6,112 +6,86 @@
 
     <!-- Preloader Start -->
 
-    <div class="row">
-        
+   <div class="row">
         <div class="col-lg-12">
-            <div class="count-job mb-35">
-                 <h6 >
-                    Nombre de Bus disponible : {{ bus_found }}
-           
+            <div class="count-job mb-35 d-flex justify-content-between align-items-center">
+                <h6>
+                    Nombre des contrôleurs disponibles : {{ bus_found }}
                 </h6>
                 <div class="add">
-                    <button (click)="openAddBusDialog()" mat-fab extended color="accent"  class="ml-auto">
+                    <button (click)="openAddBusDialog()" mat-fab extended color="accent">
                         <mat-icon>plus_one</mat-icon>
-                        Ajouter bus
+                        Ajouter Contrôleur
                     </button>
                 </div>
             </div>
         </div>
     </div>
+  
+    <div class="example-header">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="filters" #input>
+        </mat-form-field>
+    </div>
     
-
-    <div class="example-container mat-elevation-z8">
-        <br>
-
-        <div class="example-header">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filter">        </div>
-    
-        <mat-table #table [dataSource]="bus"  >
+   <div class=" mat-elevation-z8">
+    <br>
+   
+        <table mat-table [dataSource]="getCurrentPageBus()" matSort  >
             <!-- Position Column -->
-            <ng-container matColumnDef="numBus" matSort>
-                <mat-header-cell *matHeaderCellDef> numBus </mat-header-cell>
-                <mat-cell *matCellDef="let b"> {{b.numBus}} </mat-cell>
+            <ng-container matColumnDef="numBus"  >
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header> numBus </th>
+                <td mat-cell *matCellDef="let b"> {{b.numBus}} </td>
             </ng-container>
     
             <!-- Name Column -->
             <ng-container matColumnDef="type">
-                <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-                <mat-cell *matCellDef="let b"> {{b.type}} </mat-cell>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header > Type </th>
+                <td  mat-cell *matCellDef="let b"> {{b.type}} </td>
             </ng-container>
     
             <!-- Weight Column -->
             <ng-container matColumnDef="nbr_places">
-                <mat-header-cell *matHeaderCellDef> Nombre de places </mat-header-cell>
-                <mat-cell *matCellDef="let b"> {{b.nbr_places}} </mat-cell>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header > Nombre de places </th>
+                <td mat-cell *matCellDef="let b"> {{b.nbr_places}} </td>
             </ng-container>
     
             <!-- Symbol Column -->
             <ng-container matColumnDef="est_disponible">
-                <mat-header-cell *matHeaderCellDef> Disponibilité </mat-header-cell>
-                <mat-cell *matCellDef="let b"> {{b.est_disponible}} </mat-cell>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Disponibilité </th>
+                <td mat-cell *matCellDef="let b"> {{b.est_disponible}} </td>
             </ng-container>
             <ng-container matColumnDef="edit">
-                <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
-                <mat-cell *matCellDef="let bus">
+                <th mat-header-cell *matHeaderCellDef  > Edit </th>
+                <td mat-cell *matCellDef="let bus">
                     <a (click)="openEditBusDialog(bus._id)"><i class="bi bi-pencil-square"></i></a>
-                </mat-cell>
+                </td>
             </ng-container>
             <ng-container matColumnDef="supp">
-                <mat-header-cell *matHeaderCellDef> Suppression </mat-header-cell>
+                <th mat-header-cell *matHeaderCellDef > Suppression </th>
 
-                <mat-cell *matCellDef="let bus">
+                <td mat-cell *matCellDef="let bus">
                     <a (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a>
-
-                </mat-cell>
+                </td>
             </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-    </div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">La donnée recherché n'existe pas dans ce tableau  "{{input.value}}"</td>
+              </tr>             
+             
+              
+              
+        </table>
+     
+   </div>
     
       <br>
       
 
-    <!-- <table class="table table-bordered">
 
-        <thead>
-            <tr>
-                <th scope="col">numBus</th>
-                <th scope="col">Type</th>
-                <th scope="col">nbrPlace</th>
-                <th scope="col">Disponibilité</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let bus of getCurrentPageBus()">
-                <td>{{bus.numBus}}</td>
-                <td>{{bus.type}}</td>
-                <td>{{bus.nbr_places}}</td>
-                <td>{{bus.est_disponible}}</td>
-                <td >
-             
-                        <a  (click)="openEditBusDialog(bus._id)"><i  class="bi bi-pencil-square"></i> </a>
-
-                </td>
-                <td>
-                    
-                       <a (click)="openAlert(bus._id)"><i class="bi bi-trash"></i></a>
-                  
-                </td>
-            </tr>
-
-        </tbody>
-
-    </table> -->
+      
     <div class="center-pagination">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">

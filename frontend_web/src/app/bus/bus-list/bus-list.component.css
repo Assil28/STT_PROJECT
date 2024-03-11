@@ -7,12 +7,7 @@
     margin-right:10px;
 }
 
-
-th, td {
-    white-space: nowrap; /* This prevents text from wrapping */
-}
-
-/* Optionally, you can add padding to the cells */
-th, td {
-    padding: 5px;
-}
+table {
+    width: 100%;
+  }
+ 

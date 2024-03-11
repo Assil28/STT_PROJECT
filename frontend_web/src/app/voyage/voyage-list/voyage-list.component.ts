@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Voyage } from '../model/voyage.model';
 import { VoyageService } from '../service/voyage.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +8,10 @@ import { VoyageAddComponent } from '../voyage-add/voyage-add.component';
 import { DatePipe } from '@angular/common';
 import { BusService } from 'src/app/bus/service/bus.service';
 import { VoyageAddParMoisComponent } from '../voyage-add-par-mois/voyage-add-par-mois.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Bus } from 'src/app/bus/model/bus.model';
 
 @Component({
   selector: 'app-voyage-list',
@@ -19,11 +23,14 @@ import { VoyageAddParMoisComponent } from '../voyage-add-par-mois/voyage-add-par
 export class VoyageListComponent {
 
   voyage: Voyage[] = [];
-
+  displayedColumns = ['matricule', 'depart', 'arrive', 'date','places','vdep','varr','prix','edit','supp'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   voyage_found?: Number
   currentPage = 1;
   voyagePerPage = 5;
   showAddCVoyageModal = false;
+  public dataSource = new MatTableDataSource<Voyage>();
 
   constructor(private VoyageService: VoyageService, private busService: BusService, public dialog: MatDialog, private datePipe: DatePipe) { }
 
@@ -32,9 +39,24 @@ export class VoyageListComponent {
 
 
   }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+  
   getVoyageList(): void {
     this.VoyageService.getVoyage().subscribe(
       (res: any) => {
+        this.voyage=res.result.reverse();
+        this.dataSource.data=this.voyage;
         this.voyage = res.result.map((v: any) => {
           if (v.date) {
             v.date = this.datePipe.transform(v.date, 'yyyy-MM-dd') || '';
@@ -55,6 +77,9 @@ export class VoyageListComponent {
   getCurrentPageVoyage(): any[] {
     const startIndex = (this.currentPage - 1) * this.voyagePerPage;
     const endIndex = startIndex + this.voyagePerPage;
+    const currentPageData = this.dataSource.filteredData.slice(startIndex, endIndex);
+  console.log("lenghth", this.dataSource.filteredData.length);
+  return currentPageData;
     return this.voyage.slice(startIndex, endIndex);
   }
 
@@ -63,9 +88,10 @@ export class VoyageListComponent {
     this.currentPage = pageNumber;
   }
   getPageNumbers(): number[] {
-    const pageCount = Math.ceil(this.voyage.length / this.voyagePerPage);
-    return Array.from({ length: pageCount }, (_, index) => index + 1);
-  }
+    const pageCount = Math.ceil(this.dataSource.data.length / this.voyagePerPage);
+    const pageNumbers = Array.from({ length: pageCount }, (_, index) => index + 1);
+    console.log("data source de data:", this.dataSource.data.length);
+    return pageNumbers;  }
   openAddVoyageModal() {
     this.showAddCVoyageModal = true;
 

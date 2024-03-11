@@ -9,8 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
-
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field'; 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatIconModule,
     MatButtonModule,
     MatTableModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule 
 
   ]
 })

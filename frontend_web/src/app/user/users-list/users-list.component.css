@@ -3,6 +3,10 @@
     margin-right:15px;
 
 }
+.center-pagination {
+    display: flex;
+    justify-content: center;
+}
 .add{
     font-size: 17px;
     margin-right: 15px;

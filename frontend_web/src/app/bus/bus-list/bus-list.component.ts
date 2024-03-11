@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Bus } from '../model/bus.model';
 import { BusService } from '../service/bus.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,69 +7,81 @@ import Swal from 'sweetalert2';
 import { BusAddComponent } from '../bus-add/bus-add.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-bus-list',
   templateUrl: './bus-list.component.html',
   styleUrls: ['./bus-list.component.css']
 })
-export class BusListComponent {
+export class BusListComponent implements AfterViewInit  {
   
   bus:Bus [] = [];
   displayedColumns = ['numBus', 'type', 'nbr_places', 'est_disponible','edit','supp'];
-  @ViewChild(MatSort)
-  sort!: MatSort;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   bus_found?:Number
   currentPage = 1;
   busPerPage = 5;
+  pageEvent!: PageEvent;
   showAddCBusModal = false;
+  public dataSource = new MatTableDataSource<Bus>();
+    constructor(private BusService:BusService,public dialog: MatDialog) {
 
-  constructor(private BusService:BusService,public dialog: MatDialog) {}
+
+  }
+
 
  ngOnInit(): void {
   this.getBusList()
 
 
 }
-dataSource = new MatTableDataSource(this.bus);
 ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-} 
-applyFilter(event: Event) {
-  const filterValue = (event.target as HTMLInputElement).value.toLowerCase().trim();
-  console.log ("****************************");
-  console.log (filterValue)
-  this.dataSource.filter = filterValue;
-  console.log (this.dataSource.filter);
-
 }
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  if (this.dataSource.paginator) {
+    this.dataSource.paginator.firstPage();
+  }
+}
+
 getBusList():any{
    
   this.BusService.getBuss().subscribe(
     (res:any)=>{
       this.bus=res.result.reverse()
-      this.dataSource.data = this.bus; // Update the MatTableDataSource with new data
+      this.dataSource.data=this.bus;
       console.log(res.result)
-      this.bus_found=this.bus.length
+      this.bus_found=this.dataSource.data.length
 
     }
   )
+
 
 }
 getCurrentPageBus(): any[] {
   const startIndex = (this.currentPage - 1) * this.busPerPage;
   const endIndex = startIndex + this.busPerPage;
-  return this.bus.slice(startIndex, endIndex);
+  const currentPageData = this.dataSource.filteredData.slice(startIndex, endIndex);
+  console.log("lenghth", this.dataSource.filteredData.length);
+  return currentPageData;
 }
-
 // Fonction pour changer de page
 changePage(pageNumber: number): void {
   this.currentPage = pageNumber;
+  console.log("Current Page:", this.currentPage);
 }
 getPageNumbers(): number[] {
-  const pageCount = Math.ceil(this.bus.length / this.busPerPage);
-  return Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pageCount = Math.ceil(this.dataSource.data.length / this.busPerPage);
+  const pageNumbers = Array.from({ length: pageCount }, (_, index) => index + 1);
+  console.log("data source de data:", this.dataSource.data.length);
+  return pageNumbers;
 }
 openAddBusModal() {
   this.showAddCBusModal = true;
