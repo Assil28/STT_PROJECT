@@ -55,8 +55,13 @@
     </div>
 
     <div class="custom-dialog-actions ml-190">
-        <button type="button" class="btn btn-custom-success" (click)="addBus()">Save</button>
-        <button type="button" class="btn btn-custom-secondary" (click)="close()">Cancel</button>
+        <button type="button" mat-fab extended color="accent"  (click)="addBus()">
+            <mat-icon>check</mat-icon>
+            Ajouter</button>
+          <button type="button" mat-fab extended color="primary" (click)="close()">
+            <mat-icon>chevron_left</mat-icon>
+            Retour</button>
+      
     </div>
-
+<br>
 </div>
